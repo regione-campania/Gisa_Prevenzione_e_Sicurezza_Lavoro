@@ -1,0 +1,41 @@
+#user-notices {
+  display: block;
+
+  .table-controls {
+    justify-content: flex-start;
+    margin-bottom: 8px;
+  }
+
+}
+
+.actions-container:not(.table-controls) {
+  flex-wrap: wrap;
+
+  button.action {
+    min-width: 0;
+    padding: 0.325rem;
+    display: inline-flex;
+    margin: 0.175rem;
+
+    .icon {
+      margin: 0 !important;
+    }
+  }
+}
+
+@media(max-width: 991.98px) {
+  #user-notices {
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .actions-container:not(.table-controls) {
+
+    button.action {
+      min-width: 100px;
+      padding: 0.5rem;
+      justify-content: center;
+    }
+  }
+}

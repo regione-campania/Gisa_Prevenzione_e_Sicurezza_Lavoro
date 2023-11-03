@@ -1,0 +1,4 @@
+<div class="a-table-selector form-check" *ngIf="selector">
+    <input type="checkbox" class="form-check-input" [attr.id]="data?.id ?? null" [attr.name]="data?.name ?? null" [disabled]="disabled"
+      [ngModel]="value" (ngModelChange)="onChange($event)">
+</div>

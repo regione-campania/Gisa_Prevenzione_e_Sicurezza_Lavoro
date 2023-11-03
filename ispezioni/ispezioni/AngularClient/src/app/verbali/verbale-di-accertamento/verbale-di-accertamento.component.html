@@ -1,0 +1,155 @@
+<div class="verbale" id="verbale-di-accertamento">
+  <div class="header-verbale text-center">
+    <h2>VERBALE DI ACCERTAMENTO</h2>
+    <p>(ai sensi del D.Lgs. 19/12/1994 n. 758)</p>
+  </div>
+  <div class="body-verbale">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label"><strong>Proc. Pen.</strong></label>
+          <input type="" id="" formControlName="proc_pen" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label"><strong>R.G.N.R.</strong></label>
+          <input type="" id="" formControlName="rgnr" class="form-control">
+        </div>
+      </div>
+      <h4>Funzionari</h4>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">U.P.G. (1)</label>
+          <input type="" id="" formControlName="upg1" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">U.P.G (2)</label>
+          <input type="" id="" formControlName="upg2" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Congiuntamente a</label>
+          <input type="" id="" formControlName="congiuntamente_a" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Ufficio</label>
+          <select id="" formControlName="ufficio" class="form-select">
+            <option value="siml" selected>SIML</option>
+            <option value="spsal">SPSAL</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Il giorno</label>
+          <input type="date" id="" formControlName="data_fase" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">presso</label>
+          <input type="" id="" formControlName="presso" class="form-control">
+        </div>
+      </div>
+      <h4>Alla presenza di</h4>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Nome e Cognome</label>
+          <input type="" id="" formControlName="presenza_di" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Nato/a a</label>
+          <input type="" id="" formControlName="nato_a" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Il</label>
+          <input type="date" id="" formControlName="data_nascita" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Residente a</label>
+          <input type="" id="" formControlName="residente_a" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">In qualità di</label>
+          <input type="" id="" formControlName="in_qualita_di" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Telefono</label>
+          <input type="" id="" formControlName="telefono" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">e-mail (solo PEO)</label>
+          <input type="" id="" formControlName="email" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Identificato con</label>
+          <input type="" id="" formControlName="identificato_con" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">N.</label>
+          <input type="" id="" formControlName="numero_documento" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Rilasciato da</label>
+          <input type="" id="" formControlName="rilasciato_da" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Data rilascio</label>
+          <input type="date" id="" formControlName="data_rilascio" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Data scadenza</label>
+          <input type="date" id="" formControlName="data_scadenza" class="form-control">
+        </div>
+      </div>
+      <p>
+        a seguito dell’ispezione effettuata per la verifica delle prescrizioni impartite con:
+        <strong>VERBALE DI PRESCRIZIONE</strong>
+        del <input type="date" id="" formControlName="data_verbale_prescrizione" class="form-control d-inline-block w-auto">
+        hanno accertato:
+      </p>
+      <ul class="radio-group">
+        <li>
+          <input type="radio" id="" formControlName="ottemperanza" value="no" class="form-check-input">
+          La <strong>NON OTTEMPERANZA</strong> alle prescrizioni di cui al succitato verbale
+          <ng-container *ngIf="ottemperanzaValue === 'no'">
+            <ul>
+              <li>
+                <strong>PUNTO 1)</strong> art. <input type="" id="" formControlName="art_1" class="form-control numero-articolo">
+                D.Lgs. 81/08 e ss.mm.ii., in quanto
+                <input type="" id="" formControlName="in_quanto_1" class="form-control my-2">
+              </li>
+              <li>
+                <strong>PUNTO 2)</strong> art. <input type="" id="" formControlName="art_2" class="form-control numero-articolo">
+                D.Lgs. 81/08 e ss.mm.ii., in quanto
+                <input type="" id="" formControlName="in_quanto_2" class="form-control my-2">
+              </li>
+              <li>
+                <strong>PUNTO 3)</strong> art. <input type="" id="" formControlName="art_3" class="form-control numero-articolo">
+                D.Lgs. 81/08 e ss.mm.ii., in quanto
+                <input type="" id="" formControlName="in_quanto_3" class="form-control my-2">
+              </li>
+            </ul>
+            <label for="" class="form-label">Contravventore</label>
+            <input type="" id="" formControlName="contravventore" class="form-control">
+          </ng-container>
+        </li>
+        <li>
+          <input type="radio" id="" formControlName="ottemperanza" value="si" class="form-check-input">
+          L' <strong>OTTEMPERANZA</strong> alle prescrizioni di cui al succitato verbale<br>
+          <ng-container *ngIf="ottemperanzaValue === 'si'">
+            <label for="" class="form-label">Contravventore</label>
+            <input type="" id="" formControlName="contravventore" class="form-control">
+            <label for="" class="form-label">Importo da pagare (in euro)</label>
+            <input type="number" id="" formControlName="importo" class="form-control" min="0">
+          </ng-container>
+        </li>
+      </ul>
+      <button type="submit" class="btn btn-outline-blue d-block ms-auto">Invia</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+#imprese-selezionate {
+  table {
+    th {
+      width: 30%;
+
+      &.actions-col {
+        width: 10%;
+      }
+    }
+  }
+}
+
+#natura-altro {
+  display: none;
+}

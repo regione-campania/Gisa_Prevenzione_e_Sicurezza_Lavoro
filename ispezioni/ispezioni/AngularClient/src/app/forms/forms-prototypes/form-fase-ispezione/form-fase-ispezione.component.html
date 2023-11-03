@@ -1,0 +1,57 @@
+<div class="form-fase-ispezione" [formGroup]="form">
+  <div *ngIf="form.get('fase')" formGroupName="fase">
+    <div class="row">
+      <div class="col-md">
+        <div class="form-field">
+          <label *ngIf="isCantiere" for="impresa" class="form-label">Cantiere/Impresa *</label>
+          <label *ngIf="!isCantiere" for="impresa" class="form-label">Impresa *</label>
+        <select #i class="form-select" id="id_impresa_sede" formControlName="id_impresa_sede"
+          (change)="patchValue('impresa', i.value)">
+          <option *ngIf="isCantiere" [value]="null">
+            Intero cantiere
+          </option>
+          <option *ngFor="let i of impreseSelezionabili" [value]="i.id_impresa_sede">
+            {{ i.nome_azienda }} - {{ i.partita_iva }} - {{i.codice_fiscale}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="form-field">
+          <label for="id_fase_esito" class="form-label">Fase *</label>
+          <select #s class="form-select" id="id_fase_esito" formControlName="id_fase_esito"
+            (change)="patchValue('fase', s.value); currEsito = s.value">
+            <!--<optgroup *ngFor="let e of esitiFase" [label]="e.descr">
+              <option *ngFor="let c of e.children" [value]="c.id_fase_esito">
+                {{ c.descr_esito_per_fase.length == 0 || c.descr_esito_per_fase == null ? e.descr : "" }}
+                {{ c.descr_esito_per_fase.length != 0 && c.descr_esito_per_fase != null ? c.descr_esito_per_fase : "" }}
+                {{ c.riferimento_fase_esito.length != 0 ? "[" + c.riferimento_fase_esito + "]" : "" }}
+              </option>
+            </optgroup>-->
+            <option *ngFor="let e of esitiFase" [value]="e.id">
+              {{ e.descr_fase }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="form-field">
+          <label for="data" class="form-label">Data *</label>
+          <input type="date" class="form-control" id="data" formControlName="data_fase" min="{{dataIspezione}}" />
+        </div>
+      </div>
+    </div>
+    <div class="form-field" *ngIf="currEsito == 999">
+      <label for="altro_esito" class="form-label">Altro *</label>
+      <input type="text" class="form-control" id="altro_esito" formControlName="altro_esito" />
+    </div>
+    <div class="form-field">
+      <label for="note" class="form-label">Note</label>
+      <textarea class="form-control no-resize" id="note" formControlName="note" rows="8"></textarea>
+    </div>
+    <div class="form-field" *ngIf="showButton">
+      <button type="button" class="btn btn-outline-blue d-block ms-auto" (click)="submit()">{{buttonLabel}}</button>
+    </div>
+  </div>
+  <strong>* campi obbligatori</strong>
+</div>

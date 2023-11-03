@@ -1,0 +1,53 @@
+<div class="a-content-paginator" *ngIf="pages">
+  <div class="page-header">
+    <div class="page-title">
+      <ng-container *ngIf="currentPage?.pageTitle">
+        {{currentPage?.pageTitle}}
+      </ng-container>
+    </div>
+    <ngb-pagination class="ms-auto" [collectionSize]="pages.length" [pageSize]="1"
+      [(page)]="currentPageNumber">
+      <ng-template ngbPaginationPrevious>
+        <i class="icon fa-solid fa-angle-left"></i>
+      </ng-template>
+      <ng-template ngbPaginationPages let-page let-pages="pages">
+        <li class="current-page-display px-0" *ngIf="pages.length > 0">
+          <div class="d-flex flex-nowrap p-0">
+            <label for="paginationInput" class="col-form-label me-2 ms-1">
+              Pagina
+            </label>
+            <input
+              #i
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              class="form-control custom-pages-input"
+              id="paginationInput"
+              [value]="currentPageNumber"
+              (keyup.enter)="selectPage(i)"
+              (blur)="selectPage(i)"
+              (input)="formatInput($any($event).target)"
+            />
+            <span class="col-form-label text-nowrap px-2"> di {{pages.length}}</span>
+          </div>
+        </li>
+      </ng-template>
+      <ng-template ngbPaginationNext>
+        <i class="icon fa-solid fa-angle-right"></i>
+      </ng-template>
+    </ngb-pagination>
+  </div>
+  <ngb-carousel
+    #carousel="ngbCarousel"
+    [showNavigationArrows]="false"
+    [showNavigationIndicators]="false"
+    [keyboard]="false"
+    [wrap]="false"
+    [interval]="0">
+    <ng-template ngbSlide *ngFor="let page of pages">
+      <div class="page-content">
+        <ng-container [ngTemplateOutlet]="page!.template"></ng-container>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>

@@ -1,0 +1,16 @@
+@use "../verbali.component.scss";
+
+#lista-articoli {
+  white-space: nowrap;
+
+  li {
+    margin: .5rem 0;
+  }
+
+  .form-control {
+    margin: 0 .25rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

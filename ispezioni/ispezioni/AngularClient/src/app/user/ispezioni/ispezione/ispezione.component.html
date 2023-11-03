@@ -1,0 +1,50 @@
+<button id="goBackButton" type="button" class="btn btn-outline-blue action" (click)="goToListaIspezioni()"
+  style="background-color:rgb(0, 85, 175); color:white">
+  <i class=""></i>
+  <span>Indietro</span>
+</button>
+
+<div class="container-xl rounded box-3d d-block p-3" id="nuova-ispezione" *ngIf="nuovaIspezione">
+  <form (submit)="onSubmit($event)">
+    <div class="row tabs-container">
+      <div class="col-lg tab persistent">
+        <div class="tab-content">
+          <h4>Dati Ispezione</h4>
+          <form-ispezione #formIspezione [data]="nuovaIspezione"></form-ispezione>
+          <button class="btn btn-outline-blue d-block ms-auto mt-3">Salva</button>
+        </div>
+      </div>
+      <div class="col-lg tab">
+        <div class="tab-content" @formCantiereTrigger
+          *ngIf="formIspezione.form.get('ispezione.cantiere_o_impresa')!.value === 'Cantiere'; else elseBlock">
+          <div *ngIf="this.nuovaIspezione.ispezione.descr_stato_ispezione == 'INIZIALE'" class="py-2">
+            Aggiungi Cantiere senza Notifica Preliminare
+            <button type="button" class="btn btn-outline-blue d-block" (click)="openFormCantiere()"
+              placement="left" tooltipClass="tooltip tooltip-blue"
+              container="body">
+              <i class="icon fas fa-plus"></i>
+              Aggiungi
+            </button>
+          </div>
+          <form-ricerca-cantiere [data]="nuovaIspezione" (openFormCantiere)="openFormCantiere($event)" #formRicercaCantiere></form-ricerca-cantiere>
+        </div>
+        <ng-template #elseBlock>
+          <div class="tab-content" @formImpresaTrigger>
+            <form-ricerca-impresa [data]="nuovaIspezione" #formRicercaImpresa
+              header="Impresa Ispezionata"></form-ricerca-impresa>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #modaleCantiere>
+  <div class="modal-header">
+    Aggiunta cantiere non notificato
+    <button type="button" class="btn btn-close" (click)="modalRef?.close()"></button>
+  </div>
+  <div class="modal-body">
+    <form-cantiere #formCantiere (onSubmit)="reload()"></form-cantiere>
+  </div>
+</ng-template>

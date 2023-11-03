@@ -1,0 +1,146 @@
+<div class="container-fluid" id="lista-ispezioni">
+  <h3>Lista Ispezioni</h3>
+  <div *ngIf="ispezioni">
+    <div class="actions-container table-controls">
+      <button type="button" class="btn btn-outline-blue action" *ngIf="!isRegione && !isDirettore"
+        routerLink="nuova-ispezione">
+        <i class="icon fas fa-plus"></i>
+        <span>Nuova Ispezione</span>
+      </button>
+      <button type="button" class="btn btn-outline-green action" (click)="chooseExport()">
+        <i class="icon fa-regular fa-file-excel"></i>
+        <span>Esporta</span>
+      </button>
+      <!-- <button type="button" class="btn btn-outline-green action" [ngbTooltip]="exportTemplate"
+        tooltipClass="table-export-tooltip" triggers="click" container="body">
+        <i class="icon fa-regular fa-file-excel"></i>
+        <span>Esporta</span>
+      </button>
+      <ng-template #exportTemplate>
+        <div>
+          <button type="button" class="btn btn-outline-green action w-100 mb-1" (click)="exportTable()">
+            <span>Intera Tabella</span>
+          </button>
+          <button type="button" class="btn btn-outline-green action w-100" (click)="exportTable(false)">
+            <span>Pagina Corrente</span>
+          </button>
+        </div>
+      </ng-template> -->
+      <button type="button" class="btn btn-outline-blue action" *ngIf="!isRegione && !isDirettore"
+        (click)="scaricaModuli(false)">
+        <i class="icon fa-regular fa-file"></i>
+        <span>Scarica Template</span>
+      </button>
+      <button type="button" class="btn btn-outline-blue action" *ngIf="isDirettore"
+        routerLink="trasferimento-ispezioni">
+        <i class="fa fa-user"></i>
+        <i class="fa fa-exchange" aria-hidden="true"></i>
+        <span> Trasferisci Ispezioni </span>
+      </button>
+      <button type="button" class="btn btn-outline-blue action" routerLink="macchine-difformi">
+        <i class="icon fa fa-cogs"></i>
+        <span>Macchine Difformi</span>
+      </button>
+    </div>
+    <div class="table-wrapper">
+      <a-smart-table class="table-blue table-striped-light no-borders" [data]="ispezioni" [paginator]="true"
+        id="tabella-ispezioni" [exportable]="false" #table>
+        <ng-template aTemplate="head">
+          <tr>
+            <th scope="col" width="8%">
+              <a-table-sorter type="text" field="descr_ente"></a-table-sorter>
+              <a-table-filter type="selection" field="descr_ente" [values]="aslDisponibili"></a-table-filter>
+              <span class="label">ASL</span>
+            </th>
+            <th scope="col" width="8%">
+              <a-table-sorter type="text" field="ambito"></a-table-sorter>
+              <a-table-filter type="selection" field="ambito" [values]="ambitiDisponibili"></a-table-filter>
+              <span class="label">Ambito</span>
+            </th>
+            <th scope="col" width="10%">
+              <a-table-sorter type="text" field="ispettore"></a-table-sorter>
+              <a-table-filter type="text" field="ispettore"></a-table-filter>
+              <span class="label">Ispettori</span>
+            </th>
+            <th scope="col" width="10%">
+              <a-table-sorter type="text" field="codice_ispezione"></a-table-sorter>
+              <a-table-filter type="text" field="codice_ispezione"></a-table-filter>
+              <span class="label">CUI</span>
+            </th>
+            <th scope="col" width="10%">
+              <a-table-sorter type="text" field="descr_isp"></a-table-sorter>
+              <a-table-filter type="text" field="descr_isp"></a-table-filter>
+              <span class="label">Descrizione</span>
+            </th>
+            <!--<th scope="col" width="10%">
+              <a-table-sorter type="text" field="descr_ente_isp"></a-table-sorter>
+              <a-table-filter type="selection" field="descr_ente_isp" [values]="entiDisponibili"></a-table-filter>
+              <span class="label">Ente</span>
+            </th>
+            <th scope="col" width="10%">
+              <a-table-sorter type="text" field="descr_uo_isp"></a-table-sorter>
+              <a-table-filter type="text" field="descr_uo_isp"></a-table-filter>
+              <span class="label">U.O.</span>
+            </th>-->
+            <th scope="col" width="15%">
+              <a-table-sorter type="text" field="descr_motivo_isp"></a-table-sorter>
+              <a-table-filter type="selection" field="descr_motivo_isp" [values]="motiviDisponibili"></a-table-filter>
+              <span class="label">Motivo</span>
+            </th>
+            <th scope="col" width="8%">
+              <a-table-sorter type="text" field="cantiere_o_impresa"></a-table-sorter>
+              <a-table-filter type="selection" field="cantiere_o_impresa" values="Cantiere, Impresa"></a-table-filter>
+              <span class="label">Tipo</span>
+            </th>
+            <th scope="col" width="8%">
+              <a-table-sorter type="date" field="data_ispezione"></a-table-sorter>
+              <a-table-filter type="date" field="data_ispezione"></a-table-filter>
+              <span class="label">Data</span>
+            </th>
+            <th scope="col" width="10%">
+              <a-table-sorter type="text" field="descr_stato_ispezione"></a-table-sorter>
+              <a-table-filter type="selection" field="descr_stato_ispezione" [values]="statiDisponibili">
+              </a-table-filter>
+              <span class="label">Stato</span>
+            </th>
+            <th scope="col" width="8%">
+              <a-table-sorter type="text" field="descr_esito_ispezione"></a-table-sorter>
+              <a-table-filter type="selection" field="descr_esito_ispezione" [values]="esitiDisponibili">
+              </a-table-filter>
+              <span class="label">Esito</span>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template aTemplate="body" let-isp #bodyTemplate>
+          <tr>
+            <td>{{ isp.descr_ente }}</td>
+            <td>{{ isp.ambito }}</td>
+            <td>{{ isp.ispettore }}</td>
+            <td>{{ isp.codice_ispezione }}</td>
+            <td>{{ isp.descr_isp }}</td>
+            <!--<td>{{ isp.descr_ente_isp }}</td>
+            <td>{{ isp.descr_uo_isp }}</td>-->
+            <td>{{ isp.descr_motivo_isp }}</td>
+            <td>{{ isp.cantiere_o_impresa }}</td>
+            <td>{{ isp.data_ispezione | italianDate }}</td>
+            <td>{{ isp.descr_stato_ispezione }}</td>
+            <td>{{ isp.descr_esito_ispezione }}</td>
+            <td>
+              <!-- <button *ngIf="isp.modificabile && isp.id_utente_access == userId" class="btn btn-primary action" (click)="openDettaglioIspezione(isp)"> -->
+              <button *ngIf="isp.modificabile && checkUserID(isp.id_utente_access) && !this.isDirettore"
+                class="btn btn-primary action" (click)="openDettaglioIspezione(isp)">
+                <i class="icon far fa-edit m-0"></i>
+              </button>
+              <!-- <button *ngIf="!isp.modificabile || isp.id_utente_access != userId" class="btn btn-info action" (click)="openDettaglioIspezione(isp)"> -->
+              <button *ngIf="!isp.modificabile || !checkUserID(isp.id_utente_access) || this.isDirettore"
+                class="btn btn-info action" (click)="openDettaglioIspezione(isp)">
+                <i class="icon fas fa-search m-0"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </a-smart-table>
+    </div>
+  </div>
+</div>

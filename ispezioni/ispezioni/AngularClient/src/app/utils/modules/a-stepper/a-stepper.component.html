@@ -1,0 +1,41 @@
+<div class="a-stepper">
+  <ng-container *ngIf="steps && activeStep">
+    <nav class="mb-2">
+      <ul class="steps-nav">
+        <li class="step-link" role="button" *ngFor="let step of steps; index as i; last as last" (click)="stepTo(i)"
+          [ngClass]="{'active': step === activeStep, 'completed': step.completed, 'disabled': !step.enabled}">
+          <div class="d-flex align-items-center">
+            <div class="step-indicator">
+              <div class="icon" *ngIf="!step.enabled">
+                <i class="fa-solid fa-circle-xmark"></i>
+              </div>
+              <div class="icon" *ngIf="step.enabled && step.completed">
+                <i class="fa-solid fa-circle-check" *ngIf="step.completed"></i>
+              </div>
+              <div class="icon" *ngIf="step.enabled && !step.completed">
+                {{i+1}}
+              </div>
+            </div>
+            <div class="step-label">{{step.label}}</div>
+            <div class="step-track">
+              <div class="step-track-background"></div>
+              <div class="step-track-fill"></div>
+            </div>
+            <div class="step-indicator" id="last-step-indicator" *ngIf="last">
+              <i class="icon fa-solid fa-flag"></i>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <div class="step-outlet">
+      <div class="step" *ngFor="let step of path"
+        [ngClass]="{'active': step === activeStep, 'completed': step.completed, 'disabled': !step.enabled}">
+        <ng-container
+          [ngTemplateOutlet]="step.template"
+          [ngTemplateOutletContext]="{$implicit: step.data}">
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

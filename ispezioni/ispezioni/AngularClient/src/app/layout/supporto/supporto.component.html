@@ -1,0 +1,51 @@
+<div class="form-supporto">
+    <form [formGroup]="formSupporto" (ngSubmit)="onSubmit()">
+        <table class="table-mail">
+            <tr>
+                <td class="input-label"><b>Tipo problema: *</b></td>
+                <td>
+                    <select formControlName="tipo" class="form-control"> 
+                        <option value="tecnico">Tecnico</option>
+                        <option value="funzionale">Funzionale</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Titolo problema: *</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input class="form-control" formControlName="titolo" style="width: 100%;"></td>
+            </tr>
+            <tr>
+                <td><b>Descrizione problema: *</b></td>
+            </tr>
+            <tr>
+                <td colspan="2"><textarea class="form-control" style="width: 100%" rows="5" formControlName="messaggio"></textarea></td>
+            </tr>
+            <tr><td><h4>Informazioni per il ricontatto</h4></td></tr>
+            <tr>
+                <td class="input-label"><b>Nome e Cognome: *</b></td>
+                <td><input type=text class="form-control" formControlName="nomeSegnalante"></td>
+            </tr>
+            <tr>
+                <td class="input-label"><b>E-mail: **</b></td>
+                <td><input type=text class="form-control" formControlName="emailSegnalante"></td>
+            <tr>
+                <td class="input-label"><b>Telefono: **</b></td>
+                <td><input type=text class="form-control" formControlName="telefonoSegnalante"></td>
+            </tr>
+            <tr>
+                <td class="input-label"><b>Ente di appartenenza: *</b></td>
+                <td><input type=text class="form-control" formControlName="ente"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="Submit" value="Invia" class="btn action btn-supporto"></td>
+            </tr>
+        </table>
+        <strong>* campi obbligatori</strong>
+        <br>
+        <strong>** inserire almeno uno tra</strong>
+    </form>
+</div>

@@ -1,0 +1,77 @@
+#app-dashboard {
+  background: transparent;
+
+  #portali {
+    .portale {
+      padding: 16px;
+      height: 420px;
+      width: 420px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+
+      .background {
+        border-radius: 16px;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.15s ease-out;
+
+        &:hover {
+          transform: translateY(-8px);
+        }
+      }
+
+      button {
+        display: block;
+        margin: auto;
+        padding: 16px;
+        border: 1px solid var(--blue);
+        border-radius: 16px;
+        min-width: 0;
+        background: var(--blue);
+        color: white;
+        transition: background .6s;
+
+        .icon {
+          width: 64px;
+          height: 64px;
+          margin: 0;
+        }
+      }
+
+      .label {
+        font-size: 2.5rem;
+        font-weight: 500;
+        /*text-transform: uppercase;*/
+      }
+    }
+  }
+}
+
+#ispezioni-background {
+  background-image: url('/assets/img/ispezioni.jpg');
+}
+
+#notifiche-background {
+  background-image: url('/assets/img/notifiche.webp');
+}
+
+#sanzioni-background {
+  background-image: url('/assets/img/sanzioni.jpeg');
+}
+
+@media (max-width: 798px) {
+
+    .label {
+      font-size: 1rem !important;
+    }
+
+    .portale {
+      width: 250px !important;
+      height: 250px !important;
+    }
+
+    .hide-mobile{
+     display: none;
+    }
+}

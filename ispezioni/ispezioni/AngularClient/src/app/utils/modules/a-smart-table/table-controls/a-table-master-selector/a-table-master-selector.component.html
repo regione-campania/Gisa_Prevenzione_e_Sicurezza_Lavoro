@@ -1,0 +1,4 @@
+<div class="a-table-selector a-table-master-selector form-check" *ngIf="selector">
+  <input type="checkbox" class="form-check-input" [disabled]="disabled"
+    [ngModel]="value" (ngModelChange)="onChange($event)">
+</div>

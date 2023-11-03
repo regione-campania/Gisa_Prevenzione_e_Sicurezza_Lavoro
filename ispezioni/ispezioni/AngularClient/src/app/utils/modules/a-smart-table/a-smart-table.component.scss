@@ -1,0 +1,79 @@
+@use "../../scss/utils";
+
+.a-smart-table {
+  --table-primary-color: var(--light-blue);
+  --table-secondary-color: white;
+  --table-toolbar-item-hover-bg: var(--table-secondary-color);
+  --table-toolbar-item-hover-color: var(--table-primary-color);
+  --table-toolbar-item-active-bg: var(--table-secondary-color);
+  --table-toolbar-item-active-color: var(--table-primary-color);
+
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+
+  caption {
+
+    &,
+    &.top-paginator {
+      caption-side: top !important;
+    }
+
+    &.bottom-paginator {
+      caption-side: bottom !important;
+    }
+  }
+
+  thead,
+  .paginator-wrapper {
+    background: var(--table-primary-color);
+    color: inherit;
+  }
+
+  .toolbar {
+    background-color: var(--table-primary-color);
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+
+    &-item {
+      background-color: transparent !important;
+
+      &.dropdown {
+
+        &.show>button {
+          background-color: var(--table-toolbar-item-active-bg);
+          color: var(--table-toolbar-item-active-color);
+        }
+
+        .dropdown-menu {
+
+          .dropdown-item:hover {
+            background-color: var(--table-primary-color);
+            color: var(--table-secondary-color);
+          }
+        }
+      }
+    }
+
+    &-button {
+      color: inherit;
+      background-color: inherit;
+      border-radius: var(--border-radius);
+
+      &:hover {
+        background-color: var(--table-toolbar-item-hover-bg);
+        color: var(--table-toolbar-item-hover-color);
+      }
+
+      &:active {
+        background-color: var(--table-toolbar-item-active-bg);
+        color: var(--table-toolbar-item-active-color);
+      }
+    }
+  }
+
+}
+
+th {
+  font-weight: 600 !important;
+}

@@ -1,0 +1,53 @@
+@use "../../../bootstrap/scss/bootstrap.scss" as bs;
+
+$bg-color: scale-color($color: bs.$blue, $lightness: 25%);;
+$text-color: white;
+
+//color classes
+.notification-message {
+  &.info {
+    background-color: bs.$blue;
+  }
+
+  &.success {
+    background-color: bs.$green;
+  }
+
+  &.error {
+    background-color: bs.$red;
+  }
+
+  &.warning {
+    background-color: bs.$yellow;
+  }
+}
+
+.notification-message {
+  color: $text-color;
+  width: 300px;
+
+  .notification-body {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .icon-wrapper {
+    flex: 1 1 15%;
+    padding: .25rem;
+
+    .icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .content-wrapper {
+    flex: 1 1 85%;
+    padding: .25rem;
+
+    .content {
+      overflow-wrap: anywhere;
+    }
+  }
+}

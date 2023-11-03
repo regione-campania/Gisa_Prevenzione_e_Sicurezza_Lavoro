@@ -1,0 +1,37 @@
+
+
+##################################################################
+####		CONFIGURAZIONE ENDPOINT							  ####
+##################################################################
+
+#GISA=endpointAPPGisa
+#CANINA=endpointAPPCanina
+#FELINA=endpointAPPFelina
+#VAM=endpointAPPVam
+#GISA_REPORT=endpointAPPDigemon
+#CANINA_REPORT=endpointAPPCaninaReport
+
+##################################################################
+####		CONFIGURAZIONE TIMEOUT LAST LOGIN				  ####
+##################################################################
+timeout=6
+
+#####################################################################
+####         CONFIGURAZIONE MAIL PEC							#####
+#####################################################################
+mail.smtp.starttls.enable = false
+mail.smtp.auth = true
+mail.smtp.host = 192.168.10.10
+mail.smtp.from = gisa.sicurezzalavoro@regione.campania.it
+mail.smtp.port = 25
+mail.smtp.ssl.enable = false
+username = 
+password = 
+
+## ESERCIZIO
+mail.cc = gisahelpdesk@usmail.it
+mail.invio.utente=si
+mail.header=
+
+
+SITO_GISA=https://gisagel-coll.regione.campania.it

@@ -1,0 +1,135 @@
+.a-stepper {
+  --step-active-border-color: var(--light-blue);
+  --step-indicator-border-color: var(--light-blue);
+  --step-indicator-bg-color: var(--light-blue);
+  --step-completed-color: var(--light-green);
+
+  .steps-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    .step-link {
+      width: 100%;
+      border-bottom: 3px solid transparent;
+      padding: 10px 8px 10px 4px;
+      transition:
+        border-bottom-color .2s ease-in-out,
+        background .15s ease-out;
+
+      .step-indicator {
+        margin-right: .5rem;
+        flex: 0 0 auto;
+        max-height: 24px;
+
+        .icon {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid var(--step-indicator-border-color);
+          border-radius: 50%;
+          background: var(--step-indicator-bg-color);
+          width: 24px;
+          height: 24px;
+          font-size: 16px;
+          font-weight: 500;
+          font-style: normal;
+          color: white;
+          transition: .3s ease-in-out;
+
+          svg {
+            font-size: 24px;
+          }
+        }
+
+        &#last-step-indicator {
+          .icon {
+            border: none;
+            margin-left: 0.5rem;
+            margin-right: 0;
+            background: transparent;
+            color: var(--step-indicator-bg-color);
+          }
+        }
+      }
+
+      &.completed {
+        --step-indicator-border-color: var(--step-completed-color);
+        --step-indicator-bg-color: var(--step-completed-color);
+
+        .step-track-fill {
+          width: 100%;
+        }
+      }
+
+      &.disabled {
+        --step-indicator-border-color: var(--light-grey);
+        --step-indicator-bg-color: var(--light-grey);
+        cursor: not-allowed;
+      }
+
+      &.completed,
+      &.disabled {
+        .step-indicator .icon,
+        #last-step-indicator .icon {
+          --step-indicator-bg-color: white;
+          color: var(--step-indicator-border-color);
+        }
+      }
+
+      &.active {
+        border-bottom-color: var(--step-active-border-color);
+
+        &.completed {
+          border-bottom-color: var(--step-completed-color);
+        }
+
+        .step-label {
+          font-weight: 500;
+        }
+      }
+
+      &:hover {
+        background: var(--light-gray-plus);
+      }
+
+      .step-label {
+        flex: 1 0 auto;
+        margin-right: .5rem;
+      }
+
+      .step-track {
+        position: relative;
+        flex: 1 1 100%;
+        z-index: 0;
+
+        &-background,
+        &-fill {
+          position: absolute;
+          left: 0;
+        }
+
+        &-background {
+          height: 1px;
+          width: 100%;
+          background: var(--light-grey);
+          z-index: 1;
+        }
+
+        &-fill {
+          height: 2px;
+          width: 0%;
+          background: var(--step-completed-color);
+          z-index: 2;
+          transition: width .6s ease-in-out;
+        }
+      }
+
+    }
+  }
+
+  .step:not(.active) {
+    display: none;
+  }
+}

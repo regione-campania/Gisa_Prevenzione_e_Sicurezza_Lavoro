@@ -1,0 +1,21 @@
+<div class="a-table-date-filter" *ngIf="filter">
+    <div class="wrapper">
+        <select class="form-select" name="select-mode" [(ngModel)]="filter.selectedOption">
+            <option value="exact-date" selected>data esatta</option>
+            <option value="from-date">da</option>
+            <option value="till-date">fino a</option>
+            <option value="range">intervallo</option>
+        </select>
+    </div>
+    <div class="wrapper" id="range-wrapper" *ngIf="filter.selectedOption === 'range'; else singleDate">
+        <label for="start-date" class="form-label">Da</label>
+        <input type="date" class="form-control" name="start-date" [(ngModel)]="filter.startDate">
+        <label for="end-date" class="form-label">A</label>
+        <input type="date" class="form-control" name="end-date" [(ngModel)]="filter.endDate">
+    </div>
+    <ng-template #singleDate>
+        <div class="wrapper">
+            <input type="date" class="form-control" name="date" [(ngModel)]="filter.exactDate">
+        </div>
+    </ng-template>
+</div>

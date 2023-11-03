@@ -1,0 +1,20 @@
+<div class="wrapper number-input-wrapper">
+  <input type="number"
+  [value]="value"
+  [disabled]="disabled"
+  [attr.class]="inputClass"
+  [attr.min]="min"
+  [attr.max]="max"
+  [attr.step]="step"
+  [attr.placeholder]="placeholder"
+  [attr.readonly]="readonly"
+  (blur)="onViewChange($event.target)"
+  (keydown.enter)="onViewChange($event.target)"
+  >
+  <div class="wrapper buttons-wrapper">
+    <button type="button" class="value-control plus-button btn-primary" [ngClass]="{'readonly': readonly, 'disabled': disabled}"
+    (click)="increase()">&#9650;</button>
+    <button type="button" class="value-control minus-button btn-primary" [ngClass]="{'readonly': readonly, 'disabled': disabled}"
+    (click)="decrease()">&#9660;</button>
+  </div>
+</div>

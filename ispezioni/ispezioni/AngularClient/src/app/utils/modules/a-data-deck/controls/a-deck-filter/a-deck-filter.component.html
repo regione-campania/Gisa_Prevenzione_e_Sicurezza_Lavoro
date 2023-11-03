@@ -1,0 +1,10 @@
+<div class="a-deck-filter">
+  <ng-container [ngSwitch]="filter?.type">
+    <a-deck-text-filter *ngSwitchCase="'text'" [filter]="$any(filter)" (validityChange)="isValid = $event">
+    </a-deck-text-filter>
+    <a-deck-date-filter *ngSwitchCase="'date'" [filter]="$any(filter)" (validityChange)="isValid = $event">
+    </a-deck-date-filter>
+    <a-deck-selection-filter *ngSwitchCase="'selection'" [filter]="$any(filter)" (validityChange)="isValid = $event">
+    </a-deck-selection-filter>
+  </ng-container>
+</div>

@@ -1,0 +1,603 @@
+<div class="form-field">
+  <label class="form-label" for="version">Versione</label>
+  <select class="form-select w-25" name="version" id="version" #version>
+    <option value="form" selected>form</option>
+    <option value="document">documento</option>
+  </select>
+</div>
+<ng-container *ngIf="version.value === 'form'; else documentVersion">
+  <div class="verbale" id="verbale-di-sopralluogo">
+    <form id="verbale-form" [formGroup]="form">
+      <h2 class="text-center">VERBALE DI SOPRALLUOGO</h2>
+      <div class="row">
+        <div class="col-md">
+          <div class="form-field">
+            <label class="form-label" for="numero_verbale">n°</label>
+            <input class="form-control" id="numero_verbale" formControlName="numero_verbale">
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="form-field">
+            <label class="form-label" for="ora_sopralluogo">Ora sopralluogo</label>
+            <input class="form-control" type="time" id="ora_sopralluogo" formControlName="ora_sopralluogo">
+          </div>
+        </div>
+      </div>
+      <h3>Persone coinvolte (da specificare meglio)</h3>
+      <div class="form-section">
+        <div class="form-field">
+          <label class="form-label" for="ispettore">Ufficiale di P.G.</label>
+          <input class="form-control" id="ispettore" formControlName="ispettore">
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="nome_persona_presente">Sig. (a chi si riferisce?)</label>
+          <input class="form-control" id="nome_persona_presente" formControlName="nome_persona_presente" type="text">
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="row">
+          <div class="col-md">
+            <div class="form-field">
+              <label class="form-label" for="comune_nascita">nato a</label>
+              <input class="form-control" type="text" id="comune_nascita" formControlName="comune_nascita">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label class="form-label" for="data_nascita">il</label>
+              <input class="form-control" type="date" id="data_nascita" formControlName="data_nascita">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <div class="form-field">
+              <label class="form-label" for="comune_residenza">residente in</label>
+              <input class="form-control" type="text" id="comune_residenza" formControlName="comune_residenza">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label class="form-label" for="via_residenza">via</label>
+              <input class="form-control" type="text" id="via_residenza" formControlName="via_residenza">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <div class="form-field">
+              <label class="form-label" for="identificato_con">identificato con</label>
+              <input class="form-control" type="text" id="identificato_con" formControlName="identificato_con">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label class="form-label" for="qualita_di">nella qualità di</label>
+              <input class="form-control" type="text" id="qualita_di" formControlName="qualita_di">
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3>Ispezione</h3>
+      <div class="form-section">
+        <div class="form-field">
+          <label class="form-label" for="data_ispezione">Data ispezione</label>
+          <input class="form-control" type="date" id="data_ispezione" formControlName="data_ispezione">
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="is_ditta_o_cantiere">Soggetto dell'ispezione</label>
+          <fieldset id="is_ditta_o_cantiere">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="is_ditta_o_cantiere"
+                formControlName="is_ditta_o_cantiere" value="ditta">
+              <label class="form-check-label">ditta</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="is_ditta_o_cantiere"
+                formControlName="is_ditta_o_cantiere" value="cantiere">
+              <label class="form-check-label">cantiere</label>
+            </div>
+          </fieldset>
+        </div>
+        <ng-container *ngIf="isDittaOCantiere === 'ditta'; else isCantiere">
+          <h4>Dettagli Ditta</h4>
+          <div class="form-field">
+            <label class="form-label" for="nome_ditta">Nome (forse Ragione Sociale?)</label>
+            <input class="form-control" type="text" id="nome_ditta" formControlName="nome_ditta">
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="comune_ditta">Comune</label>
+                <input class="form-control" type="text" id="comune_ditta" formControlName="comune_ditta">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="via_ditta">Via/Piazza</label>
+                <input class="form-control" type="text" id="via_ditta" formControlName="via_ditta">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="comune_sede_legale_ditta">Comune sede legale</label>
+                <input class="form-control" type="text" id="comune_sede_legale_ditta"
+                  formControlName="comune_sede_legale_ditta">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="via_sede_legale_ditta">Via/Piazza</label>
+                <input class="form-control" type="text" id="via_sede_legale_ditta"
+                  formControlName="via_sede_legale_ditta">
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #isCantiere>
+          <h4>Dettagli Cantiere</h4>
+          <div class="form-field">
+            <label class="form-label" for="nome_cantiere">Nome (?)</label>
+            <input class="form-control" id="nome_cantiere" formControlName="nome_cantiere">
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="comune_cantiere">Comune</label>
+                <input class="form-control" type="text" id="comune_cantiere" formControlName="comune_cantiere">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="via_cantiere">Via/Piazza</label>
+                <input class="form-control" type="text" id="via_cantiere" formControlName="via_cantiere">
+              </div>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="nome_ditta">Ditta operante</label>
+            <input class="form-control" type="text" id="nome_ditta"
+              formControlName="nome_ditta">
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="sede_legale_ditta_in_canitere">Comune sede legale ditta</label>
+                <input class="form-control" type="text" id="sede_legale_ditta_in_canitere"
+                  formControlName="sede_legale_ditta_in_canitere">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="via_sede_legale_ditta_in_cantiere">Via/Piazza</label>
+                <input class="form-control" type="text" id="via_sede_legale_ditta_in_cantiere"
+                  formControlName="via_sede_legale_ditta_in_cantiere">
+              </div>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="nome_rappresentante_legale">Rappresentante Legale</label>
+            <input class="form-control" type="text" id="nome_rappresentante_legale"
+              formControlName="nome_rappresentante_legale">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="qualita_di_rappresentante_legale">in qualita' di</label>
+            <input class="form-control" type="text" id="qualita_di_rappresentante_legale"
+              formControlName="qualita_di_rappresentante_legale">
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="comune_nascita_rappresentante_legale">nato a</label>
+                <input class="form-control" type="text" id="comune_nascita_rappresentante_legale"
+                  formControlName="comune_nascita_rappresentante_legale">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="data_nascita_rappresentante_legale">il</label>
+                <input class="form-control" type="date" id="data_nascita_rappresentante_legale"
+                  formControlName="data_nascita_rappresentante_legale">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="comune_residenza_rappresentante_legale">residente in</label>
+                <input class="form-control" type="text" id="comune_residenza_rappresentante_legale"
+                  formControlName="comune_residenza_rappresentante_legale">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="via_residenza_rappresentante_legale">via/piazza</label>
+                <input class="form-control" type="text" id="via_residenza_rappresentante_legale"
+                  formControlName="via_residenza_rappresentante_legale">
+              </div>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="nome_datore">Datore di lavoro</label>
+            <input class="form-control" type="text" id="nome_datore" formControlName="nome_datore">
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="comune_nascita_datore">nato a</label>
+                <input class="form-control" type="text" id="comune_nascita_datore"
+                  formControlName="comune_nascita_datore">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="data_nascita_datore">il</label>
+                <input class="form-control" type="date" id="data_nascita_datore" formControlName="data_nascita_datore">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="comune_residenza_datore">residente in</label>
+                <input class="form-control" type="text" id="comune_residenza_datore"
+                  formControlName="comune_residenza_datore">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label class="form-label" for="via_residenza_datore">via/piazza</label>
+                <input class="form-control" type="text" id="via_residenza_datore"
+                  formControlName="via_residenza_datore">
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      <br>
+      <h2 class="text-center">DANNO ATTO DI QUANTO SEGUE</h2>
+      <textarea class="form-control" formControlName="dato_atto"></textarea>
+      <h3>Descrizione dei luoghi</h3>
+      <textarea class="form-control" formControlName="descrizione_luoghi"></textarea>
+      <h3>Esiti del sopralluogo</h3>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" id="esito_sopralluogo_rilievi_negativi"
+          name="esito_sopralluogo_rilievi_negativi" value="negativo"
+          formControlName="esito_sopralluogo_rilievi_negativi">
+        <label for="esito_sopralluogo_rilievi_negativi" class="form-check-label">l'esito <span class="bold">NON</span>
+          evidenzia la presenza di rilievi negativi</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" id="esito_sopralluogo_rilievi_negativi"
+          name="esito_sopralluogo_rilievi_negativi" value="positivo"
+          formControlName="esito_sopralluogo_rilievi_negativi">
+        <label for="esito_sopralluogo_rilievi_negativi" class="form-check-label">l'esito evidenzia la presenza di
+          rilievi negativi</label>
+      </div>
+      <textarea class="form-control" formControlName="esito_sopralluogo"></textarea>
+      <h3 class="text-center">ATTIVITA’ EFFETTUATE</h3>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="rilievi_fotografici" name="rilievi_fotografici"
+          formControlName="rilievi_fotografici">
+        <label for="rilievi_fotografici" class="form-check-label">Rilievi Fotografici</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="acquisizione_documentale" name="acquisizione_documentale"
+          formControlName="acquisizione_documentale">
+        <label for="acquisizione_documentale" class="form-check-label">Acquisizione Documentazione</label>
+      </div>
+      <textarea class="form-control" formControlName="attivita_effettuate"></textarea>
+      <h3 class="text-center">ALTRO</h3>
+      <textarea class="form-control" formControlName="altro"></textarea>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-outline-blue d-block ms-auto mt-2" (click)="submit()">Invia</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>
+<ng-template #documentVersion>
+  <div class="document verbale" id="verbale-di-sopralluogo">
+    <form id="verbale-form" [formGroup]="form">
+      <div class="header-verbale">
+        <h1 class="text-center">VERBALE DI SOPRALLUOGO</h1>
+        <div class="form-field d-flex justify-content-center align-items-center mx-auto">
+          <label for="numero_verbale" class="me-1">n° </label>
+          <input class="form-control" id="numero_verbale" formControlName="numero_verbale">
+        </div>
+      </div>
+      <div class="body-verbale">
+        <section>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label for="ispettore">Il/la sottoscritto/a Ufficiale di P.G.</label>
+                <input class="form-control" id="ispettore" formControlName="ispettore">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="ora_sopralluogo">in data odierna, alle ore</label>
+                <input class="form-control" type="time" id="ora_sopralluogo" formControlName="ora_sopralluogo">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label for="nome_persona_presente">presente il sig.</label>
+                <input class="form-control" id="nome_persona_presente" formControlName="nome_persona_presente"
+                  type="text">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="comune_nascita">nato a</label>
+                <input class="form-control" type="text" id="comune_nascita" formControlName="comune_nascita">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="data_nascita">il</label>
+                <input class="form-control" type="date" id="data_nascita" formControlName="data_nascita">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label for="comune_residenza">residente in</label>
+                <input class="form-control" type="text" id="comune_residenza" formControlName="comune_residenza">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="via_residenza">via</label>
+                <input class="form-control" type="text" id="via_residenza" formControlName="via_residenza">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label for="identificato_con">identificato con</label>
+                <input class="form-control" type="text" id="identificato_con" formControlName="identificato_con">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="qualita_di">nella qualità di</label>
+                <input class="form-control" type="text" id="qualita_di" formControlName="qualita_di">
+              </div>
+            </div>
+          </div>
+        </section>
+        <br>
+        <h2 class="text-center">AVENDO PROCEDUTO ALL'ISPEZIONE</h2>
+        <br>
+        <div class="form-field">
+          <label for="data_ispezione">in data</label>
+          <input class="form-control" type="date" id="data_ispezione" formControlName="data_ispezione">
+        </div>
+        <fieldset>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field w-100">
+                <div class="form-check d-inline-block me-1 w-25">
+                  <input class="form-check-input" type="radio" id="is_ditta_o_cantiere" name="is_ditta_o_cantiere"
+                    value="ditta" formControlName="is_ditta_o_cantiere">
+                  <label for="is_ditta_o_cantiere" class="form-check-label">della ditta</label>
+                </div>
+                <input class="form-control w-100" type="text" formControlName="nome_ditta">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label for="comune_ditta">sita nel comune di</label>
+                <input class="form-control" type="text" id="comune_ditta" formControlName="comune_ditta">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="via_ditta">Via/Piazza</label>
+                <input class="form-control" type="text" id="via_ditta" formControlName="via_ditta">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label for="comune_sede_legale_ditta">con sede legale in</label>
+                <input class="form-control" type="text" id="comune_sede_legale_ditta"
+                  formControlName="comune_sede_legale_ditta">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="via_sede_legale_ditta">via</label>
+                <input class="form-control" type="text" id="via_sede_legale_ditta"
+                  formControlName="via_sede_legale_ditta">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field w-100">
+                <div class="form-check d-inline-block me-1 w-25">
+                  <input class="form-check-input" type="radio" id="is_ditta_o_cantiere" name="is_ditta_o_cantiere"
+                    value="cantiere" formControlName="is_ditta_o_cantiere">
+                  <label for="is_ditta_o_cantiere" class="form-check-label">del cantiere</label>
+                </div>
+                <input class="form-control w-100" id="nome_cantiere" formControlName="nome_cantiere">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label for="comune_cantiere">sito nel comune</label>
+                <input class="form-control" type="text" id="comune_cantiere" formControlName="comune_cantiere">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="via_cantiere">Via/Piazza</label>
+                <input class="form-control" type="text" id="via_cantiere" formControlName="via_cantiere">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-field">
+                <label for="nome_ditta">in cui opera la ditta</label>
+                <input class="form-control" type="text" id="nome_ditta"
+                  formControlName="nome_ditta">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="sede_legale_ditta_in_canitere">con sede legale in</label>
+                <input class="form-control" type="text" id="sede_legale_ditta_in_canitere"
+                  formControlName="sede_legale_ditta_in_canitere">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-field">
+                <label for="via_sede_legale_ditta_in_cantiere">via</label>
+                <input class="form-control" type="text" id="via_sede_legale_ditta_in_cantiere"
+                  formControlName="via_sede_legale_ditta_in_cantiere">
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="row">
+          <div class="col-md">
+            <div class="form-field">
+              <label for="nome_rappresentante_legale">rappresentata legalmente dal/dalla sig.</label>
+              <input class="form-control" type="text" id="nome_rappresentante_legale"
+                formControlName="nome_rappresentante_legale">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label for="qualita_di_rappresentante_legale">nella qualità di</label>
+              <input class="form-control" type="text" id="qualita_di_rappresentante_legale"
+                formControlName="qualita_di_rappresentante_legale">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <div class="form-field">
+              <label for="comune_nascita_rappresentante_legale">nato a</label>
+              <input class="form-control" type="text" id="comune_nascita_rappresentante_legale"
+                formControlName="comune_nascita_rappresentante_legale">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label for="data_nascita_rappresentante_legale">il</label>
+              <input class="form-control" type="date" id="data_nascita_rappresentante_legale"
+                formControlName="data_nascita_rappresentante_legale">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label for="comune_residenza_rappresentante_legale">residente in</label>
+              <input class="form-control" type="text" id="comune_residenza_rappresentante_legale"
+                formControlName="comune_residenza_rappresentante_legale">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <div class="form-field">
+              <label for="via_residenza_rappresentante_legale">via</label>
+              <input class="form-control" type="text" id="via_residenza_rappresentante_legale"
+                formControlName="via_residenza_rappresentante_legale">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label for="nome_datore">di cui è datore di lavoro il/la sig.</label>
+              <input class="form-control" type="text" id="nome_datore" formControlName="nome_datore">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label for="comune_nascita_datore">nato a</label>
+              <input class="form-control" type="text" id="comune_nascita_datore"
+                formControlName="comune_nascita_datore">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <div class="form-field">
+              <label for="data_nascita_datore">il</label>
+              <input class="form-control" type="date" id="data_nascita_datore" formControlName="data_nascita_datore">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label for="comune_residenza_datore">e residente in </label>
+              <input class="form-control" type="text" id="comune_residenza_datore"
+                formControlName="comune_residenza_datore">
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-field">
+              <label for="via_residenza_datore">via</label>
+              <input class="form-control" type="text" id="via_residenza_datore" formControlName="via_residenza_datore">
+            </div>
+          </div>
+        </div>
+        <br>
+        <h2 class="text-center">DANNO ATTO DI QUANTO SEGUE</h2>
+        <textarea class="form-control" formControlName="dato_atto"></textarea>
+        <h3>Descrizione dei luoghi</h3>
+        <textarea class="form-control" formControlName="descrizione_luoghi"></textarea>
+        <h3>Esiti del sopralluogo</h3>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="esito_sopralluogo_rilievi_negativi"
+            name="esito_sopralluogo_rilievi_negativi" value="negativo"
+            formControlName="esito_sopralluogo_rilievi_negativi">
+          <label for="esito_sopralluogo_rilievi_negativi" class="form-check-label">l'esito <span class="bold">NON</span>
+            evidenzia la presenza di rilievi negativi</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="esito_sopralluogo_rilievi_negativi"
+            name="esito_sopralluogo_rilievi_negativi" value="positivo"
+            formControlName="esito_sopralluogo_rilievi_negativi">
+          <label for="esito_sopralluogo_rilievi_negativi" class="form-check-label">l'esito evidenzia la presenza di
+            rilievi negativi</label>
+        </div>
+        <textarea class="form-control" formControlName="esito_sopralluogo"></textarea>
+        <h3 class="text-center">ATTIVITA’ EFFETTUATE</h3>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="rilievi_fotografici" name="rilievi_fotografici"
+            formControlName="rilievi_fotografici">
+          <label for="rilievi_fotografici" class="form-check-label">Rilievi Fotografici</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="acquisizione_documentale" name="acquisizione_documentale"
+            formControlName="acquisizione_documentale">
+          <label for="acquisizione_documentale" class="form-check-label">Acquisizione Documentazione</label>
+        </div>
+        <textarea class="form-control" formControlName="attivita_effettuate"></textarea>
+        <h3 class="text-center">ALTRO</h3>
+        <textarea class="form-control" formControlName="altro"></textarea>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-outline-blue d-block ms-auto mt-2" (click)="submit()">Invia</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

@@ -1,0 +1,19 @@
+<div class="a-tree-filter" (keydown.enter)="apply()">
+  <div class="input-group">
+    <select class="form-select filter-mode" [(ngModel)]="filterMode">
+      <option value="contains" selected>Contiene</option>
+      <option value="not-contains">Non contiene</option>
+      <option value="starts-with">Inizia con</option>
+      <option value="ends-with">Termina con</option>
+    </select>
+    <input class="form-control filter-input" type="search" [placeholder]="placeholder" [(ngModel)]="pattern">
+    <div class="buttons-container d-inline-flex rounded-end">
+      <button class="btn btn-danger reset-button rounded-0" (click)="reset(true)" *ngIf="isActive">
+        <i class="icon fa-solid fa-xmark m-0"></i>
+      </button>
+      <button class="btn btn-primary apply-button" (click)="apply()">
+        <i class="icon fa-solid fa-magnifying-glass m-0"></i>
+      </button>
+    </div>
+  </div>
+</div>

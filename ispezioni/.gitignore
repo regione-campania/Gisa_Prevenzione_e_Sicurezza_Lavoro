@@ -1,0 +1,11 @@
+**/config/*.js
+**/environments/*.ts
+
+**/*.pdf
+**/*.doc
+**/*.docx
+**/sicurezza_lavoro/README*
+**/sicurezza_lavoro/LICENSE*
+**/*.odt
+
+registrazione/

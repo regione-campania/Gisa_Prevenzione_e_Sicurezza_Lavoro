@@ -1,0 +1,148 @@
+@use "./colors" as c;
+@use "./mixins" as mx;
+
+:root {
+  --btn-bg-transition: background-color 0.135s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+button,
+.btn {
+  border: 1px solid transparent;
+  transition: var(--btn-bg-transition);
+
+  .icon:not(:only-child) {
+    margin-right: .5rem;
+  }
+
+}
+
+.btn-outline {
+  &-blue {
+    @include mx.button-outline(c.$blue);
+  }
+
+  &-green {
+    @include mx.button-outline(c.$green);
+  }
+
+  &-red {
+    @include mx.button-outline(c.$red);
+  }
+}
+
+button.icon-only {
+  min-width: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+
+  .icon {
+    margin: 0;
+  }
+}
+
+button.btn-close {
+  min-width: 0;
+
+  &:active,
+  &:focus,
+  &:active:focus {
+    box-shadow: var(--blue-outline);
+    /* border: none; */
+  }
+}
+
+.confirm-button {
+  --main-color: var(--blue);
+  --side-color: white;
+}
+
+.reset-button {
+  --main-color: var(--red);
+  --side-color: white;
+}
+
+.confirm-button,
+.reset-button {
+
+  &,
+  &:hover {
+    border: 1px solid var(--main-color);
+    background-color: var(--main-color);
+    color: var(--side-color);
+  }
+}
+
+.reset-button:focus {
+  box-shadow: var(--red-outline);
+}
+
+.trash-button {
+  box-shadow: none !important;
+
+  .trash-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--red);
+    fill: var(--red);
+  }
+}
+
+.button-group {
+  --main-color: var(--light-blue);
+  --button-bg-color: white;
+  --button-height: 36px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+  position: relative;
+
+  button {
+    flex: 1 1 100%;
+    padding: 4px 6px;
+    height: var(--button-height);
+    border: none;
+    border: 1px solid var(--main-color);
+    overflow: hidden;
+    background: var(--button-bg-color);
+    position: relative;
+
+    &:first-child {
+      border-top-left-radius: inherit;
+      border-bottom-left-radius: inherit;
+    }
+
+    &:last-child {
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
+
+    &:not(:first-child)::before {
+      content: "";
+      display: inline-block;
+      height: var(--button-height);
+      border-left: 0px solid var(--main-color);
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    &.active {
+      background-color: var(--main-color);
+      color: var(--button-bg-color);
+    }
+  }
+}
+
+//sweetAlert2 buttons
+button.swal2-styled {
+
+  &.swal2-confirm {
+    background-color: var(--bs-blue, blue);
+  }
+}

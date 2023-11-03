@@ -1,0 +1,121 @@
+<div class="form-soggetto-pagatore" [formGroup]="form">
+  <div class="form-group required">
+    <label style="margin-bottom:0;" class="form-label">Tipo</label>
+    <fieldset style="border:none; padding:0; padding-left:0.2rem">
+      <div class="form-check required">
+        <input class="form-check-input" type="radio" value="G" id="G"
+          formControlName="tipo_pagatore" (change)="changeTipoPagatore($event)">
+        <label class="form-check-label" for="G"> Soggetto Giuridico (Azienda) </label>
+      </div>
+      <div class="form-check required">
+        <input class="form-check-input" type="radio" value="F" id="F"
+          formControlName="tipo_pagatore" (change)="changeTipoPagatore($event)">
+        <label class="form-check-label" for="F"> Persona Fisica </label>
+      </div>
+    </fieldset>
+  </div>
+  <div *ngIf="checkTipoPagatore()" class="form-group required">
+    <label class="form-label" [for]="'cod_fiscale_' + type">Partita IVA</label>
+    <input class="form-control" [id]="'cod_fiscale_' + type" formControlName="cod_fiscale"
+    [autofiller]="anagrafica.imprese" autofillerKey="partita_iva" matchingMode="includes"
+    (valueChange)="patchImpresa('partita_iva', $event); fs.lockInput(ts.select('cod_fiscale_' + type))"
+    (keyup)="fs.unlockInput(ts.select('#cod_fiscale_' + type))"  errorName="Parita IVA">
+  </div>
+
+  <!-- <div class="form-group required">
+    <label class="form-label" [for]="'nominativo_' + type"> Nominativo </label>
+    <input class="form-control" [id]="'nominativo_' + type" formControlName="nominativo"
+      [autofiller]="anagrafica.soggettiFisici" autofillerKey="nominativo" matchingMode="includes"
+      (valueChange)="patchPersona('nominativo', $event); fs.lockInput(ts.select('#cod_fiscale_' + type))"
+      (keyup)="fs.unlockInput(ts.select('#cod_fiscale_' + type))">
+  </div> -->
+
+  <div *ngIf="checkTipoPagatore(); else elseForm" class="form-group required">
+    <label class="form-label"> Nome Impresa </label>
+    <input class="form-control" formControlName="nominativo" errorName="Nome Impresa">
+  </div>
+
+  <ng-template #elseForm>
+    <div class="form-group required"> 
+      <label class="form-label" [for]="'cod_fiscale_' + type">Codice Fiscale</label>
+      <input class="form-control" [id]="'cod_fiscale_' + type" formControlName="cod_fiscale"
+        [autofiller]="anagrafica.soggettiFisici" autofillerKey="codice_fiscale"
+        (valueChange)="patchPersona('codice_fiscale', $event); fs.lockInput(ts.select('#nominativo_' + type))"
+        (keyup)="fs.unlockInput(ts.select('#nominativo_' + type))"  errorName="Codice Fiscale">
+    </div>
+    <div class="form-group required">
+      <label class="form-label"> Nome </label>
+      <input class="form-control" formControlName="nominativo" errorName="Nome">
+    </div>
+    <div class="form-group required">
+      <label class="form-label"> Cognome </label>
+      <input class="form-control" formControlName="cognome" errorName="Cognome">
+    </div>
+  </ng-template>
+
+  <div class="form-group required">
+    <label class="form-label">Indirizzo</label>
+    <input class="form-control" formControlName="indirizzo"  errorName="Indirizzo">
+  </div>
+  <div class="form-group required">
+    <label class="form-label">Civico</label>
+    <input class="form-control" formControlName="civico"  errorName="Civico">
+  </div>
+  <div class="form-group required">
+    <label class="form-label">CAP</label>
+    <input class="form-control" formControlName="cap"  errorName="CAP">
+  </div>
+  <div class="form-group required">
+    <label class="form-label">Comune</label>
+    <input class="form-control" formControlName="comune" [autofiller]="anagrafica.comuni"
+      (valueChange)="patchComune($event);" autofillerKey="comune" (change)="patchComune2($event)"
+      (keyup)="fs.unlockInput(prov); fs.unlockInput(nazione)"  errorName="Comune">
+  </div>
+  <div class="form-group required">
+    <label class="form-label">Cod. Provincia</label>
+    <input class="form-control" formControlName="cod_provincia" #prov id="provincia"  errorName="Cod. Provincia">
+  </div>
+  <div class="form-group required">
+    <label class="form-label">Nazione</label>
+    <input class="form-control" formControlName="nazione" #nazione id="nazione"  errorName="Nazione">
+  </div>
+  <div class="form-group required">
+    <label class="form-label">Email</label>
+    <!-- <input class="form-control" formControlName="email" errorTip="L'email inserita non è corretta"> -->
+    <input class="form-control" formControlName="email"  errorName="Email">
+  </div>
+  <div class="form-group required">
+    <label class="form-label">Telefono</label>
+    <input type="number" class="form-control" formControlName="telefono"  errorName="Telefono">
+  </div>
+  <div class="form-group required" style="margin-top: 20px;">
+    <label class="form-label">Modalita' di Contestazione/Notifica</label>
+    <fieldset>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="I" checked id="contestazione-immediata-1" formControlName="mod_contestazione" (change)="changeNotifica($event)">
+        <label class="form-check-label" for="contestazione-immediata-1">
+          Contestazione Immediata
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="P" id="pec-1" formControlName="mod_contestazione" (change)="changeNotifica($event)">
+        <label class="form-check-label" for="pec-1">
+          PEC
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="R" id="raccomandata" formControlName="mod_contestazione" (change)="changeNotifica($event)">
+        <label class="form-check-label" for="raccomandata">
+          Raccomandata A/R o consegna a mano
+        </label>
+      </div>
+      <div class="form-group required" style="margin-top: 20px;">
+        <label class="form-label">Data Notifica</label>
+        <p *ngIf="!this.hideInputdata">{{parseData(dataNotificaString?.split('/')?.join('-') || '')?.split('-')?.join('/')}}</p>
+        <!-- <input *ngIf="!this.hideInputdata" type="text" class="form-control" formControlName="data_notifica"> -->
+        <input *ngIf="this.hideInputdata" type="date" min="{{dataNotificaString.split('/').join('-')}}" class="form-control" formControlName="data_notifica">
+      </div>
+      <small><strong>N.B.: Data scadenza settata a {{giorni_scadenza}} giorni dalla data di contestazione immediata/notifica. {{avviso_scadenza}}</strong></small>
+    </fieldset>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="a-deck-filter a-deck-date-filter" *ngIf="filter">
+  <div class="form-group">
+    <span class="form-label">Modalita'</span>
+    <select class="form-select" [(ngModel)]="filter.selectedOption">
+      <option *ngFor="let opt of filter.options" [value]="opt"> {{ getOptionLabel(opt) }}</option>
+    </select>
+  </div>
+  <div class="form-group" *ngIf="filter.selectedOption !== 'range'; else rangeTemplate">
+    <span class="form-label">Valore</span>
+    <input type="date" class="form-control" (change)="updateValidity()"
+    [(ngModel)]="filter.exactDate" [ngClass]="{'invalid': !isExactDateValid}">
+  </div>
+  <ng-template #rangeTemplate>
+      <div class="form-group">
+        <span class="form-label">Da</span>
+        <input type="date" class="form-control" (change)="updateValidity()"
+        [(ngModel)]="filter.startDate" [ngClass]="{'invalid': !isStartDateValid}">
+      </div>
+      <div class="form-group">
+        <span class="form-label">A</span>
+        <input type="date" class="form-control" (change)="updateValidity()"
+        [(ngModel)]="filter.endDate" [ngClass]="{'invalid': !isEndDateValid}">
+      </div>
+  </ng-template>
+</div>

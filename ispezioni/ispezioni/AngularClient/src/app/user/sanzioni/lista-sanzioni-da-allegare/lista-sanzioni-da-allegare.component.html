@@ -1,0 +1,247 @@
+<div class="container-fluid" id="lista-sanzioni-da-allegare" *ngIf="sanzioniDaAllegare">
+  <h3>
+    Lista Avvisi di Pagamento
+  </h3>
+  <div class="table-controls mb-2">
+    <button type="button" class="btn btn-outline-blue" routerLink="./nuova-sanzione" *ngIf="mode === 'creation'">
+      <i class="fas fa-plus me-1"></i>
+      <span>Nuovo Avviso PagoPA</span>
+    </button>
+  </div>
+  <div class="table-wrapper" *ngIf="!appService.isMobileView; else datadeck">
+    <a-smart-table class="table-blue table-striped-light no-borders" id="tabella-sanzioni" [data]="sanzioniDaAllegare"
+      [paginator]="true" [exportable]="false">
+      <ng-template aTemplate="head">
+        <tr>
+          <th>
+            <a-table-sorter type="text" field="codice_avviso"></a-table-sorter>
+            <a-table-filter type="text" field="codice_avviso"></a-table-filter>
+            <span class="label">Codice Avviso</span>
+          </th>
+          <th>
+            <a-table-sorter type="text" field="proc_pen"></a-table-sorter>
+            <a-table-filter type="text" field="proc_pen"></a-table-filter>
+            <span class="label">Proc.Pen.</span>
+          </th>
+          <th>
+            <a-table-sorter type="text" field="rgnr"></a-table-sorter>
+            <a-table-filter type="text" field="rgnr"></a-table-filter>
+            <span class="label">RGNR</span>
+          </th>
+          <th>
+            <a-table-sorter type="date" field="data_generazione_iuv"></a-table-sorter>
+            <a-table-filter type="date" field="data_generazione_iuv"></a-table-filter>
+            <span class="label">Data generazione IUV</span>
+          </th>
+          <th>
+            <a-table-sorter type="date" field="data_notifica"></a-table-sorter>
+            <a-table-filter type="date" field="data_notifica"></a-table-filter>
+            <span class="label">Data contestazione / Notifica</span>
+          </th>
+          <th>
+            <a-table-sorter type="date" field="data_scadenza"></a-table-sorter>
+            <a-table-filter type="date" field="data_scadenza"></a-table-filter>
+            <span class="label">Data scadenza</span>
+          </th>
+          <th>
+            <a-table-sorter type="text" field="norma"></a-table-sorter>
+            <a-table-filter type="text" field="norma"></a-table-filter>
+            <span class="label">Norma</span>
+          </th>
+          <th>
+            <a-table-sorter type="text" field="articolo_violato"></a-table-sorter>
+            <a-table-filter type="text" field="articolo_violato"></a-table-filter>
+            <span class="label">Articolo Violato</span>
+          </th>
+          <th>
+            <a-table-sorter type="text" field="punto_verbale_prescrizione"></a-table-sorter>
+            <a-table-filter type="text" field="punto_verbale_prescrizione"></a-table-filter>
+            <span class="label">Punto Verbale Prescrizione</span>
+          </th>
+          <th>
+            <a-table-sorter type="text" field="descrizione"></a-table-sorter>
+            <a-table-filter type="text" field="descrizione"></a-table-filter>
+            <span class="label">Descrizione</span>
+          </th>
+          <th>
+            <a-table-sorter type="text" field="n_protocollo"></a-table-sorter>
+            <a-table-filter type="text" field="n_protocollo"></a-table-filter>
+            <span class="label">N. Protocollo</span>
+          </th>
+          <th>
+            <a-table-sorter type="text" field="tipo_verbale"></a-table-sorter>
+            <a-table-filter type="text" field="tipo_verbale"></a-table-filter>
+            <span class="label">Tipo Verbale</span>
+          </th>
+          <th>
+            <a-table-sorter type="text" field="tipo_notifica"></a-table-sorter>
+            <a-table-filter type="text" field="tipo_notifica"></a-table-filter>
+            <span class="label">Tipo Notifica</span>
+          </th>
+          <th *ngIf="mode === 'linking'"></th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template aTemplate="body" let-sanzione>
+        <!--<tr [ngStyle]="{'color': isDataScaduta(sanzione.data_scadenza) ? 'red' : ''}">-->
+        <tr [ngStyle]="{'color': isSanzioneScaduta(sanzione.stato_pagamento) ? 'red' : ''}">
+          <td>{{sanzione.codice_avviso}}</td>
+          <td>{{sanzione.proc_pen}}</td>
+          <td>{{sanzione.rgnr}}</td>
+          <td>{{sanzione.data_generazione_iuv | italianDate}}</td>
+          <td>{{sanzione.data_notifica | italianDate}}</td>
+          <td>{{sanzione.data_scadenza | italianDate}}</td>
+          <td>{{sanzione.norma}}</td>
+          <td>{{sanzione.articolo_violato}}</td>
+          <td>{{sanzione.punto_verbale_prescrizione}}</td>
+          <td>{{sanzione.descrizione}}</td>
+          <td>{{sanzione.n_protocollo}}</td>
+          <td>{{sanzione.verbale}}</td>
+          <td>{{getTipoNotificaString(sanzione.tipo_notifica)}}</td>
+          <td *ngIf="mode === 'linking'">
+            <!-- <div *ngIf="((sanzione.tipo_notifica == 'I' && this.fase && dataWithoutTime(this.fase.data_fase) == dataWithoutTime(sanzione.data_notifica)) || (sanzione.tipo_notifica != 'I' && this.fase && dataWithoutTime(sanzione.data_notifica) >= dataWithoutTime(this.fase.data_fase)))" class="wrapper justify-content-center"> -->
+            <div *ngIf="checkTastoAssocia(sanzione.tipo_notifica, dataWithoutTime(this.fase.data_fase), dataWithoutTime(sanzione.data_notifica))" class="wrapper justify-content-center">
+              <button type="button" class="btn btn-outline-blue icon-only" (click)="allegaSanzione(sanzione.p_id)"
+                ngbTooltip="Associa" tooltipClass="tooltip tooltip-blue">
+                <i class="icon fas fa-link"></i>
+              </button>
+            </div>
+          </td>
+          <td>
+            <div class="wrapper justify-content-center">
+              <!--<a class="btn btn-outline-blue icon-only" [href]="sanzione.url_file_avviso"
+                ngbTooltip="Scarica avviso di pagamento" tooltipClass="tooltip tooltip-blue" download>
+                <i class="fa fa-download me-1" aria-hidden="true"></i>
+              </a>-->
+              <button
+                *ngIf="!isSanzionePagata(sanzione.stato_pagamento) else scaricaRtButton"
+                type="button" class="btn btn-outline-blue icon-only"
+                (click)="scaricaAvviso(sanzione.p_id)"
+                ngbTooltip="Scarica avviso di pagamento" tooltipClass="tooltip tooltip-blue">
+                <i class="fa fa-download me-1" aria-hidden="true"></i>
+              </button>
+              <ng-template #scaricaRtButton>
+                <button
+                type="button" class="btn btn-outline-blue icon-only"
+                (click)="scaricaRicevuta(sanzione.p_id)"
+                ngbTooltip="Scarica ricevuta pagamento" tooltipClass="tooltip tooltip-blue">
+                <i class="fa fa-download me-1" aria-hidden="true"></i>
+              </button>
+              </ng-template>
+              <button
+                *ngIf="isNotificaModificabile(sanzione.stato_pagamento, sanzione.tipo_notifica, sanzione.data_scadenza)"
+                type="button" class={{this.buttonType}}
+                (click)="modificaDataNotifica(sanzione.p_id, sanzione.data_notifica, sanzione.tipo_notifica, sanzione.data_scadenza, sanzione.data_generazione_iuv, sanzione.stato_pagamento)"
+                ngbTooltip={{this.stringTooltip}} tooltipClass={{this.tooltipColor}}>
+                <i class="icon fas fa-edit"></i>
+              </button>
+              <button *ngIf="isSanzioneAnnullabile(sanzione.stato_pagamento)" type="button"
+                class="btn btn-outline-red icon-only" (click)="annullaPagamento(sanzione.p_id)" ngbTooltip="Annulla"
+                tooltipClass="tooltip tooltip-red">
+                <i class="icon fa fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </a-smart-table>
+  </div>
+  <ng-template #datadeck>
+    <a-data-deck [data]="sanzioniDaAllegare" [paginator]="true" [filters]="dataFiltersConf" [sorters]="dataSortersConf">
+      <ng-template aTemplate="card" let-sanzione>
+        <div class="card-header">
+          <div class="data-wrapper">
+            <span class="label">Codice Avviso</span>
+            <span class="value">{{ sanzione.codice_avviso }}</span>
+          </div>
+        </div>
+        <!--<div class="card-body" [ngStyle]="{'color': isDataScaduta(sanzione.data_scadenza) ? 'red' : ''}">-->
+        <div class="card-body" [ngStyle]="{'color': isSanzioneScaduta(sanzione.stato_pagamento) ? 'red' : ''}">
+          <div class="data-wrapper">
+            <span class="label">Proc.Pen.</span>
+            <span class="value">{{ sanzione.proc_pen }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">RGNR</span>
+            <span class="value">{{ sanzione.rgnr }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">Data generazione IUV</span>
+            <span class="value">{{ sanzione.data_generazione_iuv | italianDate }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">Data contestazone/ notifica</span>
+            <span class="value">{{ sanzione.data_notifica | italianDate }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">Data scadenza</span>
+            <span class="value">{{ sanzione.data_scadenza | italianDate }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">Norma</span>
+            <span class="value">{{ sanzione.norma }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">Articolo Violato</span>
+            <span class="value">{{ sanzione.articolo_violato }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">Punto Verbale Prescrizione</span>
+            <span class="value">{{ sanzione.punto_verbale_prescrizione }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">Descrizione</span>
+            <span class="value">{{ sanzione.descrizione }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">N.protocollo</span>
+            <span class="value">{{ sanzione.n_protocollo }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">Tipo verbale</span>
+            <span class="value">{{ sanzione.verbale }}</span>
+          </div>
+          <div class="data-wrapper">
+            <span class="label">Tipo Notifica</span>
+            <span class="value">{{ getTipoNotificaString(sanzione.tipo_notifica) }}</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="wrapper justify-content-center">
+            <!--<a class="btn btn-outline-blue icon-only" [href]="sanzione.url_file_avviso" download>
+              <i class="fa fa-download me-1" aria-hidden="true"></i>
+            </a>-->
+            <button
+              *ngIf="!isSanzionePagata(sanzione.stato_pagamento) else scaricaRtButtonMobile"
+                type="button" class="btn btn-outline-blue"
+                (click)="scaricaAvviso(sanzione.p_id)">
+                <i class="fa fa-download me-1" aria-hidden="true"></i>
+            </button>
+            <ng-template #scaricaRtButtonMobile>
+              <button
+                type="button" class="btn btn-outline-blue"
+                (click)="scaricaRicevuta(sanzione.p_id)">
+                <i class="fa fa-download me-1" aria-hidden="true"></i>
+              </button>
+            </ng-template>
+            <button
+              *ngIf="isNotificaModificabile(sanzione.stato_pagamento, sanzione.tipo_notifica, sanzione.data_scadenza)"
+              type="button" class="btn btn-outline-blue"
+              (click)="modificaDataNotifica(sanzione.p_id, sanzione.data_notifica, sanzione.tipo_notifica, sanzione.data_scadenza, sanzione.data_generazione_iuv, sanzione.stato_pagamento)">
+              <i class="fas fa-edit me-1"></i>
+              <span>Modifica data notifica</span>
+            </button>
+            <button *ngIf="isSanzioneAnnullabile(sanzione.stato_pagamento)" type="button" class="btn btn-outline-red"
+              (click)="annullaPagamento(sanzione.p_id)">
+              <i class="fa fa-trash"></i>
+              <span>Annulla</span>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </a-data-deck>
+  </ng-template>
+</div>
+<div style="font-weight: bold;">
+  * In rosso gli avvisi di pagamento scaduti
+</div>

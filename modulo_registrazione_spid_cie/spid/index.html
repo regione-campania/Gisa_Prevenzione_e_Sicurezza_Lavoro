@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://gisagel-coll.regione.campania.it/js/GisaSpid.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mgalante/jquery.redirect@master/jquery.redirect.js"></script>
+
+  </head>
+  <body>
+    <p style="position: absolute;
+    left: 50%;
+    right: 50%;
+    width: 200px;
+    transform: translate(-50%,-50%)">Accesso a SPID/CIE in corso ...</p>
+    <script>
+      GisaSpid.entraConSpid(event, null, null, 'miaFunzione', null);
+
+      function miaFunzione(data){
+        console.log(data);
+        $.redirect('./index.php', {'nome': `${data.firstName}`, 'cognome': `${data.lastName}`, 'cf': `${data.fiscalCode}`});
+      }
+    </script>
+  </body>
+</html>

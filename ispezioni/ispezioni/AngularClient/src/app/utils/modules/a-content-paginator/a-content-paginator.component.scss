@@ -1,0 +1,23 @@
+.a-content-paginator {
+
+  .page-header {
+    display: flex;
+    align-items: center;
+
+    .page-title {
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+
+  #paginationInput {
+    width: 44px;
+    padding: 0 2px;
+    text-align: center;
+  }
+
+}
+
+.carousel-inner {
+  padding: 0 !important;
+}

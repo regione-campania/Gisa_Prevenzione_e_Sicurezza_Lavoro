@@ -1,0 +1,12 @@
+<ul class="tabs">
+  <li class="tab clickable" *ngFor="let tab of tabs; index as i" [ngClass]="{'active': tab === activeTab}"
+  (click)="switchTab(i)">
+    {{tab.name}}
+  </li>
+</ul>
+<div class="view-container custom-scrollbar">
+  <div class="tab-content" [id]="'tab-'+i" *ngFor="let tab of tabs; index as i" [ngClass]="{'active': tab === activeTab}"
+    [@tabSwitchTrigger]="animationPlaying">
+    <ng-container [ngTemplateOutlet]="tab.template"></ng-container>
+  </div>
+</div>

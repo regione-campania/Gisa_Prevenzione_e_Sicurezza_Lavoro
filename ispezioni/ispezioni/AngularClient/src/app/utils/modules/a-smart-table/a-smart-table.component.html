@@ -1,0 +1,42 @@
+<table class="a-smart-table" [ngClass]="class ?? ''" #table>
+  <caption *ngIf="caption">
+    <ng-container [ngTemplateOutlet]="caption.templateRef"></ng-container>
+  </caption>
+  <thead>
+    <tr class="toolbar-row" *ngIf="exportable">
+      <td class="toolbar-cell">
+        <div class="toolbar">
+          <ul class="toolbar-tools">
+            <li ngbDropdown class="toolbar-item">
+              <button type="button" class="toolbar-button" id="dropdownBasic1" ngbDropdownToggle
+                ngbTooltip="Esporta tabella">
+                <i class="icon fa-regular fa-file-excel"></i>
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem (click)="exportTable(true)">Completa</button>
+                <button ngbDropdownItem (click)="exportTable(false)">Parziale</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr class="paginator-row">
+      <td class="paginator-cell">
+        <div class="paginator-wrapper top-paginator"
+          *ngIf="includePaginator && (paginatorSide === 'top' || paginatorSide === 'both')">
+          <a-table-paginator [rowsPerPage]="rowsPerPage"></a-table-paginator>
+        </div>
+      </td>
+    </tr>
+    <ng-container *ngIf="head" [ngTemplateOutlet]="head.templateRef"></ng-container>
+  </thead>
+  <tbody *ngIf="body && data">
+    <ng-container *ngFor="let c of tableContent; index as i" [ngTemplateOutlet]="body.templateRef"
+      [ngTemplateOutletContext]="{$implicit: dm.findData(c), index: i}">
+    </ng-container>
+  </tbody>
+  <tfoot *ngIf="footer">
+    <ng-container [ngTemplateOutlet]="footer.templateRef"></ng-container>
+  </tfoot>
+</table>

@@ -1,0 +1,116 @@
+@use "./bootstrap/scss/bootstrap.scss";
+@use "./animations";
+@use "./buttons";
+@use "./lists";
+@use "./forms";
+@use "./components";
+@use "./tables";
+@use "./modals";
+@use "./scrollbar";
+
+:root {
+  box-sizing: border-box;
+  --border-radius: 8px;
+  --outline-width: 0 0 0 0.2rem;
+  --black: rgb(33 37 41);
+  --black-outline: var(--outline-width) rgb(33 37 41 / 30%);
+  --light-gray: #ced4da;
+  --light-grey: #ced4da;
+  --light-gray-plus: #f1f1f1;
+  --light-grey-plus: #f1f1f1;
+  --ms-blue: #00adff;
+  --blue: rgb(0, 85, 175);
+  --blue-outline: var(--outline-width) rgb(0 85 175 / 30%);
+  --light-blue: rgb(60 205 255);
+  --light-blue-outline: var(--outline-width) rgb(60 205 255 / 30%);
+  --red: rgb(222, 35, 41);
+  --red-outline: var(--outline-width) rgb(222 35 41 / 30%);
+  --orange: rgb(255, 117, 24);
+  --orange-outline: var(--outline-width) rgba(255 117 24 / 30%);
+  --green: #008000;
+  --light-green: #41d741;
+  --box-shadow-3d:
+    1.4px 1.4px 1.6px rgb(0 0 0 / 19%),
+    2.7px 2.7px 3.8px rgb(0 0 0 / 12%),
+    4px 4px 6.5px rgb(0 0 0 / 10%),
+    5.4px 5.4px 9.9px rgb(0 0 0 / 5%),
+    6.9px 6.9px 7.8px rgb(0 0 0 / 3%),
+    7.8px 7.8px 12.4px rgb(0 0 0 / 2%),
+    10.1px 10.1px 15.7px rgb(0 0 0 / 1%);
+}
+
+.rounded {
+  border-radius: var(--border-radius) !important;
+}
+
+.no-border {
+  border: none !important;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+
+  &.centered,
+  &.y-centered {
+    align-items: center;
+  }
+
+  &.centered,
+  &.x-centered {
+    justify-content: center;
+  }
+}
+
+.icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+
+.box {
+  display: block;
+  border: 1px solid #bebebe;
+  padding: .5rem;
+  background-color: white;
+  color: var(--black);
+
+  &-3d {
+    @extend .box;
+    box-shadow: var(--box-shadow-3d)
+  }
+}
+
+.blinking {
+  animation: blink .75s linear infinite;
+}
+
+.background {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.fade-down {
+  opacity: 0;
+  animation: fade-in .4s 0.2s ease-in-out forwards, from-up 0.4s ease-in-out forwards;
+}
+
+.badge {
+  padding: 10px 8px;
+  border-radius: var(--border-radius, 0);
+}
+
+.popover {
+
+  &.no-arrow {
+    .popover-arrow {
+      display: none !important;
+    }
+  }
+}

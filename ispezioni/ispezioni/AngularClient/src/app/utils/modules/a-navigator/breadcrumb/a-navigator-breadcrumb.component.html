@@ -1,0 +1,11 @@
+<nav class="a-navigator-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" [ngClass]="{'active' : crumb.state === 'active' }" *ngFor="let crumb of viewPath"
+      [attr.role]="crumb.state !== 'active' ? 'button' : null" (click)="navService.changeView(crumb.view.viewName!)"
+      [@breadcrumbTrigger]="crumb.state">
+      {{ crumb.view.viewName }}
+    </li>
+  </ol>
+  <button *ngIf="navigator?.closable" type="button" class="btn-close ms-auto" aria-label="Close"
+    (click)="navigator?.closeEvent?.emit()"></button>
+</nav>

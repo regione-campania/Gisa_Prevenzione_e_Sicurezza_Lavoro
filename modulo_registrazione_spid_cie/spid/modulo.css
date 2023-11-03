@@ -1,0 +1,70 @@
+
+
+    table{
+      -webkit-print-color-adjust: exact;
+      color-adjust: exact;
+
+      border-collapse: collapse;
+      width: 99%;
+    }
+
+    th{
+      -webkit-print-color-adjust: exact;
+      color-adjust: exact;
+      text-align: center;
+      background-color: lightgray !important;
+    }
+
+    table,
+    td,
+    th {
+        font-family: Liberation serif;
+        border: 1px solid black;
+        margin: 5px;
+    }
+
+    td{
+	padding-left:5px;
+    }
+
+    input,
+    select{
+      border: none; 
+      border-width: 0; 
+      box-shadow: none;
+      width: 100%;
+    }
+
+    option{
+	word-wrap: break-word;
+    }
+
+    select:disabled{
+
+      background: lightgrey;
+    }
+    
+    select:enabled{
+
+      background: white;
+    }
+
+  #sistemSelect{
+      
+    font-weight: bolder;
+
+  }
+
+.ui-dialog-titlebar{
+  border: 1px solid #4297d7 !important;
+  background-color: #5c9ccc !important;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: #00040a;
+  color: white;
+}

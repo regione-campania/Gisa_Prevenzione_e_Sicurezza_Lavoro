@@ -1,0 +1,24 @@
+<div class="a-multi-select">
+    <div class="form-select" #control (click)="optionsList.hidden = !optionsList.hidden; touched = true"
+    [ngClass]="{'ng-touched': touched, 'invalid': noEmptyValues && selectedOptions.length === 0}">
+        <ul class="selected-options">
+            <div class="wrapper selected-values-display">
+                <li class="option" *ngFor="let opt of selectedOptions; index as i"
+                    [hidden]="i > 0">
+                    {{opt}}
+                </li>
+                <span class="more-than-one-counter" *ngIf="selectedOptions.length> 1">
+                    +{{selectedOptions.length-1}}
+                </span>
+            </div>
+        </ul>
+    </div>
+    <ul class="options-list rounded" hidden #optionsList>
+        <li class="option" *ngFor="let opt of options">
+            <div class="wrapper input-group">
+                <input type="checkbox" [value]="opt" (change)="onChange($event)">
+                <label class="option-label">{{opt}}</label>
+            </div>
+        </li>
+    </ul>
+</div>

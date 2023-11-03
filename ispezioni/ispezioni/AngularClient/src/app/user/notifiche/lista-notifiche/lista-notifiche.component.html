@@ -1,0 +1,184 @@
+<div class="container-fluid" id="user-notices" *ngIf="userNotices">
+  <div class="actions-container table-controls">
+    <button *ngIf="role == 'Profilo Notificatore' || role == 'Profilo Amministratore'"
+      class="btn btn-outline-blue action" id="nuova-notifica" (click)="insertNotifica()">
+      <i class="icon fas fa-plus"></i>
+      <span>Nuova Notifica</span>
+    </button>
+    <button type="button" class="btn btn-outline-green action"
+      (click)="chooseExport()">
+      <i class="icon fa-regular fa-file-excel"></i>
+      <span>Esporta</span>
+    </button>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!appService.isMobileView">
+    <a-smart-table [data]="userNotices" [paginator]="true" class="table-blue table-striped-light no-borders"
+      id="tabella-notifiche" [exportable]="false" #table>
+      <ng-template aTemplate="head">
+        <tr>
+          <th scope="col" *ngIf="role != 'Profilo Notificatore'  && role != 'Profilo Regione'" width="10%">
+            <a-table-sorter type="text" field="cognome_notificante+nome_notificante"></a-table-sorter>
+            <a-table-filter type="text" field="cognome_notificante+nome_notificante"></a-table-filter>
+            <span class="label">Notificante</span>
+          </th>
+          <th scope="col" width="10%">
+            <a-table-sorter type="text" field="cun"></a-table-sorter>
+            <a-table-filter type="text" field="cun"></a-table-filter>
+            <span class="label">CUN</span>
+          </th>
+          <th scope="col" width="10%">
+            <a-table-sorter type="text" field="cuc"></a-table-sorter>
+            <a-table-filter type="text" field="cuc"></a-table-filter>
+            <span class="label">CUC</span>
+          </th>
+          <th scope="col" width="20%">
+            <a-table-sorter type="text" field="denominazione"></a-table-sorter>
+            <a-table-filter type="text" field="denominazione"></a-table-filter>
+            <span class="label">Denominazione</span>
+          </th>
+          <th *ngIf="role != 'Profilo Notificatore'" scope="col" width="10%">
+            <a-table-sorter type="text" field="anno"></a-table-sorter>
+            <a-table-filter type="selection" field="anno" [values]="anniDisponibili"></a-table-filter>
+            <span class="label" autoscroll="100%">Anno Notifica</span>
+          </th>
+          <th scope="col" width="10%">
+            <a-table-sorter type="date" field="data_modifica"></a-table-sorter>
+            <a-table-filter type="date" field="data_modifica"></a-table-filter>
+            <span class="label" autoscroll="100%">Data ultima modifica</span>
+          </th>
+          <th *ngIf="role != 'Profilo Notificatore'" scope="col" width="10%">
+            <a-table-sorter type="text" field="descr_asl"></a-table-sorter>
+            <a-table-filter type="selection" field="descr_asl" [values]="aslDisponibili"></a-table-filter>
+            <span class="label">ASL</span>
+          </th>
+          <th scope="col" width="15%">
+            <a-table-sorter type="text" field="stato"></a-table-sorter>
+            <a-table-filter type="selection" field="stato" [values]="statiDisponibili"></a-table-filter>
+            <span class="label">Stato</span>
+          </th>
+          <th scope="col" width="10%" style="display: none;"> Indirizzo </th>
+          <th scope="col" width="10%" style="display: none;"> Civico </th>
+          <th scope="col" width="10%" style="display: none;"> Comune </th>
+          <th scope="col" width="10%" style="display: none;"> CAP </th>
+          <th scope="col" width="10%" style="display: none;"> Natura opera </th>
+          <th scope="col" width="10%" style="display: none;"> Altra natura opera </th>
+          <th scope="col" width="10%" style="display: none;"> Data presunta inizio lavori </th>
+          <th scope="col" width="10%" style="display: none;"> Durata presunta </th>
+          <th scope="col" width="10%" style="display: none;"> Numero imprese </th>
+          <th scope="col" width="10%" style="display: none;"> Numero lavoratori </th>
+          <th scope="col" width="10%" style="display: none;"> Ammontare </th>
+          <th scope="col" width="10%" style="display: none;"> Lavori Edili </th>
+          <th scope="col" width="10%" style="display: none;"> Imprese </th>
+          <th scope="col" width="10%" style="display: none;"> Committenti </th>
+          <th scope="col" width="10%" style="display: none;"> Responsabile dei lavori </th>
+          <th scope="col" width="10%" style="display: none;"> Coordinatore per la sicurezza durante la progettazione </th>
+          <th scope="col" width="10%" style="display: none;"> Coordinatore per la sicurezza durante la realizzazione </th>
+          <th scope="col" width="15%" *ngIf="role != 'Profilo Regione'"></th>
+        </tr>
+      </ng-template>
+      <ng-template aTemplate="body" let-notice>
+        <tr>
+          <td *ngIf="role != 'Profilo Notificatore' && role != 'Profilo Regione'">{{notice.cognome_notificante}} {{notice.nome_notificante}}</td>
+          <td>{{ notice.cun }}</td>
+          <td>{{ notice.cuc }}</td>
+          <td>{{ notice.denominazione }}</td>
+          <td *ngIf="role != 'Profilo Notificatore'">{{ notice.anno }}</td>
+          <td>{{ notice.data_modifica | italianDate }}</td>
+          <td *ngIf="role != 'Profilo Notificatore'">{{ notice.descr_asl }}</td>
+          <td>{{ notice.stato }}</td>
+          <td style="display: none;"> {{notice.via}} </td>
+          <td style="display: none;"> {{notice.civico}} </td>
+          <td style="display: none;"> {{notice.comune}} </td>
+          <td style="display: none;"> {{notice.cap}} </td>
+          <td style="display: none;"> {{notice.denominazione}} </td>
+          <td style="display: none;"> {{notice.natura_opera}} </td>
+          <td style="display: none;"> {{notice.altra_natura_opera}} </td>
+          <td style="display: none;"> {{notice.data_presunta}} </td>
+          <td style="display: none;"> {{notice.duarata_presunta}} </td>
+          <td style="display: none;"> {{notice.numero_imprese}} </td>
+          <td style="display: none;"> {{notice.numero_lavoratori}} </td>
+          <td style="display: none;"> {{notice.ammontare}} </td>
+          <td style="display: none;"> {{notice.lavori_edili}} </td>
+          <td style="display: none;"> {{notice.imprese}} </td>
+          <td style="display: none;"> {{notice.committenti}} </td>
+          <td style="display: none;"> {{notice.responsabile}} </td>
+          <td style="display: none;"> {{notice.coord_progettazione}} </td>
+          <td style="display: none;"> {{notice.coord_realizzazione}} </td>
+          <td *ngIf="role != 'Profilo Regione'">
+            <div class="actions-container justify-content-center">
+              <button *ngIf="notice.modificabile" class="btn btn-primary action"
+                (click)="goToNoticeEditor(notice.id_notifica, notice.modificabile, notice.modificabile_cantiere)">
+                <i class="icon far fa-edit"></i>
+              </button>
+              <button class="btn btn-info action"
+                (click)="goToNoticeEditor(notice.id_notifica, false, false)">
+                <i class="icon fas fa-search"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </a-smart-table>
+  </div>
+
+  <a-data-deck *ngIf="appService.isMobileView" [data]="userNotices" [paginator]="true"
+  [filters]="dataFiltersConf" [sorters]="dataSortersConf">
+    <ng-template aTemplate="card" let-notice>
+      <div class="card-body">
+        <div class="data-wrapper" *ngIf="role != 'Profilo Notificatore' && role != 'Profilo Regione'">
+          <span class="label">Notificante</span>
+          <span class="value">{{ notice.nome_notificante }} {{ notice.cognome_notificante }}</span>
+        </div>
+        <div class="data-wrapper">
+          <span class="label">CUN</span>
+          <span class="value">{{ notice.cun }}</span>
+        </div>
+        <div class="data-wrapper">
+          <span class="label">CUC</span>
+          <span class="value">{{ notice.cuc }}</span>
+        </div>
+        <div class="data-wrapper">
+          <span class="label">Denominazione</span>
+          <span class="value">{{ notice.denominazione }}</span>
+        </div>
+        <div *ngIf="role != 'Profilo Notificatore'" class="data-wrapper">
+          <span class="label">Anno notifica</span>
+          <span class="value">{{ notice.anno }}</span>
+        </div>
+        <div class="data-wrapper">
+          <span class="label">Ultima modifica</span>
+          <span class="value">{{ notice.data_modifica | italianDate }}</span>
+        </div>
+        <div *ngIf="role != 'Profilo Notificatore'" class="data-wrapper">
+          <span class="label">ASL</span>
+          <span class="value">{{ notice.descr_asl }}</span>
+        </div>
+        <div class="data-wrapper">
+          <span class="label">Stato</span>
+          <span class="value">{{ notice.stato }}</span>
+        </div>
+        <div *ngIf="role != 'Profilo Regione'" class="actions-container">
+          <button *ngIf="notice.modificabile" class="btn btn-primary action" (click)="
+              goToNoticeEditor(
+                notice.id_notifica,
+                notice.modificabile,
+                notice.modificabile_cantiere
+              )
+            ">
+            <i class="icon far fa-edit m-0"></i>
+          </button>
+          <button class="btn btn-info action" (click)="
+                goToNoticeEditor(
+                  notice.id_notifica,
+                  false,
+                  false
+                )
+              ">
+            <i class="icon fas fa-search m-0"></i>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </a-data-deck>
+</div>

@@ -1,0 +1,125 @@
+<div class="verbale" id="verbale-di-prescrizione">
+  <div class="header-verbale text-center">
+    <h2>VERBALE DI SOMMARIE INFORMAZIONI TESTIMONIALI</h2>
+    <p>(ai sensi degli artt. 362 e 370 c.p.p.)</p>
+  </div>
+  <div class="body-verbale">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label"><strong>Proc. Pen.</strong></label>
+          <input type="" id="" formControlName="proc_pen" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label"><strong>R.G.N.R.</strong></label>
+          <input type="" id="" formControlName="rgnr" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Il giorno</label>
+          <input type="date" id="" formControlName="il_giorno" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">alle ore</label>
+          <input type="time" id="" formControlName="alle_ore" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">in</label>
+          <input type="" id="" formControlName="in" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">presso l'ufficio</label>
+          <input type="" id="" formControlName="presso_ufficio" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">U.P.G.</label>
+          <input type="" id="" formControlName="upg" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">T.d.P.</label>
+          <input type="" id="" formControlName="tdp" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">in relazione</label>
+          <input type="" id="" formControlName="in_relazione" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Proc. pen.</label>
+          <input type="" id="" formControlName="proc_pen" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">P.M.</label>
+          <input type="" id="" formControlName="pm" class="form-control">
+        </div>
+      </div>
+      <h4>Il Testimoniante</h4>
+      <div formGroupName="contravventore">
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Nome e Cognome</label>
+            <input type="" id="" formControlName="nominativo" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Nato/a a</label>
+            <input type="" id="" formControlName="nato_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Il</label>
+            <input type="date" id="" formControlName="data_nascita" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Residente a</label>
+            <input type="" id="" formControlName="residente_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">In qualità di</label>
+            <input type="" id="" formControlName="in_qualita_di" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Telefono</label>
+            <input type="" id="" formControlName="telefono" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Identificato con</label>
+            <input type="" id="" formControlName="identificato_con" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">N.</label>
+            <input type="" id="" formControlName="numero_documento" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Rilasciato da</label>
+            <input type="" id="" formControlName="rilasciato_da" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data rilascio</label>
+            <input type="date" id="" formControlName="data_rilascio" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data scadenza</label>
+            <input type="date" id="" formControlName="data_scadenza" class="form-control">
+          </div>
+        </div>
+      </div>
+      <h4>Dichiara</h4>
+      <label for="" class="form-label">Domanda</label>
+      <input type="" id="" formControlName="domanda" class="form-control">
+      <label for="" class="form-label">Risposta</label>
+      <input type="" id="" formControlName="risposta" class="form-control">
+      <label for="" class="form-label">Letto e sottoscritto, previa integrale rilettura, alle ore</label>
+      <input type="time" id="" formControlName="ora_firma" class="form-control">
+      <button type="submit" class="btn btn-outline-blue d-block ms-auto">Invia</button>
+    </form>
+  </div>
+</div>

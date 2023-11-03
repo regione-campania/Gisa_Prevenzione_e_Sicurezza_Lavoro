@@ -1,0 +1,180 @@
+<form class="form-cantiere" [formGroup]="form" (ngSubmit)="submit()" (keydown.enter)="$event.preventDefault()">
+  <div class="form-section">
+    <h4 class="form-section-header">Ubicazione del cantiere</h4>
+    <div class="form-field">
+      <label for="via" class="form-label">Indirizzo *</label>
+      <input type="text" id="via" formControlName="via" class="form-control">
+    </div>
+    <div class="form-field">
+      <label for="civico" class="form-label">Civico/km *</label>
+      <input type="text" id="civico" formControlName="civico" class="form-control">
+    </div>
+    <div class="form-field">
+      <label for="comune" class="form-label">Comune *</label>
+      <input type="text" id="comune" formControlName="comune" class="form-control" [autofiller]="anagrafica.comuni"
+        autofillerKey="comune"
+        (dataChange)="form.patchValue({comune: $event.comune, cod_provincia: $event.cod_provincia, id_comune: $event.id})">
+    </div>
+    <div class="form-field">
+      <label for="cap" class="form-label">CAP *</label>
+      <input type="text" id="cap" formControlName="cap" class="form-control" maxlength="5">
+    </div>
+  </div>
+  <div class="form-section">
+    <h4 class="form-section-header">Informazioni supplementari</h4>
+    <div class="form-field">
+      <label for="denominazione" class="form-label">Denominazione *</label>
+      <input type="text" id="denominazione" formControlName="denominazione" class="form-control">
+    </div>
+    <div class="form-field">
+      <label for="id_natura_opera" class="form-label">Natura Opera *</label>
+      <select #s class="form-select" id="id_natura_opera" formControlName="id_natura_opera">
+        <option *ngFor="let nat of anagrafica.natureOpera" [value]="nat.id">
+          {{nat.descr}}
+        </option>
+      </select>
+    </div>
+    <div class="form-field" *ngIf="s.value === '0'">
+      <label class="form-label" for="altro">Specificare Natura Opera *</label>
+      <input class="form-control" id="altro" formControlName="altro">
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="data_presunta">Data presunta inizio lavori *</label>
+      <input type="date" class="form-control" id="data_presunta" formControlName="data_presunta">
+    </div>
+    <div class="form-field">
+      <label for="durata_presunta" class="form-label">Durata presunta lavori (in giorni) *</label>
+      <input type="number" id="durata_presunta" formControlName="durata_presunta" class="form-control" min="0">
+    </div>
+    <div class="form-field">
+      <label for="numero_imprese" class="form-label">Numero previsto di imprese e di lavoratori autonomi sul
+        cantiere *</label>
+      <input type="number" id="numero_imprese" formControlName="numero_imprese" class="form-control" min="0">
+    </div>
+    <div class="form-field">
+      <label for="numero_lavoratori" class="form-label">Numero presunto dei lavoratori in cantiere *</label>
+      <input type="number" id="numero_lavoratori" formControlName="numero_lavoratori" class="form-control" min="0">
+    </div>
+    <div class="form-field">
+      <label for="ammontare" class="form-label">Ammontare complessivo presunto dei lavori (in €) *</label>
+      <input type="number" id="ammontare" formControlName="ammontare" class="form-control" min="0">
+    </div>
+  </div>
+  <hr>
+  <div class="form-section">
+    <h4 class="form-section-header d-flex justify-content-between align-items-center">
+      <span>Imprese</span>
+      <button type="button" class="btn btn-outline-blue icon-only ms-auto" (click)="addImpresa()"
+        ngbTooltip="Aggiungi Impresa" placement="left" tooltipClass="tooltip tooltip-blue">
+        <i class="icon fas fa-plus"></i>
+      </button>
+    </h4>
+    <div id="imprese-selezionate" formArrayName="cantiere_imprese">
+      <table class="table-blue no-borders" *ngIf="impreseAsArray.length > 0">
+        <colgroup>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>P.IVA **</th>
+            <th>Ragione Sociale *</th>
+            <th>Codice Fiscale **</th>
+            <th class="actions-col"></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="anagrafica.imprese">
+          <tr *ngFor="let imp of impreseAsArray; index as i" [formGroupName]="i">
+            <td>
+              <input class="form-control" id="partita_iva_impresa->{{i}}" formControlName="partita_iva"
+                [autofiller]="anagrafica.imprese" autofillerKey="partita_iva"
+                (dataChange)="patchValue(['cantiere_imprese', i], $event)">
+            </td>
+            <td>
+              <input class="form-control" id="ragione_sociale_impresa->{{i}}" formControlName="nome_azienda"
+                [autofiller]="anagrafica.imprese" autofillerKey="nome_azienda"
+                (dataChange)="patchValue(['cantiere_imprese', i], $event)">
+            </td>
+            <td>
+              <input class="form-control" id="codice_fiscale_impresa->{{i}}" formControlName="codice_fiscale"
+                [autofiller]="anagrafica.imprese" autofillerKey="codice_fiscale"
+                (dataChange)="patchValue(['cantiere_imprese', i], $event)">
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-red icon-only d-block m-auto"
+                (click)="impreseAsFormArray.removeAt(i)" ngbTooltip="Rimuovi Impresa" placement="left"
+                tooltipClass="tooltip tooltip-red">
+                <i class="icon fas fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+  <div class="form-section">
+    <h4 class="form-section-header d-flex justify-content-between align-items-center">
+      <span>Persone</span>
+      <button type="button" class="btn btn-outline-blue icon-only ms-auto" (click)="addPersona()"
+        ngbTooltip="Aggiungi Persona" placement="left" tooltipClass="tooltip tooltip-blue">
+        <i class="icon fas fa-plus"></i>
+      </button>
+    </h4>
+    <div id="persone-selezionate" formArrayName="persona_ruoli">
+      <table class="table-blue no-borders" *ngIf="personeAsArray.length > 0">
+        <colgroup>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th style="width: 30%">Ruolo *</th>
+            <th>Codice fiscale *</th>
+            <th>Nome *</th>
+            <th>Cognome *</th>
+            <th>Pec</th>
+            <th style="width: 3%;"></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="anagrafica.persone">
+          <tr *ngFor="let imp of personeAsArray; index as i" [formGroupName]="i">
+            <td>
+              <select class="form-control" id="descr->{{i}}" formControlName="id_ruolo"
+                (dataChange)="patchValue(['persona_ruoli', i], $event)">
+                <option *ngFor="let r of anagrafica.ruoli" [value]="r.id">{{r.descr}}</option>
+              </select>
+            </td>
+            <td>
+              <input class="form-control" id="codice_fiscale->{{i}}" formControlName="codice_fiscale"
+                [autofiller]="anagrafica.persone" autofillerKey="codice_fiscale"
+                (dataChange)="patchValue(['persona_ruoli', i], $event)">
+            </td>
+            <td>
+              <input class="form-control" id="nome->{{i}}" formControlName="nome" [autofiller]="anagrafica.persone"
+                autofillerKey="nome" (dataChange)="patchValue(['persona_ruoli', i], $event)">
+            </td>
+            <td>
+              <input class="form-control" id="cognome->{{i}}" formControlName="cognome"
+                [autofiller]="anagrafica.persone" autofillerKey="cognome"
+                (dataChange)="patchValue(['persona_ruoli', i], $event)">
+            </td>
+            <td>
+              <input class="form-control" id="pec->{{i}}" formControlName="pec" [autofiller]="anagrafica.persone"
+                autofillerKey="pec" (dataChange)="patchValue(['persona_ruoli', i], $event)">
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-red icon-only d-block m-auto"
+                (click)="personeAsFormArray.removeAt(i)" ngbTooltip="Rimuovi persona" placement="left"
+                tooltipClass="tooltip tooltip-red">
+                <i class="icon fas fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-outline-blue d-block ms-auto mt-3">Salva</button>
+  <strong>* campi obbligatori</strong>
+  <br>
+  <strong>** valorizzare almeno uno tra</strong>
+</form>

@@ -1,0 +1,11 @@
+#footer {
+  padding: 1rem .5rem;
+  display: flex;
+  width: 100%;
+  background-color: var(--light-gray-plus);
+}
+
+.footer-element {
+    padding: .25rem .5rem;
+    cursor: pointer;
+}

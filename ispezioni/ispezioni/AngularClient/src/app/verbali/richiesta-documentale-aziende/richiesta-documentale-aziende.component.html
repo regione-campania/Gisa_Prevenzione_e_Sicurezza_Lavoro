@@ -1,0 +1,260 @@
+<div class="verbale" id="richiesta-documentale-aziende">
+  <div class="header-verbale text-center">
+    <h2>
+      VERBALE DI ISPEZIONE E CONTESTUALE RICHIESTA DOCUMENTALE AZIENDE
+    </h2>
+    <p>(ai sensi del D.Lgs. 19/12/1994 n. 758)</p>
+  </div>
+  <div class="body-verbale">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-section">
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Data</label>
+            <input type="date" id="" formControlName="data" class="form-control w-auto">
+          </div>
+        </div>
+        <h4>Funzionari</h4>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">U.P.G. (1)</label>
+            <input type="" id="" formControlName="upg1" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">U.P.G (2)</label>
+            <input type="" id="" formControlName="upg2" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Congiuntamente a</label>
+            <input type="" id="" formControlName="congiuntamente_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Ufficio</label>
+            <select id="" formControlName="ufficio" class="form-select">
+              <option value="siml" selected>SIML</option>
+              <option value="spsal">SPSAL</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-section" formGroupName="ispezione">
+        <h4>Ispezione</h4>
+        <div formGroupName="azienda">
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Azienda</label>
+              <input type="" id="" formControlName="rag_sociale" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Comune</label>
+              <input type="" id="" formControlName="comune" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Via</label>
+              <input type="" id="" formControlName="via" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Sede Legale</label>
+              <input type="" id="" formControlName="sede_legale" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div formGroupName="alla_presenza_di">
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Alla presenza di</label>
+              <input type="" id="" formControlName="nominativo" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Nato/a a</label>
+              <input type="" id="" formControlName="comune_nascita" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Il</label>
+              <input type="date" id="" formControlName="data_nascita" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Residente a</label>
+              <input type="" id="" formControlName="comune_residenza" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">In qualità di</label>
+              <input type="" id="" formControlName="in_qualita_di" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Telefono</label>
+              <input type="" id="" formControlName="telefono" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Identificato con</label>
+              <input type="" id="" formControlName="identificato_con" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">N.</label>
+              <input type="" id="" formControlName="numero_documento" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Rilasciato da</label>
+              <input type="" id="" formControlName="rilasciato_da" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Data rilascio</label>
+              <input type="date" id="" formControlName="data_rilascio" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Data scadenza</label>
+              <input type="date" id="" formControlName="data_scadenza" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-section" formGroupName="descrizione_luoghi_lavoro">
+        <h4>Descrizione dei luoghi di lavoro</h4>
+        <p>Preliminarmente, gli scriventi rappresentano che all’atto del sopralluogo erano in corso le seguenti
+          attività:</p>
+        <textarea id="" formControlName="all_atto_del_sopralluogo" rows="6" class="form-control no-resize"></textarea>
+        <p>Per quanto accertato in fase ispettiva, gli scriventi:</p>
+        <textarea id="" formControlName="in_fase_ispettiva" rows="6" class="form-control no-resize"></textarea>
+      </div>
+      <div class="form-section" formGroupName="documentazione_richiesta">
+        <p>Gli scriventi, inoltre, <strong>richiedono la consegna della seguente documentazione:</strong></p>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="certificato_cciaa" class="form-check-input">
+          <label for="" class="form-check-label">Certificato di Iscrizione CC.I.AA.</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="durc" class="form-check-input">
+          <label for="" class="form-check-label">D.U.R.C. in corso di validità</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="valutazione_rischi" class="form-check-input">
+          <label for="" class="form-check-label">Documento di Valutazione dei Rischi con relativo programma di
+            miglioramento, eventuali allegati previsti e aggiornamento CoViD-19</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="pee" class="form-check-input">
+          <label for="" class="form-check-label">P.E.E. con planimetrie delle aree di lavoro con individuazione aree di
+            lavoro / stoccaggio materiali, presidi di sicurezza, vie di fuga, apprestamenti di sicurezza</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="organigramma_aziendale" class="form-check-input">
+          <label for="" class="form-check-label">Organigramma aziendale ed elenco personale presente con relative
+            mansioni</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="individuazione_datore_lavoro" class="form-check-input">
+          <label for="" class="form-check-label">Individuazione del Datore di Lavoro, declinandone le complete
+            generalità ed accludendo copia di un documento di riconoscimento in corso di validità</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="igiene_e_sicurezza" class="form-check-input">
+          <label for="" class="form-check-label">Copie deleghe, procure ed ordini di servizio riguardanti conferimenti
+            di incarichi per attuazione delle misure d’igiene e sicurezza nei luoghi di lavoro ispezionati (Datore di
+            Lavoro delegato, Dirigenti, Preposti, ecc.)</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="rspp" class="form-check-input">
+          <label for="" class="form-check-label">Individuazione del R.S.P.P. e atto di nomina con relativa accettazione
+            dell’incarico accludendo i titoli professionali</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="medico_competente" class="form-check-input">
+          <label for="" class="form-check-label">Individuazione del Medico Competente e atto di nomina con relativa
+            accettazione dell’incarico, accludendo i titoli professionali</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="protocollo_sanitario" class="form-check-input">
+          <label for="" class="form-check-label">Protocollo Sanitario e sopralluogo ambiente di lavoro del medico
+            competente annotazione, proposte e suggerimenti del medico competente</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="verbale_di_elezione" class="form-check-input">
+          <label for="" class="form-check-label">Verbale di elezione R.L.S., relativo attestato di formazione e
+            comunicazione all’Inail</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="verbale_ultima_riunione_periodica" class="form-check-input">
+          <label for="" class="form-check-label">Verbale ultima Riunione Periodica (art. 35 del D.Lgs. 81/08 e
+            ss.mm.ii.)</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="unilav" class="form-check-input">
+          <label for="" class="form-check-label">Unilav dei lavoratori coinvolti nelle lavorazioni in oggetto</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="giudizio_idoneità" class="form-check-input">
+          <label for="" class="form-check-label">Giudizio di idoneità alla mansione dei lavoratori coinvolti nelle
+            lavorazioni in oggetto</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="attestati_salute_e_sicurezza" class="form-check-input">
+          <label for="" class="form-check-label">Attestati di formazione / informazione / addestramento in materia di
+            salute e sicurezza sui luoghi di lavoro dei lavoratori</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="consegna_dpi" class="form-check-input">
+          <label for="" class="form-check-label">Verbali di consegna D.P.I. dei lavoratori</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="addetti_antincendio_e_primo_soccorso" class="form-check-input">
+          <label for="" class="form-check-label">Verbali di individuazione degli addetti alla lotta antincendio e primo
+            soccorso, con relativi atti di designazione con accettazione e attestati di formazione in materia</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="attrezzature_macchine_impianti" class="form-check-input">
+          <label for="" class="form-check-label">Documentazione relativa a attrezzature / macchine / impianti, quale:
+            Titolo di possesso, Certificato di conformità CE, Manuale d’Uso e Manutenzione, Registro delle manutenzioni,
+            Verbali di verifica periodica (ove ricorre)</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="conformita_impianto_elettrico" class="form-check-input">
+          <label for="" class="form-check-label">Certificazione di conformità dell’impianto elettrico (D.M.
+            37/08)</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="verifica_impianto_termico" class="form-check-input">
+          <label for="" class="form-check-label">Ultima verifica periodica impianto termico (ove ricorre)</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="cpi_gasolio" class="form-check-input">
+          <label for="" class="form-check-label">C.P.I. eventuali serbatoi di gasolio (D.P.R. 151/11 - ove
+            ricorre)</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="contratti_altre_imprese" class="form-check-input">
+          <label for="" class="form-check-label">Eventuali contratti con altre imprese e relativi D.U.V.R.I.</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="" formControlName="altra_documentazione_utile" class="form-check-input">
+          <label for="" class="form-check-label">Eventuale altra documentazione utile all’indagine</label>
+        </div>
+        <textarea id="" formControlName="specifica_altra_documentazione" class="form-control no-resize" rows="6"></textarea>
+        <p>
+          <strong>
+            La documentazione richiesta dovrà essere consegnata, in originale e/o in copia conforme numerata
+            progressivamente e con lettera di accompagnamento a firma del Legale Rappresentante, a questo Ufficio,
+            <label for="" class="form-label">il giorno</label>
+            <input type="date" id="" formControlName="data_consegna_documentazione" class="form-control w-auto d-inline-block">
+            <label for="" class="form-label">entro le ore</label>
+            <input type="time" id="" formControlName="ora_consegna_documentazione" class="form-control w-auto d-inline-block">
+            Si avverte che nulla pervenendo o pervenendo in maniera scientemente errata o incompleta,
+            fermo restando i più gravi reati, si procederà ai sensi dell’art. 4 della Legge 628/61.
+            La presente nota ha valore ufficiale: non si provvederà pertanto ad inviarne copia per posta,
+            ai sensi dell’art. 6 della Legge n. 412 del 30/12/91.
+          </strong>
+        </p>
+      </div>
+      <button type="submit" class="btn btn-outline-blue d-block ms-auto">Invia</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="a-table-number-filter" *ngIf="filter">
+  <span class="label">Modalità</span>
+  <div class="button-group">
+    <button type="button" class="filter-mode-button" (click)="filter.mode = 'single'"
+    [ngClass]="{'active': filter.mode === 'single'}">
+      Singola
+    </button>
+    <button type="button" class="filter-mode-button" (click)="filter.mode = 'range'"
+    [ngClass]="{'active': filter.mode === 'range'}">
+      Intervallo
+    </button>
+  </div>
+  <div class="wrapper filter-body">
+    <ng-container *ngIf="filter.mode === 'single'; else rangeMode">
+      <span class="x">x</span>
+      <select class="form-select" [(ngModel)]="$any(filter.config).op">
+        <option value="=" selected>=</option>
+        <option value="!=">!=</option>
+        <option [value]="'\<'">&lt;</option>
+        <option [value]="'\<='">&le;</option>
+        <option value=">">&gt;</option>
+        <option value=">=">&ge;</option>
+      </select>
+      <input class="form-control" type="number" id="value" name="value" [(ngModel)]="$any(filter.config).value">
+    </ng-container>
+    <ng-template #rangeMode>
+      <div class="wrapper">
+        <label for="from" class="form-label mb-0 me-2">da</label>
+        <input type="number" id="from" name="from" class="form-control" [(ngModel)]="$any(filter.config).lowerBound">
+      </div>
+      <div class="wrapper">
+        <label for="to" class="form-label mb-0 me-2">a</label>
+        <input type="number" id="to" name="to" class="form-control" [(ngModel)]="$any(filter.config).upperBound">
+      </div>
+    </ng-template>
+  </div>
+</div>

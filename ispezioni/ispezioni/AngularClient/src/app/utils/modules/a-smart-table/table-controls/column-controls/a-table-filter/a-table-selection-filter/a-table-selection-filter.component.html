@@ -1,0 +1,9 @@
+<div class="a-table-selection-filter" *ngIf="filter">
+  <div class="wrapper">
+    <label class="form-label">Seleziona uno o più:</label>
+  </div>
+  <div class="wrapper" *ngIf="filter.values">
+    <a-multi-select #ms [options]="filter.values" (onChange)="filter.valuesToFind = $event">
+    </a-multi-select>
+  </div>
+</div>

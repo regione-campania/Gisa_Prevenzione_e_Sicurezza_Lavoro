@@ -1,0 +1,157 @@
+<div class="verbale" id="verbale-di-prescrizione-e-contestuale-accertamento">
+  <div class="header-verbale text-center">
+    <h2>VERBALE DI PRESCRIZIONE E CONTESTUALE ACCERTAMENTO</h2>
+    <p>(ai sensi del D.Lgs. 19/12/1994 n. 758)</p>
+  </div>
+  <div class="body-verbale">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label"><strong>Proc. Pen.</strong></label>
+          <input type="" id="" formControlName="proc_pen" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label"><strong>R.G.N.R.</strong></label>
+          <input type="" id="" formControlName="rgnr" class="form-control">
+        </div>
+      </div>
+      <h4>Funzionari</h4>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">U.P.G. (1)</label>
+          <input type="" id="" formControlName="upg1" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">U.P.G (2)</label>
+          <input type="" id="" formControlName="upg2" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Congiuntamente a</label>
+          <input type="" id="" formControlName="congiuntamente_a" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Ufficio</label>
+          <select id="" formControlName="ufficio" class="form-select">
+            <option value="siml" selected>SIML</option>
+            <option value="spsal">SPSAL</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Il giorno</label>
+          <input type="date" id="" formControlName="data_fase" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">si sono recati presso</label>
+          <input type="" id="" formControlName="presso" class="form-control">
+        </div>
+      </div>
+      <p>
+        Per quanto accertato in fase di ispezione, nelle more di perfezionamento della pratica con richiesta documentale
+        elevata con altro verbale notificato in data odierna, sono state rilevate le seguenti contravvenzioni ai sensi
+        del D.Lgs. 81/08 e ss.mm.ii.:
+      </p>
+      <ul>
+        <li>
+          <strong>PUNTO 1)</strong> art. <input type="" id="" formControlName="art_1" class="form-control numero-articolo">
+          D.Lgs. 81/08 e ss.mm.ii., in quanto
+          <input type="" id="" formControlName="in_quanto_1" class="form-control my-2">
+        </li>
+        <li>
+          <strong>PUNTO 2)</strong> art. <input type="" id="" formControlName="art_2" class="form-control numero-articolo">
+          D.Lgs. 81/08 e ss.mm.ii., in quanto
+          <input type="" id="" formControlName="in_quanto_2" class="form-control my-2">
+        </li>
+        <li>
+          <strong>PUNTO 3)</strong> art. <input type="" id="" formControlName="art_3" class="form-control numero-articolo">
+          D.Lgs. 81/08 e ss.mm.ii., in quanto
+          <input type="" id="" formControlName="in_quanto_3" class="form-control my-2">
+        </li>
+      </ul>
+      <h4>Contravventore</h4>
+      <div formGroupName="contravventore">
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Nome e Cognome</label>
+            <input type="" id="" formControlName="nominativo" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Nato/a a</label>
+            <input type="" id="" formControlName="nato_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Il</label>
+            <input type="date" id="" formControlName="data_nascita" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Residente a</label>
+            <input type="" id="" formControlName="residente_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">In qualità di</label>
+            <input type="" id="" formControlName="in_qualita_di" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Telefono</label>
+            <input type="" id="" formControlName="telefono" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Identificato con</label>
+            <input type="" id="" formControlName="identificato_con" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">N.</label>
+            <input type="" id="" formControlName="numero_documento" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Rilasciato da</label>
+            <input type="" id="" formControlName="rilasciato_da" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data rilascio</label>
+            <input type="date" id="" formControlName="data_rilascio" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data scadenza</label>
+            <input type="date" id="" formControlName="data_scadenza" class="form-control">
+          </div>
+        </div>
+      </div>
+      <h4>Prescrizioni</h4>
+      <ul>
+        <li>
+          per quanto attiene il <strong>Punto 1</strong>, gli scriventi, nell’esercizio delle funzioni di Polizia Giudiziaria di cui
+          all’art. 21 comma 3 della Legge 833/78 e art. 55 c.p.p., impartiscono al Contravventore apposite prescrizioni
+          che dovranno essere ottemperate nei tempi appresso indicati:
+          Punto 1: la prescrizione sopra specificata deve essere eseguita nei tempi tecnici strettamente necessari e
+          comunque entro e non oltre il <input type="date" id="" formControlName="termine_prescrizione" class="form-control d-inline-block w-auto">
+          decorrenti dalla data della comunicazione del presente verbale al contravventore. In particolare, il
+          Contravventore dovrà provvedere <input type="" id="" formControlName="dovra_provvedere" class="form-control">
+        </li>
+        <li>
+          non essendo più possibile ottemperare a quanto previsto dagli articoli di cui ai <strong>Punti 2 e 3</strong> precedenti, il
+          reato risulta consumato e non più sanabile e, pertanto, il Contravventore viene direttamente ammesso
+          all’oblazione ora per allora. Gli scriventi notificano la contestuale ammissione al pagamento che è parte
+          integrante del presente verbale.
+          Il Contravventore è ammesso a pagare in sede amministrativa la somma di €
+          <input type="number" id="" formControlName="importo_da_pagare" class="form-control d-inline-block w-auto" min="0">
+          pari al quarto del massimo delle ammende (ex art. 26 del D.Lgs.
+          758/94) stabilite per le violazioni alle norme di sicurezza accertate in fase ispettiva (vedi “Prospetto delle
+          ammende da pagare”), entro il termine di 30 (trenta) giorni a partire dalla data di ricezione del presente
+          VERBALE DI PRESCRIZIONE E CONTESTUALE ACCERTAMENTO, corredato dai Codici Avviso degli Avvisi di pagamento Pago
+          PA riportati di seguito nel “Prospetto delle ammende da pagare”.
+        </li>
+      </ul>
+      <button type="submit" class="btn btn-outline-blue d-block ms-auto">Invia</button>
+    </form>
+  </div>
+</div>

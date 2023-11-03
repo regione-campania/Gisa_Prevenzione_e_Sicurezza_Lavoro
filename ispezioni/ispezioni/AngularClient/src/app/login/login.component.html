@@ -1,0 +1,16 @@
+<div id="login-container">
+    <div id="login-box">
+        <h6 style="width: 60%; text-align: center;">Se sei notificatore, non è necessaria la registrazione. Entra
+            direttamente con SPID/CIE</h6>
+    </div>
+    <div class="box-3d rounded" id="login-box">
+        <h3>Benvenuto!</h3>
+        <button type="button" class="btn spid-button" id="spid-button" (click)="loginSpid()">
+            <span class="btn-text">Accedi con Spid/CIE</span>
+        </button>
+    </div>
+    <div id="login-box" *ngIf="endpointRegistrazione != null && endpointRegistrazione.length > 0">
+        <h6 style="width: 60%; text-align: center;">Per utenti ASL e Regione è necessario effettuare la registrazione
+            al seguente <a href="{{endpointRegistrazione}}" target="_blank">link</a></h6>
+    </div>
+</div>

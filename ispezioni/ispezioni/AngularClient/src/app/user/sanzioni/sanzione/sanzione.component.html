@@ -1,0 +1,134 @@
+<button id="goBackButton" *ngIf="!this.isFromFase" type="button" class="btn btn-outline-blue action"
+  routerLink="/sanzioni" style="background-color:rgb(0, 85, 175); color:white">
+  <i class=""></i>
+  <span>Indietro</span>
+</button>
+
+<div class="container">
+  <form id="sanzione" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-section">
+      <h5 class="section-header">Informazioni Pagamento</h5>
+      <div class="form-group required">
+        <label class="form-label">Importo Totale Versamento</label>
+        <input #importo type="number" class="form-control" min="0" formControlName="info_pagamento" errorName="Importo Totale Versamento"
+          errorTip="L'importo deve essere > 0">
+      </div>
+      <div class="form-section" formGroupName="info_verbale">
+        <div class="form-group">
+          <label class="form-label">Proc. Pen.</label>
+          <input type="text" class="form-control" formControlName="proc_pen">
+        </div>
+        <div class="form-group">
+          <label class="form-label">R.G.N.R.</label>
+          <input type="text" class="form-control" formControlName="rgnr">
+        </div>
+        <div class="form-group">
+          <label class="form-label">N° Protocollo</label>
+          <input type="number" class="form-control" min="0" formControlName="numero_protocollo">
+        </div>
+        <div class="form-group required">
+          <label class="form-label">Tipo Verbale</label>
+          <select class="form-select" formControlName="tipo_verbale"  errorName="Tipo Verbale">
+            <option selected value="">Selezionare il Tipo Verbale</option>
+            <option *ngFor="let m of moduliVerbale" [value]="m.id">{{m.descr}}</option>
+          </select>
+        </div>
+        <div class="form-group required">
+          <label class="form-label">Data Verbale</label>
+          <input type="date" class="form-control" min="{{dataNotificaString.split('/').join('-')}}"
+            formControlName="data_verbale"  errorName="Data Verbale">
+          <!-- <input type="date" class="form-control" min="{{dataNotificaString.split('/').join('-')}}" formControlName="data_verbale" (change)="changeData($event)"> -->
+        </div>
+        <!-- Sezione VIOLAZIONI -->
+        <div class="form-section">
+          <!-- Bottone "Aggiungi Violazione" -->
+          <h5 style="margin-top: 0.8rem" class="form-section-header d-flex justify-content-between align-items-center">
+            <span>Violazioni</span>
+            <button type="button" class="btn btn-outline-blue ms-auto" (click)="addViolazione()" placement="left"
+              tooltipClass="tooltip tooltip-blue">
+              <i class="icon fas fa-plus"></i>
+              Aggiungi Violazione
+            </button>
+          </h5>
+          <!-- Form Violazioni -->
+          <div id="violazioni" formArrayName="violazioni">
+            <div *ngIf="violazioniAsFormArray.length > 0">
+              <div
+                style="padding: 0.5rem; margin-top: 0.5rem; border-style: solid; border-color:lightgray; border-radius: 6px;"
+                *ngFor="let v of violazioniAsArray; index as i" [formGroupName]="i">
+                <h6>
+                  <span> Violazione {{i+1}} </span>
+                  <button *ngIf="i > 0" style="float: right" type="button"
+                    class="btn btn-outline-red icon-only d-block m-auto" (click)="violazioniAsFormArray.removeAt(i)"
+                    ngbTooltip="Rimuovi Violazione" placement="left" tooltipClass="tooltip tooltip-red">
+                    <i class="icon fas fa-trash-can"></i>
+                  </button>
+                </h6>
+
+                <div class="form-group required">
+                  <label class="form-label">Punto Verbale di Prescrizione </label>
+                  <input id="puntoVerbale_ammenda->{{i}}" type="text" class="form-control"
+                    formControlName="punto_verbale_prescrizione"  errorName="Punto Verbale di Prescrizione">
+                </div>
+
+                <div class="form-group required">
+                  <label class="form-label">Articolo/Commi Violati</label>
+                  <input id="artViolato_ammenda->{{i}}" type="text" class="form-control"
+                    formControlName="articolo_violato" errorName="Articolo/Commi Violati">
+                </div>
+
+                <div class="form-group required">
+                  <label class="form-label">Norma di Riferimento</label>
+                  <select id="norma_ammenda->{{i}}" (change)="this.violazioniAsArray[i].value.norma" class="form-select"
+                    formControlName="norma">
+                    <option value="D.Lgs. 81/08">D.Lgs. 81/08</option>
+                    <option value="D.Lgs. 101/20">D.Lgs. 101/20</option>
+                    <option value="altro">Altro...</option>
+                  </select>
+                </div>
+
+                <div style="margin-top: 0.5rem;" class="form-group required"
+                  *ngIf="checkAltroValue(this.violazioniAsArray[i].value.norma)">
+                  <label class="form-label">Specificare Altra Norma Violata</label>
+                  <input type="text" id="altraNormaViolata_ammenda->{{i}}" class="form-control" id="altra_norma_violata"
+                    formControlName="altra_norma_violata"  errorName="Altra Norma Violata">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group required">
+          <label style="margin-bottom:0;" class="form-label">Tipo</label>
+          <fieldset style="border:none; padding:0; padding-left:0.2rem">
+            <div class="form-check required">
+              <input class="form-check-input" type="radio" value="cantiere" checked id="cantiere"
+                formControlName="cantiereOrImpresa"  errorName="Tipo Cantiere o Impresa">
+              <label class="form-check-label" for="cantiere"> Cantiere </label>
+            </div>
+            <div class="form-check required">
+              <input class="form-check-input" type="radio" value="impresa" id="impresa"
+                formControlName="cantiereOrImpresa">
+              <label class="form-check-label" for="impresa"> Impresa </label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="form-group required">
+          <label for="" class="form-label">Descrizione Esito Ispezione </label>
+          <input type="text" id="" name="" class="form-control" formControlName="descrizione_libera" errorName="Descrizione Esito Ispezione">
+        </div>
+      </div>
+    </div>
+    <div class="form-section" formGroupName="info_pagatore">
+      <h5 class="section-header">Informazioni Soggetto Pagatore</h5>
+      <form-soggetto-pagatore type="trasgressore" #formTrasgressore></form-soggetto-pagatore>
+    </div>
+
+    <strong>* campi obbligatori</strong>
+    <div class="d-flex justify-content-center">
+      <!--<button type="submit" class="btn btn-outline-blue" [disabled]="form.invalid"> Invia </button>-->
+      <button type="submit" class="btn btn-outline-blue"> Invia </button>
+    </div>
+  </form>
+</div>

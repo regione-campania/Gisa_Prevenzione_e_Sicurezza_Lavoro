@@ -1,0 +1,79 @@
+<button id="goBackButton" type="button" class="btn btn-outline-blue action" routerLink="/ispezioni"
+    style="background-color:rgb(0, 85, 175); color:white">
+    <i class=""></i>
+    <span>Indietro</span>
+</button>
+
+<div class="container-fluid" id="macchine-difformi">
+    <h3>Lista Macchine Difformi</h3>
+    <div class="actions-container table-controls">
+        <button type="button" class="btn btn-outline-blue action" routerLink="../nuova-macchina">
+            <i class="icon fas fa-plus"></i>
+            <span>Nuova Macchina</span>
+        </button>
+        <button type="button" class="btn btn-outline-green action" (click)="chooseExport()">
+            <i class="icon fa-regular fa-file-excel"></i>
+            <span>Esporta</span>
+          </button>
+    </div>
+    <div *ngIf="macchine">
+        <div class="table-wrapper">
+            <a-smart-table class="table-blue table-striped-light no-borders" [data]="macchine" [paginator]="true"
+                id="tabella-macchine" [exportable]="false" #table>
+                <ng-template aTemplate="head">
+                    <tr>
+                        <th scope="col" width="15%">
+                            <a-table-sorter type="text" field="descr_tipo_macchina"></a-table-sorter>
+                            <a-table-filter type="text" field="descr_tipo_macchina"></a-table-filter>
+                            <span class="label">Descrizione Tipo Macchina</span>
+                        </th>
+                        <th scope="col" width="10%">
+                            <a-table-sorter type="text" field="descr_costruttore"></a-table-sorter>
+                            <a-table-filter type="text" field="descr_costruttore"></a-table-filter>
+                            <span class="label">Descrizione Costruttore</span>
+                        </th>
+                        <th scope="col" width="10%">
+                            <a-table-sorter type="text" field="modello"></a-table-sorter>
+                            <a-table-filter type="text" field="modello"></a-table-filter>
+                            <span class="label">Identificativo Modello</span>
+                        </th>
+                        <th scope="col" width="10%">
+                            <a-table-sorter type="date" field="data_inserimento"></a-table-sorter>
+                            <a-table-filter type="date" field="data_inserimento"></a-table-filter>
+                            <span class="label">Data Inserimento</span>
+                        </th>
+                        <th scope="col" width="20%">
+                            <a-table-sorter type="text" field="filename"></a-table-sorter>
+                            <a-table-filter type="text" field="filename"></a-table-filter>
+                            <span class="label">Nome file</span>
+                        </th>
+                        <th scope="col" width="10%">
+                            <span class="label"></span>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template aTemplate="body" let-mac #bodyTemplate>
+                    <tr>
+                        <td>{{mac.descr_tipo_macchina}}</td>
+                        <td>{{mac.descr_costruttore}}</td>
+                        <td>{{mac.modello}}</td>
+                        <td>{{mac.data_inserimento | italianDate}}</td>
+                        <td>{{mac.filename}}</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-blue action"
+                                (click)="scaricaInfoFile(mac.id_macchina)"
+                                ngbTooltip="Scarica" tooltipClass="tooltip tooltip-blue">
+                                <i class="icon fa fa-download"></i>
+                            </button>
+                            <button *ngIf="idUtente == mac.id_utente || isRegione" type="button" class="btn btn-outline-red action"
+                                (click)="eliminaInfoFile(mac.id_macchina)"
+                                ngbTooltip="Elimina" tooltipClass="tooltip tooltip-red">
+                                <i class="icon fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </a-smart-table>
+        </div>
+    </div>
+</div>

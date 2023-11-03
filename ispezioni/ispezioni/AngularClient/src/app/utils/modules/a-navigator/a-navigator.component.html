@@ -1,0 +1,17 @@
+<div class="a-navigator">
+  <a-navigator-breadcrumb></a-navigator-breadcrumb>
+  <div class="a-navigator-header" *ngIf="header">
+    <ng-container [ngTemplateOutlet]="header"></ng-container>
+  </div>
+  <div class="a-navigator-body">
+    <div class="view-container">
+      <div class="view" *ngFor="let v of viewPath" [@navigationTrigger]="v.state"
+        [ngClass]="v.state">
+        <ng-container [ngTemplateOutlet]="v.view.templateRef"></ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="a-navigator-footer" *ngIf="footer">
+    <ng-container [ngTemplateOutlet]="footer"></ng-container>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div id="notifications-container" *ngIf="notifications.length > 0">
+  <ul class="notifications">
+    <li class="notification" *ngFor="let n of notifications; index as i">
+      <notification-message
+        [content]="n.content"
+        [class]="n.notificationClass"
+        [delay]="n.delay"
+        (onClose)="closeNotification(i)">
+      </notification-message>
+    </li>
+  </ul>
+</div>

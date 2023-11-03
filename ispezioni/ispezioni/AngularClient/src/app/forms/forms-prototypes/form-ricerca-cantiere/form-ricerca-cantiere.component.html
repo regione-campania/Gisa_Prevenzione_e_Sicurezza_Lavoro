@@ -1,0 +1,232 @@
+<div class="form-ricerca-cantiere" [formGroup]="form" id="tableImpreseCantiere">
+  <div id="elemToScroll"></div>
+  <div *ngIf="impreseCantiereSelezionato" style="margin-bottom: .8rem;">
+    <div class="my-3" @collapse *ngIf="addingImpresa">
+      <form-ricerca-impresa header="Nuova Impresa" #ricercaImpresa></form-ricerca-impresa>
+      <div class="wrapper d-flex justify-content-end">
+        <button type="button" class="btn btn-outline-red" (click)="addingImpresa = false">
+          Annulla
+        </button>
+        <button type="button" class="btn btn-outline-blue ms-2" (click)="aggiungiImpresa()">
+          Aggiungi
+        </button>
+      </div>
+    </div>
+    
+    <!-- Tabella dettagli cantiere selezionato -->
+    <h4 *ngIf="this.data?.ispezione.descr_stato_ispezione != 'INIZIALE'">
+      <span>Cantiere Ispezionato</span>
+    </h4>
+    <a-smart-table *ngIf="this.data?.ispezione.descr_stato_ispezione != 'INIZIALE'"
+      class="table-blue table-striped-light no-borders" [data]="[this.data?.cantiere]" [exportable]="false">
+      <ng-template aTemplate="head">
+        <tr>
+          <th>
+            <span>CUN</span>
+          </th>
+          <th>
+            <span>CUC</span>
+          </th>
+          <th>
+            <span>Indirizzo</span>
+          </th>
+          <th>
+            <span>Comune</span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template aTemplate="body" let-c>
+        <tr>
+          <td>{{ c.cun }}</td>
+          <td>{{ c.cuc }}</td>
+          <td>{{ c.via }}, {{ c.civico }}</td>
+          <td>{{ c.comune }}</td>
+        </tr>
+      </ng-template>
+    </a-smart-table>
+
+    <h4 class="d-flex justify-content-between align-items-center mt-3">
+      <span>Imprese Ispezionate in Cantiere</span>
+      <!--<button *ngIf="this.data?.ispezione.descr_stato_ispezione == 'INIZIALE'" type="button" class="btn btn-outline-blue" (click)="addingImpresa = true"
+        placement="left" tooltipClass="tooltip tooltip-blue">
+        <i class="icon fas fa-plus"></i>
+        Aggiungi Impresa
+      </button>-->
+    </h4>
+    <table class="table-blue no-borders">
+      <thead>
+        <tr>
+          <th scope="col" width="30%">P.IVA</th>
+          <th scope="col" width="30%">Ragione Sociale</th>
+          <th scope="col" width="30%">Codice Fiscale</th>
+          <!--<th *ngIf="this.data?.ispezione.descr_stato_ispezione == 'INIZIALE'" scope="col" width="10%" class="pe-0 text-end"></th>-->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let imp of impreseCantiereSelezionato">
+          <td>{{ imp.partita_iva }}</td>
+          <td>{{ imp.nome_azienda }}</td>
+          <td>{{ imp.codice_fiscale }}</td>
+          <!--<td *ngIf="this.data?.ispezione.descr_stato_ispezione == 'INIZIALE'" class="pe-0 text-end">
+            <button type="button" class="btn btn-outline-blue icon-only" (click)="rimuoviImpresa(imp)"
+              ngbTooltip="Rimuovi Impresa" placement="left" tooltipClass="tooltip tooltip-blue">
+              <i class="icon fa-regular fa-trash-can"></i>
+            </button>
+          </td>-->
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Tabella persone Cantiere -->
+    <div class="row">
+      <div class="col">
+        <h4>Persone Cantiere</h4>
+        <table class="table-blue no-borders">
+          <thead>
+            <tr>
+              <th>CF</th>
+              <th>Cognome</th>
+              <th>Nome</th>
+              <th>Ruolo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let persona of this.personeCantiere">
+              <td>{{persona.codice_fiscale}}</td>
+              <td>{{persona.cognome}}</td>
+              <td>{{persona.nome}}</td>
+              <td>{{persona.descr}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <!-- <div formGroupName="cantiere">
+    <div class="form-field">
+      <label class="form-label" for="cun">CUN</label>
+      <input
+        class="form-control"
+        id="cun"
+        (dataChange)="selezionaCantiere($event)"
+        placeholder="Ricerca per CUN"
+        [readonly]="cantiereSelezionato"
+        [autofiller]="cantieriAttivi"
+        autofillerKey="cun"
+        formControlName="cun"
+      />
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="cuc">CUC</label>
+      <input
+        class="form-control"
+        id="cuc"
+        (dataChange)="selezionaCantiere($event)"
+        placeholder="Ricerca per CUC"
+        [readonly]="cantiereSelezionato"
+        [autofiller]="cantieriAttivi"
+        autofillerKey="cuc"
+        formControlName="cuc"
+      />
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="denominazione">Denominazione</label>
+      <input
+        class="form-control"
+        id="denominazione"
+        (dataChange)="selezionaCantiere($event)"
+        placeholder="Ricerca per Denominazione"
+        [readonly]="cantiereSelezionato"
+        [autofiller]="cantieriAttivi"
+        autofillerKey="denominazione"
+        formControlName="denominazione"
+      />
+    </div>
+  </div> -->
+  <h4 class="d-flex justify-content-between align-items-center" *ngIf="this.data?.ispezione.descr_stato_ispezione == 'INIZIALE'">
+    <span>Lista Cantieri</span>
+    <!-- <span class="my-2" style="font-size: .9rem;">Ricercare un cantiere tramite uno degli appositi campi e selezionarlo dalla lista</span> -->
+    <!-- <button type="button" class="btn btn-outline-blue icon-only" ngbTooltip="Modifica" placement="left"
+      tooltipClass="tooltip tooltip-blue" *ngIf="cantiereSelezionato" (click)="reset()">
+      <i class="fa-regular fa-pen-to-square"></i>
+    </button> -->
+  </h4>
+  <a-smart-table *ngIf="this.data?.ispezione.descr_stato_ispezione == 'INIZIALE'" class="table-blue table-striped-light no-borders" [paginator]="true" [data]="cantieriAttivi" [exportable]="false">
+    <ng-template aTemplate="head">
+      <tr>
+        <th>
+          <a-table-sorter field="cun"></a-table-sorter>
+          <a-table-filter field="cun"></a-table-filter>
+          <span>CUN</span>
+        </th>
+        <th>
+          <a-table-sorter field="cuc"></a-table-sorter>
+          <a-table-filter field="cuc"></a-table-filter>
+          <span>CUC</span>
+        </th>
+        <!--<th>
+          <a-table-sorter field="denominazione"></a-table-sorter>
+          <a-table-filter field="denominazione"></a-table-filter>
+          <span>Denominazione</span>
+        </th>-->
+        <th>
+          <a-table-sorter field="via"></a-table-sorter>
+          <a-table-filter field="via"></a-table-filter>
+          <span>Indirizzo</span>
+        </th>
+        <th>
+          <a-table-sorter field="comune"></a-table-sorter>
+          <a-table-filter field="comune"></a-table-filter>
+          <span>Comune</span>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template aTemplate="body" let-c>
+      <tr class="clickable" (click)="selezionaCantiere(c, '#elemToScroll', $event)">
+        <td>{{ c.cun }}</td>
+        <td>{{ c.cuc }}</td>
+        <!--<td>{{ c.denominazione }}</td>-->
+        <td>{{ c.via }}, {{ c.civico }}</td>
+        <td>{{ c.comune }}</td>
+        <td>  
+          <button *ngIf="c.modificabile" (click)="editCantiere(c, $event)" class="btn btn-outline-blue"><i class="icon fas fa-edit"></i></button>
+          <button *ngIf="c.modificabile" (click)="deleteCantiere(c, $event)" class="btn btn-outline-red"><i class="icon fas fa-trash"></i></button>
+        </td>
+      </tr>
+    </ng-template>
+  </a-smart-table>
+
+  <!-- <table class="table-blue table-striped-light no-borders" aSmartTable [paginator]="true" [data]="cantieriAttivi">
+    <thead>
+      <tr>
+        <th>
+          <a-table-sorter></a-table-sorter>
+          <a-table-filter></a-table-filter>
+          <span>CUN</span>
+        </th>
+        <th>
+          <a-table-sorter></a-table-sorter>
+          <a-table-filter></a-table-filter>
+          <span>CUC</span>
+        </th>
+        <th>
+          <a-table-sorter></a-table-sorter>
+          <a-table-filter></a-table-filter>
+          <span>Denominazione</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngTemplateOutlet="row, context: {$implicit: cantieriAttivi[0]}"></ng-container>
+      <ng-template #row let-c>
+        <tr class="clickable" (click)="selezionaCantiere(c)">
+          <td>{{ c.cun }}</td>
+          <td>{{ c.cuc }}</td>
+          <td>{{ c.denominazione }}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table> -->
+</div>

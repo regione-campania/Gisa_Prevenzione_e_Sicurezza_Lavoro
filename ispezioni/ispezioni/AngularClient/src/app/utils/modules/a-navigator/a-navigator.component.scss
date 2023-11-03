@@ -1,0 +1,31 @@
+.a-navigator {
+  --navigator-padding: .5rem;
+  --view-padding: .25rem;
+  position: relative;
+
+  &-header,
+  &-footer {
+    padding: calc(var(--navigator-padding) + var(--view-padding));
+  }
+
+  &-body {
+    padding: var(--navigator-padding);
+    overflow: hidden auto;
+
+    .view-container {
+      display: block;
+      position: relative;
+      background: white;
+
+      .view {
+        padding: var(--view-padding);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: inherit;
+      }
+    }
+  }
+
+}

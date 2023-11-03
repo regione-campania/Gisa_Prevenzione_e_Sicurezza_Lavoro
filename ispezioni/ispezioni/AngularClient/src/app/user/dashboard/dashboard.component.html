@@ -1,0 +1,35 @@
+<div class="container-fluid" id="app-dashboard">
+  <h2>Portali disponibili</h2>
+  <div class="row" id="portali">
+    <div class="col-md" *ngIf="canAccess('notifiche')">
+      <div class="portale">
+        <div class="background" id="notifiche-background" routerLink="/notifiche"></div>
+        <div class="label text-center">NOTIFICHE PRELIMINARI</div>
+        <!-- <button type="button" routerLink="/notifiche">
+          <i class="icon fa-solid fa-file-signature"></i>
+        </button>
+        <div class="label text-center">Notifiche</div> -->
+      </div>
+    </div>
+    <div class="col-md hide-mobile" *ngIf="canAccess('ispezioni')">
+      <div class="portale">
+        <div class="background" id="ispezioni-background" routerLink="/ispezioni"></div>
+        <div class="label text-center">ISPEZIONI</div>
+        <!-- <button type="button" routerLink="/ispezioni">
+          <i class="icon fa-solid fa-magnifying-glass"></i>
+        </button>
+        <div class="label text-center">Ispezioni</div> -->
+      </div>
+    </div>
+    <div class="col-md" *ngIf="canAccess('sanzioni')">
+      <div class="portale">
+        <div class="background" id="sanzioni-background" routerLink="/sanzioni"></div>
+        <div class="label text-center">GISA - PagoPA</div>
+        <!-- <button type="button" routerLink="/sanzioni">
+          <i class="icon fa-solid fa-money-bill"></i>
+        </button>
+        <div class="label text-center">Sanzioni</div> -->
+      </div>
+    </div>
+  </div>
+</div>

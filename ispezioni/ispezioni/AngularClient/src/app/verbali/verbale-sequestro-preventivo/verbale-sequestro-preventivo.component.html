@@ -1,0 +1,356 @@
+<div class="verbale" id="verbale-di-prescrizione-e-contestuale-accertamento">
+  <div class="header-verbale text-center">
+    <h2>VERBALE DI SEQUESTRO PREVENTIVO</h2>
+    <p>(ai sensi dell’art. 321 del c.p.p.)</p>
+  </div>
+  <div class="body-verbale">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label"><strong>Proc. Pen.</strong></label>
+          <input type="" id="" formControlName="proc_pen" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label"><strong>R.G.N.R.</strong></label>
+          <input type="" id="" formControlName="rgnr" class="form-control">
+        </div>
+      </div>
+      <div formGroupName="a_carico_di">
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">A carico di</label>
+            <input type="" id="" formControlName="nominativo" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Nato/a a</label>
+            <input type="" id="" formControlName="nato_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Il</label>
+            <input type="date" id="" formControlName="data_nascita" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Residente a</label>
+            <input type="" id="" formControlName="residente_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">In qualità di</label>
+            <input type="" id="" formControlName="in_qualita_di" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Telefono</label>
+            <input type="" id="" formControlName="telefono" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Identificato con</label>
+            <input type="" id="" formControlName="identificato_con" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">N.</label>
+            <input type="" id="" formControlName="numero_documento" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Rilasciato da</label>
+            <input type="" id="" formControlName="rilasciato_da" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data rilascio</label>
+            <input type="date" id="" formControlName="data_rilascio" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data scadenza</label>
+            <input type="date" id="" formControlName="data_scadenza" class="form-control">
+          </div>
+        </div>
+      </div>
+      <h4>Funzionari</h4>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">U.P.G. (1)</label>
+          <input type="" id="" formControlName="upg1" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">U.P.G (2)</label>
+          <input type="" id="" formControlName="upg2" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Congiuntamente a</label>
+          <input type="" id="" formControlName="congiuntamente_a" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Ufficio</label>
+          <select id="" formControlName="ufficio" class="form-select">
+            <option value="siml" selected>SIML</option>
+            <option value="spsal">SPSAL</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Il giorno</label>
+          <input type="date" id="" formControlName="il_giorno" class="form-control">
+        </div>
+        <div class="col-md"></div>
+      </div>
+      <div formGroupName="alla_presenza_di">
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Alla presenza di</label>
+            <input type="" id="" formControlName="nominativo" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Nato/a a</label>
+            <input type="" id="" formControlName="nato_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Il</label>
+            <input type="date" id="" formControlName="data_nascita" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Residente a</label>
+            <input type="" id="" formControlName="residente_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">In qualità di</label>
+            <input type="" id="" formControlName="in_qualita_di" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Telefono</label>
+            <input type="" id="" formControlName="telefono" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Identificato con</label>
+            <input type="" id="" formControlName="identificato_con" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">N.</label>
+            <input type="" id="" formControlName="numero_documento" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Rilasciato da</label>
+            <input type="" id="" formControlName="rilasciato_da" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data rilascio</label>
+            <input type="date" id="" formControlName="data_rilascio" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data scadenza</label>
+            <input type="date" id="" formControlName="data_scadenza" class="form-control">
+          </div>
+        </div>
+      </div>
+      <h4>Ispezione</h4>
+      <div class="form-check">
+        <input type="checkbox" id="" formGroupName="azienda_o_cantiere" value="azienda" class="form-check-input">
+        <label for="" class="form-check-label">Azienda</label>
+      </div>
+      <div formGroupName="azienda">
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Rag. Sociale</label>
+            <input type="" id="" formControlName="rag_sociale" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Comune</label>
+            <input type="" id="" formControlName="comune" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Via</label>
+            <input type="" id="" formControlName="via" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Sede Legale</label>
+            <input type="" id="" formControlName="sede_legale" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="" formGroupName="azienda_o_cantiere" value="cantiere" class="form-check-input">
+        <label for="" class="form-check-label">Cantiere</label>
+      </div>
+      <div formGroupName="cantiere">
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Nome cantiere</label>
+            <input type="" id="" formControlName="nome" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Comune</label>
+            <input type="" id="" formControlName="comune" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Via</label>
+            <input type="" id="" formControlName="via" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Impresa</label>
+            <input type="" id="" formControlName="impresa" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Sede Legale</label>
+            <input type="" id="" formControlName="sede_legale" class="form-control">
+          </div>
+        </div>
+        <div formGroupName="rappresentante_legale">
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Rappresentante legale</label>
+              <input type="" id="" formControlName="nominativo" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Nato/a a</label>
+              <input type="" id="" formControlName="nato_a" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Il</label>
+              <input type="date" id="" formControlName="data_nascita" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Residente a</label>
+              <input type="" id="" formControlName="residente_a" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">In qualità di</label>
+              <input type="" id="" formControlName="in_qualita_di" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Telefono</label>
+              <input type="" id="" formControlName="telefono" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Identificato con</label>
+              <input type="" id="" formControlName="identificato_con" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">N.</label>
+              <input type="" id="" formControlName="numero_documento" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <label for="" class="form-label">Rilasciato da</label>
+              <input type="" id="" formControlName="rilasciato_da" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Data rilascio</label>
+              <input type="date" id="" formControlName="data_rilascio" class="form-control">
+            </div>
+            <div class="col-md">
+              <label for="" class="form-label">Data scadenza</label>
+              <input type="date" id="" formControlName="data_scadenza" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4>HANNO PROCEDUTO AL SEQUESTRO</h4>
+      <textarea id="" formControlName="note_sequestro" rows="6" class="form-control no-resize"></textarea>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">N. cartelli</label>
+          <input type="number" min="0" id="" formControlName="n_cartelli" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">N. sigilli</label>
+          <input type="number" min="0" id="" formControlName="n_sigilli" class="form-control">
+        </div>
+      </div>
+      <div formControlName="testo_libero">
+        <p>
+          La/e <input type="" id="" formControlName="la_le" class="form-control w-auto">
+          sottoposta/e a SEQUESTRO è/sono costituita/e da
+          <textarea id="" formControlName="costituite_da" rows="6" class="form-control no-resize"></textarea>
+        </p>
+      </div>
+      <h4>Custode Giudiziario</h4>
+      <div formGroupName="custode_giudiziario">
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Rappresentante legale</label>
+            <input type="" id="" formControlName="nominativo" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Nato/a a</label>
+            <input type="" id="" formControlName="nato_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Il</label>
+            <input type="date" id="" formControlName="data_nascita" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Residente a</label>
+            <input type="" id="" formControlName="residente_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">In qualità di</label>
+            <input type="" id="" formControlName="in_qualita_di" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Telefono</label>
+            <input type="" id="" formControlName="telefono" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Identificato con</label>
+            <input type="" id="" formControlName="identificato_con" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">N.</label>
+            <input type="" id="" formControlName="numero_documento" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Rilasciato da</label>
+            <input type="" id="" formControlName="rilasciato_da" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data rilascio</label>
+            <input type="date" id="" formControlName="data_rilascio" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data scadenza</label>
+            <input type="date" id="" formControlName="data_scadenza" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Domicilio per la notifica degli atti</label>
+            <input type="" id="" formControlName="domicilio_notifica_atti" class="form-control">
+          </div>
+        </div>
+      </div>
+      <p>
+        Il presente verbale, redatto in triplice copia, viene letto e consegnato in copia al Sig.
+        <input type="" id="" formControlName="verbale_consegnato_a" class="form-control w-auto">, che sottoscrive per ricevuta, e trasmesso al Sig. Pubblico Ministero
+        presso il Tribunale di <input type="" id="" formControlName="tribunale" class="form-control w-auto"> per la prescritta procedura di convalida.
+      </p>
+      <button type="submit" class="btn btn-outline-blue d-block ms-auto">Invia</button>
+    </form>
+  </div>
+</div>

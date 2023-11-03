@@ -1,0 +1,149 @@
+<button id="goBackButton" type="button" class="btn btn-outline-blue action" routerLink="/ispezioni"
+    style="background-color:rgb(0, 85, 175); color:white">
+    <i class=""></i>
+    <span>Indietro</span>
+</button>
+
+<div class="container-fluid" id="lista-trasferimento-ispezioni">
+    <h3> Trasferimento Ispezioni </h3>
+    <div class="actions-container table-controls">
+        <div class="col-lg">
+            <label style="margin-right: 0.5rem"> DA </label>
+            <!-- Seleziona l'ispettore da cui trasferire le ispezioni -->
+            <select class="form-select" id="ispDA" #ispettoriDa (change)="selectedFromChangeHandler($event)"
+                (change)="getIspezioni(ispettoriDa.value)">
+                <option [value]="null" selected>Seleziona ispettore da...</option>
+                <option *ngFor="let i of ispettori" [value]="i.user_id">
+                    {{ i.cognome }} {{ i.nome }}
+                </option>
+            </select>
+        </div>
+        <div class="col-lg">
+            <!-- Seleziona l'ispettore a cui trasferire le ispezioni -->
+            <label style="margin-right: 0.5rem; margin-left: 0.5rem;"> A </label>
+            <select class="form-select" id="ispA" #ispettoriA (change)="selectedToChangeHandler($event)">
+                <option [value]="null" selected>Seleziona ispettore a...</option>
+                <option *ngFor="let i of ispettori" [value]="i.user_id">
+                    {{ i.cognome }} {{ i.nome }}
+                </option>
+            </select>
+        </div>
+        <div class="col-lg">
+            <!-- Invia le Ispezioni -->
+            <button type="button" id="sendIsp" (click)="inviaTrasferimento()" class="btn btn-outline-blue action">
+                <span> Trasferisci </span>
+            </button>
+        </div>
+    </div>
+    <div class="actions-container table-controls">
+        <div>
+            <!-- Seleziona tutti i checkbox -->
+            <button type="button" (click)="checkAll($event)" class="btn btn-outline-blue action">
+                <i class="fa fa-check-square" aria-hidden="true"></i>
+                <span> Seleziona tutto </span>
+            </button>
+        </div>
+        <div>
+            <!-- Deseleziona tutti i checkbox -->
+            <button type="button" (click)="uncheckAll($event)" class="btn btn-outline-blue action">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+                <span> Deseleziona tutto </span>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="selectedTo">
+        <div class="table-wrapper" *ngIf="!appService.isMobileView else datadeck">
+            <a-smart-table class="table-blue table-striped-light no-borders" id="tabella-trasferimento-ispezioni"
+                [data]="ispezioni" [paginator]="true" [exportable]="false">
+                <ng-template aTemplate="head">
+                    <tr>
+                        <th>
+                            <span class="label"> Seleziona </span>
+                        </th>
+                        <th>
+                            <a-table-sorter type="text" field="codice_ispezione"></a-table-sorter>
+                            <a-table-filter type="text" field="codice_ispezione"></a-table-filter>
+                            <span class="label"> CUI </span>
+                        </th>
+                        <th>
+                            <a-table-sorter type="text" field="descr"></a-table-sorter>
+                            <a-table-filter type="text" field="descr"></a-table-filter>
+                            <span class="label"> Descrizione </span>
+                        </th>
+                        <th>
+                            <a-table-sorter type="text" field="descr_motivo_isp"></a-table-sorter>
+                            <a-table-filter type="selection" field="descr_motivo_isp"
+                                [values]="motiviFiltrabili"></a-table-filter>
+                            <span class="label"> Motivo </span>
+                        </th>
+                        <th>
+                            <a-table-sorter type="text" field="cantiere_o_impresa"></a-table-sorter>
+                            <a-table-filter type="selection" field="cantiere_o_impresa"
+                                [values]="tipiFiltrabili"></a-table-filter>
+                            <span class="label"> Tipo </span>
+                        </th>
+                        <th>
+                            <a-table-sorter type="date" field="data"></a-table-sorter>
+                            <a-table-filter type="date" field="data"></a-table-filter>
+                            <span class="label"> Data </span>
+                        </th>
+                        <th>
+                            <a-table-sorter type="text" field="cognome_congiunto"></a-table-sorter>
+                            <a-table-filter type="text" field="cognome_congiunto"></a-table-filter>
+                            <span class="label"> Ispettore Congiunto </span>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template aTemplate="body" let-i>
+                    <tr>
+                        <td style="text-align: center"> <input type="checkbox" (change)="onCheck(i.id)"> <label
+                                for=" {{ i.id }} "> </label> </td>
+                        <td>{{ i.codice_ispezione }}</td>
+                        <td>{{ i.descr }}</td>
+                        <td>{{ i.descr_motivo_isp }}</td>
+                        <td>{{ i.cantiere_o_impresa }}</td>
+                        <td>{{ i.data_ispezione | italianDate }}</td>
+                        <td>{{ i.cognome_congiunto }} {{i.nome_congiunto}}</td>
+                    </tr>
+                </ng-template>
+            </a-smart-table>
+        </div>
+        <ng-template #datadeck>
+            <a-data-deck [data]="ispezioni" [paginator]="true" [filters]="dataFiltersConf" [sorters]="dataSortersConf">
+                <ng-template aTemplate="card" let-i>
+                    <div class="card-body">
+                        <div class="data-wrapper">
+                            <span class="label"> </span>
+                            <span class="value"> <input type="checkbox" (change)="onCheck(i.id)"> <label
+                                    for=" {{ i.id }} "> </label> </span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="label"> CUI </span>
+                            <span class="value">{{ i.codice_ispezione }}</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="label"> Descrizione </span>
+                            <span class="value">{{ i.descr }}</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="label"> Motivo </span>
+                            <span class="value">{{ i.descr_motivo_isp }}</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="label"> Tipo </span>
+                            <span class="value">{{ i.cantiere_o_impresa }}</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="label"> Data </span>
+                            <span class="value">{{ i.data_ispezione }}</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="label"> Ispettore Congiunto </span>
+                            <span class="value">{{ i.cognome_congiunto }} {{i.nome_congiunto}}</span>
+                        </div>
+                    </div>
+                </ng-template>
+            </a-data-deck>
+        </ng-template>
+    </div>
+</div>

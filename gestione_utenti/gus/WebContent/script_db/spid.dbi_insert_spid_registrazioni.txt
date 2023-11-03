@@ -1,0 +1,60 @@
+select * from spid.dbi_insert_spid_registrazioni(1, 1, 'test', 'test', 'nddddddddddddddd',(select date_part('year',current_date) ||'-RIC-'|| (select to_char((select max(id)+1 from spid.spid_registrazioni),'fm00000000'))), '', '', -1,-1, -1, (select get_cliniche_vam(1)), -1, '', '','','', '','','', CURRENT_DATE,'', '','',-1,'',-1,'', '', '',-1, -1,'', '', -1,'','');
+
+
+CREATE OR REPLACE FUNCTION spid.dbi_insert_spid_registrazioni(
+	id_tipologia_utente integer,
+	id_tipo_richiesta integer,
+	cognome character varying,
+	nome character varying,
+	codice_fiscale character varying,
+	numero_richiesta character varying,
+	email character varying,
+	telefono character varying,
+	id_ruolo_gisa integer,
+	id_ruolo_bdu integer,
+	id_ruolo_vam bigint,
+	id_clinica_vam integer[],
+	id_ruolo_gisa_ext bigint,
+	identificativo_ente character varying,
+	piva_numregistrazione character varying,
+	comune character varying,
+	nominativo_referente character varying,
+	ruolo_referente character varying,
+	email_referente character varying,
+	telefono_referente character varying,
+	data_richiesta timestamp without time zone,
+	codice_gisa character varying,
+	indirizzo character varying,
+	cap character varying,
+	id_gestore_acque bigint,
+	pec character varying,
+	id_ruolo_digemon bigint,
+	numero_ordine_vet character varying,
+	provincia_ordine_vet character varying,
+	numero_autorizzazione_regionale_vet character varying,
+	id_asl integer,
+	id_tipologia_trasp_dist integer,
+	numero_decreto_prefettizio character varying,
+	scadenza_decreto_prefettizio character varying,
+	id_guc_ruoli integer,
+	ip character varying,
+	user_agent character varying)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+	id_ integer;
+BEGIN
+
+	INSERT INTO spid.spid_registrazioni
+	(id_tipologia_utente, id_tipo_richiesta, cognome, nome,codice_fiscale, numero_richiesta,email, telefono,id_ruolo_gisa, id_ruolo_bdu, id_ruolo_vam, id_clinica_vam,id_ruolo_gisa_ext, identificativo_ente, piva_numregistrazione,comune, nominativo_referente, ruolo_referente, email_referente,telefono_referente, data_richiesta, codice_gisa, indirizzo, cap,id_gestore_acque, pec, id_ruolo_digemon,numero_ordine_vet, provincia_ordine_vet,numero_autorizzazione_regionale_vet,id_asl, id_tipologia_trasp_dist,numero_decreto_prefettizio, scadenza_decreto_prefettizio, id_guc_ruoli,ip, user_agent)
+	VALUES
+	(id_tipologia_utente, id_tipo_richiesta, cognome, nome,codice_fiscale, numero_richiesta,email, telefono,id_ruolo_gisa, id_ruolo_bdu, id_ruolo_vam, id_clinica_vam,id_ruolo_gisa_ext, identificativo_ente, piva_numregistrazione,comune, nominativo_referente, ruolo_referente, email_referente,telefono_referente, data_richiesta, codice_gisa, indirizzo, cap,id_gestore_acque, pec, id_ruolo_digemon,numero_ordine_vet, provincia_ordine_vet,numero_autorizzazione_regionale_vet,id_asl, id_tipologia_trasp_dist,numero_decreto_prefettizio, scadenza_decreto_prefettizio, id_guc_ruoli,ip, user_agent)
+	RETURNING id into id_;
+	
+	return id_;
+
+END;
+$BODY$;

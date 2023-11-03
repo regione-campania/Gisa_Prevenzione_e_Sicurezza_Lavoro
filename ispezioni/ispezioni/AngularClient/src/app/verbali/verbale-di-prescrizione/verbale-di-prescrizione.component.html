@@ -1,0 +1,157 @@
+<div class="verbale" id="verbale-di-prescrizione">
+  <div class="header-verbale text-center">
+    <h2>VERBALE DI PRESCRIZIONE</h2>
+    <p>(ai sensi dell’art. 20 c. 1 del D.Lgs. 19/12/1994 n. 758)</p>
+  </div>
+  <div class="body-verbale">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label"><strong>Proc. Pen.</strong></label>
+          <input type="" id="" formControlName="proc_pen" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label"><strong>R.G.N.R.</strong></label>
+          <input type="" id="" formControlName="rgnr" class="form-control">
+        </div>
+      </div>
+      <h4>Funzionari</h4>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">U.P.G. (1)</label>
+          <input type="" id="" formControlName="upg1" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">U.P.G (2)</label>
+          <input type="" id="" formControlName="upg2" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Congiuntamente a</label>
+          <input type="" id="" formControlName="congiuntamente_a" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">Ufficio</label>
+          <select id="" formControlName="ufficio" class="form-select">
+            <option value="siml" selected>SIML</option>
+            <option value="spsal">SPSAL</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="" class="form-label">Il giorno</label>
+          <input type="date" id="" formControlName="data_fase" class="form-control">
+        </div>
+        <div class="col-md">
+          <label for="" class="form-label">si sono recati presso</label>
+          <input type="" id="" formControlName="presso" class="form-control">
+        </div>
+      </div>
+      <p>
+        <strong>
+          Per quanto accertato in fase di ispezione, nelle more di perfezionamento della pratica con richiesta
+          documentale
+          elevata con altro verbale notificato in data odierna, sono state rilevate le seguenti contravvenzioni ai sensi
+          del D.Lgs. 81/08 e ss.mm.ii.:
+        </strong>
+      </p>
+      <ol id="lista-articoli">
+        <li>
+          <div class="d-flex align-items-center">
+            <strong>Art.</strong><input type="" id="" formControlName="art_1" class="form-control numero-articolo">:
+            in quanto <input type="" id="" formControlName="in_quanto_1" class="form-control d-inline-block">;
+          </div>
+        </li>
+        <li>
+          <div class="d-flex align-items-center">
+            <strong>Art.</strong><input type="" id="" formControlName="art_2" class="form-control numero-articolo">:
+            in quanto <input type="" id="" formControlName="in_quanto_2" class="form-control d-inline-block">;
+          </div>
+        </li>
+        <li>
+          <div class="d-flex align-items-center">
+            <strong>Art.</strong><input type="" id="" formControlName="art_3" class="form-control numero-articolo">:
+            in quanto <input type="" id="" formControlName="in_quanto_3" class="form-control d-inline-block">.
+          </div>
+        </li>
+      </ol>
+      <h4>Contravventore</h4>
+      <div formGroupName="contravventore">
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Nome e Cognome</label>
+            <input type="" id="" formControlName="nominativo" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Nato/a a</label>
+            <input type="" id="" formControlName="nato_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Il</label>
+            <input type="date" id="" formControlName="data_nascita" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Residente a</label>
+            <input type="" id="" formControlName="residente_a" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">In qualità di</label>
+            <input type="" id="" formControlName="in_qualita_di" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Telefono</label>
+            <input type="" id="" formControlName="telefono" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Identificato con</label>
+            <input type="" id="" formControlName="identificato_con" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">N.</label>
+            <input type="" id="" formControlName="numero_documento" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <label for="" class="form-label">Rilasciato da</label>
+            <input type="" id="" formControlName="rilasciato_da" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data rilascio</label>
+            <input type="date" id="" formControlName="data_rilascio" class="form-control">
+          </div>
+          <div class="col-md">
+            <label for="" class="form-label">Data scadenza</label>
+            <input type="date" id="" formControlName="data_scadenza" class="form-control">
+          </div>
+        </div>
+      </div>
+      <h4>Prescrizioni</h4>
+      <div formGroupName="prescrizioni">
+        <ul id="lista-prescrizioni">
+          <li class="p-0">
+            <label for=""><strong>PUNTO 1:</strong></label>
+            <textarea formControlName="punto_1" id="" rows="2" class="form-control no-resize"></textarea>
+          </li>
+          <li class="p-0">
+            <label for=""><strong>PUNTO 2:</strong></label>
+            <textarea formControlName="punto_2" id="" rows="2" class="form-control no-resize"></textarea>
+          </li>
+          <li class="p-0">
+            <label for=""><strong>PUNTO 3:</strong></label>
+            <textarea formControlName="punto_3" id="" rows="2" class="form-control no-resize"></textarea>
+          </li>
+        </ul>
+        <label for="" class="form-label">Tempo massimo per eseguire le prescrizioni (in giorni)</label>
+        <input type="number" id="" formControlName="tempo_massimo" class="form-control w-auto" min="1">
+      </div>
+      <button type="submit" class="btn btn-outline-blue d-block ms-auto">Invia</button>
+    </form>
+  </div>
+</div>

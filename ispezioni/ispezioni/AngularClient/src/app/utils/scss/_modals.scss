@@ -1,0 +1,37 @@
+@use "./colors" as c;
+
+.modal-header,
+.modal-body {
+  padding: 0.75rem 1rem;
+}
+
+.modal-header {
+  border: none !important;
+}
+
+.modal-body:last-child {
+  border-radius: inherit;
+}
+
+.system-modal {
+
+  &.modal-xl {
+    max-width: 800px;
+  }
+
+  .modal-content {
+    border: none;
+  }
+
+  .modal-header {
+    background-color: var(--bs-blue, c.$blue);
+    color: white;
+  }
+}
+
+.loading-dialog-modal {
+  .modal-content {
+    background-color: transparent;
+    border: none;
+  }
+}

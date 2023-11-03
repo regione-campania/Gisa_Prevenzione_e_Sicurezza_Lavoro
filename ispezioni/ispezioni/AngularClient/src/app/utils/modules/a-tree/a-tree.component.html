@@ -1,0 +1,16 @@
+<ul class="a-tree">
+  <a-tree-node
+    *ngIf="root"
+    [id]=" root.id"
+    [name]="root.name"
+    [data]="root.data"
+    [level]="0"
+    [selectable]="root.selectable"
+    [selected]="root.selectable && root.selected"
+    [expanded]="root.expanded || false"
+    [disabled]="root.disabled || false"
+    [children]="root.children"
+    (onChange)="changeEvent.emit(this)"
+    (onClick)="clickEvent.emit($event)">
+  </a-tree-node>
+</ul>

@@ -1,0 +1,20 @@
+<div class="notification-message box-3d rounded" [ngClass]="notificationClass">
+  <div class="notification-header">
+    <button type="button" class="btn-close d-block ms-auto"
+      (click)="closeEvent.emit()">
+    </button>
+  </div>
+  <div class="notification-body">
+    <div class="icon-wrapper">
+      <ng-container [ngSwitch]="notificationClass">
+        <i class="icon fa-solid fa-circle-info" *ngSwitchCase="'info'"></i>
+        <i class="icon fa-solid fa-circle-check" *ngSwitchCase="'success'"></i>
+        <i class="icon fa-solid fa-circle-xmark" *ngSwitchCase="'error'"></i>
+        <i class="icon fa-solid fa-circle-exclamation" *ngSwitchCase="'warning'"></i>
+      </ng-container>
+    </div>
+    <div class="content-wrapper">
+      <div class="content">{{content}}</div>
+    </div>
+  </div>
+</div>

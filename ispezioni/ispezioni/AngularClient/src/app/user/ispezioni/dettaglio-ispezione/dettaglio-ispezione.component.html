@@ -1,0 +1,764 @@
+<a-navigator *ngIf="dettaglioIspezione && dettaglioIspezione.ispezione" [header]="header" [closable]="true"
+  (onClose)="closeEvent.emit()" (viewChange)="onNavigatorViewChange($event)">
+  <ng-template #header>
+    <button *ngIf="navService.canGoBack()" (click)="navService.goBack(); reload();" class="btn btn-primary">Indietro
+    </button>
+    <button (click)="scaricaVerbaleBianco()" class="btn btn-outline-blue">
+      <i class="icon fa-regular fa-file"></i>
+      <span> Scarica Template </span>
+    </button>
+    <h3 class="m-0 w-100 d-flex justify-content-between">
+      <span> Ispezione {{ dettaglioIspezione.ispezione?.codice_ispezione }}
+        [Stato:
+        {{
+        dettaglioIspezione.ispezione.descr_stato_ispezione
+        }}]</span>
+        <div>
+          <button type="button" class="btn btn-outline-blue ms-2 h-auto" (click)="modificaIspezione()"
+          *ngIf="dettaglioIspezione.ispezione.modificabile && !navService.canGoBack()">
+          <i class="fas fa-edit"></i>
+          Modifica Ispezione
+        </button>
+        <button type="button" class="btn btn-outline-red ms-2 h-auto" (click)="chiudiIspezione()"
+          *ngIf="dettaglioIspezione.ispezione.modificabile  && !navService.canGoBack()">
+          <i class="fas fa-save"></i>
+          Chiudi Ispezione
+        </button>
+        </div>
+    </h3>
+  </ng-template>
+  <ng-template aNavigatorView="Dettaglio Ispezione">
+    <div class="modal-section" id="ispezione">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="wrapper">
+            <span class="label">ASL</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.descr_ente
+              }}</span>
+          </div>
+          <div class="wrapper">
+            <span class="label">Servizio</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.servizio
+              }}</span>
+          </div>
+          <!--<div class="wrapper" *ngIf="dettaglioIspezione.ispezione.descr_ente_uo">
+            <span class="label">Ente Congiunto</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.descr_ente_uo
+              }}</span>
+          </div>-->
+
+          <div class="wrapper" *ngFor="let ente of dettaglioIspezione.ispezione.id_ente_uo_multiple">
+            <span class="label">Ente Congiunto</span>
+            <span *ngIf="ente.id_ente_uo != '-1' else altroEnteBlock" class="value">{{
+              ente.descr_ente_uo
+              }}</span>
+          </div>
+          <ng-template #altroEnteBlock>
+            <div class="wrapper" *ngIf="dettaglioIspezione.ispezione.altro_ente">
+              <span class="label"></span>
+              <span class="value">{{
+                dettaglioIspezione.ispezione.altro_ente
+                }}</span>
+            </div>
+          </ng-template>
+          
+
+          <div class="wrapper">
+            <span class="label">Note</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.note
+              }}</span>
+          </div>
+
+          <!--<div class="wrapper" *ngIf="dettaglioIspezione.ispezione.id_ente_uo == -1">
+            <span class="label"></span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.altro_ente
+              }}</span>
+          </div>-->
+        </div>
+        <div class="col-lg-6">
+          <div class="wrapper">
+            <span class="label">Motivo</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.descr_motivo_isp
+              }}</span>
+          </div>
+
+          <div *ngIf="dettaglioIspezione.ispezione.ente_richiedente != null" class="wrapper">
+            <span class="label">Ente Richiedente</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.ente_richiedente
+              }}</span>
+          </div>
+
+          <div class="wrapper">
+            <span class="label">Tipo</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.cantiere_o_impresa
+              }}</span>
+          </div>
+          <div class="wrapper">
+            <span class="label">Data</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.data_ispezione | italianDate
+              }}</span>
+          </div>
+
+          <div class="wrapper">
+            <span class="label">Luogo</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.luogo
+              }}</span>
+          </div>
+          <div *ngIf="dettaglioIspezione.ispezione.descr_esito_ispezione" class="wrapper">
+            <span class="label">Esito ispezione</span>
+            <span class="value">{{
+              dettaglioIspezione.ispezione.descr_esito_ispezione
+              }}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal-section" id="cantiere"
+      *ngIf="dettaglioIspezione.ispezione.cantiere_o_impresa.toLowerCase() === 'cantiere'">
+      <div class="row">
+        <div class="col-lg">
+          <h5>Cantiere</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="wrapper">
+            <span class="label">Denominazione</span>
+            <span class="value">{{
+              dettaglioIspezione.cantiere.denominazione
+              }}</span>
+          </div>
+          <div class="wrapper">
+            <span class="label">Natura Opera</span>
+            <span class="value">{{
+              dettaglioIspezione.cantiere.natura_opera
+              }}</span>
+          </div>
+          <div class="wrapper">
+            <span class="label">Data</span>
+            <span class="value">{{
+              dettaglioIspezione.cantiere.data_notifica | italianDate
+              }}</span>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="wrapper">
+            <span class="label">Comune</span>
+            <span class="value">{{ dettaglioIspezione.cantiere.comune }}</span>
+          </div>
+          <div class="wrapper">
+            <span class="label">Provincia</span>
+            <span class="value">{{
+              dettaglioIspezione.cantiere.cod_provincia
+              }}</span>
+          </div>
+          <div class="wrapper">
+            <span class="label">Indirizzo</span>
+            <span class="value">
+              {{ dettaglioIspezione.cantiere.via }}
+              <ng-container *ngIf="dettaglioIspezione.cantiere.civico">,</ng-container>
+              {{ dettaglioIspezione.cantiere.civico }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-section" id="imprese" *ngIf="dettaglioIspezione.imprese.length > 0">
+      <div class="row">
+        <div class="col-lg">
+          <h5>Imprese Ispezionate</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg">
+          <table class="table-blue no-borders">
+            <thead>
+              <tr>
+                <th>Nome Azienda/Impresa</th>
+                <th>P.IVA</th>
+                <th>Codice fiscale</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let imp of dettaglioIspezione.imprese">
+                <td>{{ imp.nome_azienda }}</td>
+                <td>{{ imp.partita_iva }}</td>
+                <td>{{ imp.codice_fiscale }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Persone Cantiere -->
+    <div class="modal-selection" id="personeCantiere" *ngIf="this.dettaglioIspezione.ispezione.cantiere_o_impresa=='Cantiere'">
+      <div class="row">
+        <div class="col-lg">
+          <h5>Persone Cantiere</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg">
+          <table class="table-blue no-borders">
+            <thead>
+              <tr>
+                <th>Codice Fiscale</th>
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>Descrizione</th>
+                <th>PEC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let persona of this.personeCantiere">
+                <td>{{persona.codice_fiscale}}</td>
+                <td>{{persona.cognome}}</td>
+                <td>{{persona.nome}}</td>
+                <td>{{persona.descr}}</td>
+                <td>{{persona.ruolo_pec}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="modal-section" id="ispettori" *ngIf="isDirettore && !this.isTheSame"> -->
+    <div class="modal-section" id="ispettori">
+      <div class="row">
+        <div class="col-lg">
+          <h5>Ispettori ASL</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg">
+          <table class="table-blue no-borders">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Codice Fiscale</th>
+                <th>Ruolo</th>
+                <th>Ambito</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ this.dettaglioIspezione.ispezione.nome }}</td>
+                <td>{{ this.dettaglioIspezione.ispezione.cognome }}</td>
+                <td>{{ this.dettaglioIspezione.ispezione.codice_fiscale }}</td>
+                <td>{{ this.dettaglioIspezione.ispezione.ruolo_ispettore }}</td>
+                <td>{{ this.dettaglioIspezione.ispezione.ambito }}</td>
+              </tr>
+              <tr>
+                <td>{{ this.dettaglioIspezione.ispezione.nome_congiunto }}</td>
+                <td>{{ this.dettaglioIspezione.ispezione.cognome_congiunto }}</td>
+                <td>{{ this.dettaglioIspezione.ispezione.codice_fiscale_congiunto }}</td>
+                <td>{{ this.dettaglioIspezione.ispezione.ruolo_ispettore_congiunto }}</td>
+                <td>{{ this.dettaglioIspezione.ispezione.ambito_ispettore_congiunto }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <h5 class="d-flex justify-content-between align-items-center"
+      *ngIf="dettaglioIspezione.ispezione.modificabile">
+      <span>Aggiungi Fase</span>
+    </h5>
+    <button *ngIf="dettaglioIspezione.ispezione.modificabile" type="button" class="btn btn-outline-blue"
+      viewLink="Nuova Fase" ngbTooltip="Aggiungi verbale" placement="left" tooltipClass="tooltip tooltip-blue">
+      <i class="icon fas fa-plus"></i>
+      Aggiungi
+    </button>
+    <div class="modal-section" id="fasi" *ngIf="dettaglioIspezione.fasi.length > 0">
+      <div class="row">
+        <div class="col-lg">
+          <h5 class="d-flex justify-content-between align-items-center">
+            <span>Dettaglio Fasi</span>
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg">
+          <table class="table-blue no-borders" *ngIf="dettaglioIspezione.fasi.length > 0">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Verbale Allegato</th>
+                <th *ngIf="!dettaglioIspezione.ispezione.id_cantiere">Nome Azienda/Impresa</th>
+                <th *ngIf="dettaglioIspezione.ispezione.id_cantiere">Nome Impresa / Cantiere</th>
+                <th>Fase</th>
+                <!--<th>Esito</th>-->
+                <th>Avviso di pagamento</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fase of dettaglioIspezione.fasi">
+                <td>{{ fase.data_fase | italianDate }}</td>
+                <td>{{ fase.tipo_modulo || 'Da allegare' }} </td>
+                <td *ngIf="fase.id_impresa_sede">{{ fase.nome_azienda }}</td>
+                <td *ngIf="!fase.id_impresa_sede"> Intero cantiere </td>
+                <td>{{ fase.descr_fase }} {{ fase.altro_esito }}</td>
+                <!--<td>{{ fase.descr_esito_per_fase }}</td>-->
+                <td *ngIf="!fase.sanzione"><i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                  Aggiornamento in corso...</td>
+                <td *ngIf="fase.sanzione && fase.sanzione[0]">{{fase.sanzione[0].codice_avviso}}</td>
+                <td *ngIf="fase.sanzione && !fase.sanzione[0] && (fase.is_pagopa == true || !fase.id_modulo)">NON
+                  PRESENTE</td>
+                <td *ngIf="!(fase.sanzione && fase.sanzione[0]) && !fase.is_pagopa == true && fase.id_modulo">NON
+                  APPLICABILE</td>
+                <td>
+                  <button *ngIf="(fase.id_modulo || !dettaglioIspezione.ispezione.modificabile) else editFaseButton" class="btn btn-info action"
+                    (click)="getFaseInfo(fase.id_ispezione_fase)" viewLink="Fase">
+                    <i class="icon fas fa-search m-0"></i>
+                  </button>
+                  <ng-template #editFaseButton>
+                    <button *ngIf="!fase.id_modulo" class="btn btn-primary action"
+                      (click)="getFaseInfo(fase.id_ispezione_fase)" viewLink="Fase">
+                      <i class="icon fas fa-edit m-0"></i>
+                    </button>
+                  </ng-template>
+                  <button *ngIf="!fase.id_modulo && (!fase.sanzione || !fase.sanzione[0]) && dettaglioIspezione.ispezione.modificabile" class="btn btn-outline-red action"
+                  (click)="deleteFase(fase.id_ispezione_fase)">
+                  <i class="icon fas fa-trash m-0" *ngIf="!fase.id_modulo"></i>
+                </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="modal-section" id="allegati" *ngIf="dettaglioIspezione.allegati">
+      <div class="row">
+        <div class="col-lg">
+          <h5>Allegati</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg">
+          <table class="table-blue no-borders"></table>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template aNavigatorView="Fase">
+    <ng-container *ngIf="faseAttiva || (faseAttiva | json) != '{}'">
+      <div class="modal-section" id="fase" *ngIf="faseAttiva && faseAttiva.fase">
+        <div class="row">
+          <div class="col">
+            <h5>
+              <span>Fase</span>
+              <span *ngIf="faseAttiva.fase.descr_fase !== ''"> - </span>
+              <span>{{ faseAttiva.fase.descr_fase }}</span>
+            </h5>
+          </div>
+        </div>
+        <div *ngIf="faseAttiva.fase.id_impresa_sede else faseCantiere" class="row">
+          <div class="col-lg-6">
+            <div class="wrapper">
+              <span class="label">Data</span>
+              <span class="value">{{ faseAttiva.fase.data_fase | italianDate }}</span>
+            </div>
+            <div *ngIf="faseAttiva.fase.partita_iva" class="wrapper">
+              <span class="label">Partita IVA</span>
+              <span class="value">{{ faseAttiva.fase.partita_iva }}</span>
+            </div>
+            <div *ngIf="faseAttiva.fase.codice_fiscale" class="wrapper">
+              <span class="label">Codice Fiscale</span>
+              <span class="value">{{ faseAttiva.fase.codice_fiscale }}</span>
+            </div>
+            <div class="wrapper">
+              <span class="label">Nome Azienda/Impresa</span>
+              <span class="value">{{ faseAttiva.fase.nome_azienda }}</span>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="wrapper">
+              <span class="label">Fase
+              </span>
+              <span class="value">{{ faseAttiva.fase.descr_fase }}
+                {{ faseAttiva.fase.altro_esito }}</span>
+            </div>
+            <div *ngIf="faseAttiva.fase.descr_esito_per_fase" class="wrapper">
+              <span class="label">Esito</span>
+              <span class="value">{{ faseAttiva.fase.descr_esito_per_fase }}</span>
+            </div>
+          </div>
+        </div>
+        <ng-template #faseCantiere>
+          <div class="row">
+            <div class="col">
+              <div class="wrapper">
+                <span class="label">Data</span>
+                <span class="value">{{ faseAttiva.fase.data_fase | italianDate }}</span>
+              </div>
+              <div class="wrapper">
+                <span class="label">Cantiere</span>
+                <span class="value">{{ this.dettaglioIspezione.cantiere.denominazione }}</span>
+              </div>
+              <div class="wrapper">
+                <span class="label">CUC</span>
+                <span class="value">{{ this.dettaglioIspezione.cantiere.cuc }}</span>
+              </div>
+              <div class="wrapper">
+                <span class="label">Fase
+                </span>
+                <span class="value">{{ faseAttiva.fase.descr_fase }}
+                  {{ faseAttiva.fase.altro_esito }}</span>
+              </div>
+              <div class="wrapper">
+                <span class="label">Esito</span>
+                <span class="value">{{ faseAttiva.fase.descr_esito_per_fase }}</span>
+              </div>
+            </div>
+            <div id="personeCantiereViewList" class="col-lg-7 mx-3 px-3" *ngIf="this.dettaglioIspezione.ispezione.cantiere_o_impresa == 'Cantiere' && this.faseAttiva.fase.nome_azienda == null">
+              <div *ngFor="let persona of this.personeCantiere" class="wrapper">
+                <span class="label">{{ persona.descr }}</span>
+                <span class="value">{{ persona.codice_fiscale }}</span>
+                <span class="value">{{ persona.nome }} {{ persona.cognome }}</span>
+                <span class="value">{{ persona.ruolo_pec }}</span>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      <div class="modal-section" id="note-fase" *ngIf="faseAttiva && faseAttiva.fase && faseAttiva.fase.note">
+        <div class="row">
+          <div class="col-lg">
+            <h5>Note</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            {{ faseAttiva.fase.note }}
+          </div>
+        </div>
+      </div>
+      <div class="modal-section" id="sanzioni">
+        <div class="row">
+          <div class="col-lg">
+            <h5 class="d-flex justify-content-between align-items-center">
+              <span>Avvisi di Pagamento PagoPA</span>
+            </h5>
+          </div>
+        </div>
+        <div class="row" *ngIf="faseAttiva && faseAttiva.avvisiPagamento?.length == 0">
+          <span>Nessun Avviso di Pagamento associato</span>
+          <div *ngIf="!isFaseChiusa">
+            <span>Gli avvisi di pagamento devono essere aggiunti/associati solo a: </span>
+            <span *ngFor="let m of moduliVerbale"> 
+              <div *ngIf="m.is_pagopa" style="font-style: italic; margin-left: 20px;">      - {{m.descr}} </div>
+            </span>
+          </div>
+      </div>
+        <div class="row">
+          <div class="col-lg">
+            <loading-message *ngIf="gettingInfoSanzione; else tabellaSanzioni"></loading-message>
+            <ng-template #tabellaSanzioni>
+              <table class="table-blue no-borders" *ngIf="faseAttiva && faseAttiva.avvisiPagamento?.length > 0">
+                <ng-container *ngIf="avvisoPagamentoPagato as avviso; else avvisoNonPagato">
+                  <thead>
+                    <tr>
+                      <th>
+                        <span title="Identificativo Univoco Versamento">IUV</span>
+                      </th>
+                      <th>
+                        <span title="Identificativo Univoco Riscossione">IUR</span>
+                      </th>
+                      <th>Attestante</th>
+                      <th>Beneficiario</th>
+                      <th>Esito</th>
+                      <th>Stato</th>
+                      <th>Data</th>
+                      <th>Importo</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ avviso.identificativo_univoco_versamento }}</td>
+                      <td>{{ avviso.identificativo_univoco_riscossione }}</td>
+                      <td>{{ avviso.denominazione_attestante }}</td>
+                      <td>{{ avviso.denominazione_beneficiario }}</td>
+                      <td>{{ avviso.esito_singolo_pagamento }}</td>
+                      <td>{{ avviso.stato_pagamento.split('PAA_').join('').split('_').join(' ') }}</td>
+                      <td>{{ avviso.data_esito_singolo_pagamento | italianDate }}</td>
+                      <td>{{ avviso.singolo_importo_pagato | currency: 'EUR' }}</td>
+                      <td>
+                        <button class="btn btn-outline-blue float-end" (click)="scaricaRicevutaRT(avviso.p_id)">
+                          <i class="fa fa-download me-1" aria-hidden="true"></i>
+                          Scarica
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </ng-container>
+                <ng-template #avvisoNonPagato>
+                  <thead>
+                    <tr>
+                      <th>
+                        <span title="Codice avviso">Codice avviso</span>
+                      </th>
+                      <th>
+                        <span title="Identificativo Univoco Versamento">IUV</span>
+                      </th>
+                      <th>Importo</th>
+                      <th>Stato</th>
+                      <th>Data notifica</th>
+                      <th style="width: 23%;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let avv of faseAttiva.avvisiPagamento">
+                      <td>{{ avv?.codice_avviso }}</td>
+                      <td>{{ avv?.identificativo_univoco_versamento }}</td>
+                      <td>{{ avv?.importo_singolo_versamento | currency: 'EUR' }}</td>
+                      <td>{{ avv?.stato_pagamento.split('PAA_').join('').split('_').join(' ') }}</td>
+                      <td>{{ avv?.data_notifica | italianDate }}</td>
+                      <td>
+                        <div style="display: flex">
+                          <a class="btn btn-outline-blue float-end" (click)="scaricaAvviso(avv.p_id)"
+                            ngbTooltip="Scarica Avviso di Pagamento" placement="bottom"
+                            tooltipClass="tooltip tooltip-blue" download>
+                            <i class="fa fa-download me-1" aria-hidden="true"></i>
+                          </a>
+                          <a *ngIf="(avv.tipo_notifica == 'R' || avv.tipo_notifica == 'P') && isSanzioneAnnullabile"
+                            class="btn btn-outline-blue float-end" ngbTooltip="Modifica data notifica"
+                            placement="bottom" tooltipClass="tooltip tooltip-blue"
+                            (click)="modificaDataNotifica(avv.p_id, avv.data_notifica, avv.tipo_notifica, avv.data_scadenza, avv.data_generazione_iuv)">
+                            <i class="fas fa-edit me-1" aria-hidden="true"></i>
+                          </a>
+                          <a *ngIf="!isFaseChiusa && this.faseAttiva.avvisiPagamento.length > 0"
+                            class="btn btn-outline-red float-end" ngbTooltip="Disassocia Avviso di Pagamento"
+                            placement="bottom-right" tooltipClass="tooltip tooltip-red"
+                            (click)="disassociaPagamento(avv.p_id)">
+                            <i class="fa fa-chain-broken" aria-hidden="true"></i>
+                          </a>
+                          <a *ngIf="!isFaseChiusa && isSanzioneAnnullabile" class="btn btn-outline-red float-end"
+                            ngbTooltip="Annulla Avviso di Pagamento" placement="bottom"
+                            tooltipClass="tooltip tooltip-red" (click)="annullaPagamento(avv.p_id)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </ng-template>
+              </table>
+            </ng-template>
+          </div>
+        </div>
+        <ng-container *ngIf="!gettingInfoSanzione">
+          <div
+            *ngIf="!isFaseChiusa && dettaglioIspezione.ispezione.modificabile && faseAttiva && faseAttiva.avvisiPagamento && faseAttiva.avvisiPagamento.length == 0"
+            class="wrapper justifi-content-end">
+            <button type="button" class="btn btn-outline-blue" viewLink="Avvisi di Pagamento da Associare"
+              tooltipClass="tooltip tooltip-blue">
+              <i class="icon fas fa-link"></i>
+              Lista Avvisi di Pagamento
+            </button>
+            <button type="button" class="btn btn-outline-blue ms-2" viewLink="Nuovo Avviso di Pagamento PagoPA"
+              tooltipClass="tooltip tooltip-blue">
+              <i class="icon fas fa-plus"></i>
+              Aggiungi Avviso di Pagamento
+            </button>
+            <!--<ng-template #removeButton>-->
+            <!--<button *ngIf="isSanzioneAnnullabile" type="button" class="btn btn-outline-red icon-only ms-2"
+              ngbTooltip="Annulla tutti gli avvisi di pagamento" placement="left"
+              tooltipClass="tooltip tooltip-red" (click)="annullaSanzione()">
+              <i class="icon fas fa-xmark"></i>
+            </button>-->
+            <!--</ng-template>-->
+          </div>
+        </ng-container>
+      </div>
+      <div class="modal-section" id="verbali" *ngIf="faseAttiva && faseAttiva.verbali">
+        <div class="row">
+          <div class="col-lg">
+            <h5>Allega Verbali</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            <!--<div class="d-flex input-group" id="select-verbale-wrapper"
+                *ngIf="(!isFaseChiusa  && dettaglioIspezione.ispezione.modificabile)">
+              <button (click)="scaricaVerbaleBianco()" class="btn btn-outline-blue">
+                <i class="icon fa-regular fa-file"></i>
+                <span> Scarica Template </span>
+              </button>
+            </div>-->
+            <div *ngIf="(!isFaseChiusa  && dettaglioIspezione.ispezione.modificabile)">
+              Tipo Verbale
+            </div>
+            <div class="d-flex input-group" id="select-verbale-wrapper"
+              *ngIf="(!isFaseChiusa  && dettaglioIspezione.ispezione.modificabile) else tabellaVerbali">
+              <!-- formControlName="id_modulo" -->
+              <select #selectModulo class="form-select" id="id_modulo"
+                (change)="navService.storage.verbale.id_modulo = selectModulo.value">
+                <option [value]="null" selected>Seleziona...</option>
+                <option *ngFor="let m of moduliVerbale" [value]="m.id">{{ m.descr }}</option>
+              </select>
+              <!--<button type="button" class="btn btn-outline-blue" viewLink="Verbale">
+                <i class="fa fa-pencil me-1" aria-hidden="true"></i>
+                <span>Compila</span>
+              </button>-->
+            </div>
+            <div *ngIf="(!isFaseChiusa  && dettaglioIspezione.ispezione.modificabile)">
+              Allega Verbale
+            </div>
+            <div class="d-flex input-group" *ngIf="(!isFaseChiusa  && dettaglioIspezione.ispezione.modificabile)">
+              <input class="form-control" type="file" accept="application/pdf" (change)="allegaVerbaleCompleto($event)">
+              <button (click)="uploadVerbaleBiancoCompleto()" class="btn btn-primary">
+                <i class="fa fa-paperclip me-1"></i>
+                <span>Allega</span>
+              </button>
+            </div>
+
+            <!-- Tabella Verbali -->
+            <ng-template #tabellaVerbali>
+              <table class="table-blue no-borders">
+                <thead>
+                  <tr>
+                    <!--<th>Data</th>-->
+                    <th>Tipo Verbale</th>
+                    <th>Nome file</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <!--<td>{{ v.data | italianDate }}</td>-->
+                    <td>{{ this.verbaleAllegato.tipo }}</td>
+                    <td>{{ this.verbaleAllegato.titolo }}</td>
+                    <td>
+                      <div class="verbale-actions-container">
+                        <button *ngIf="this.faseAttiva.verbaleAllegato.length != 0" type="button"
+                          class="btn btn-outline-blue" (click)="scaricaVerbaleBiancoCompilato(null)">
+                          <i class="fa fa-download me-1"></i>
+                          <span>Scarica Verbale</span>
+                        </button>
+                        <!--<button *ngIf="!isFaseChiusa" type="button" class="btn btn-outline-blue"
+                          (click)="modificaVerbale(v)">
+                          <i class="fa fa-pencil me-1"></i>
+                          <span>Modifica</span>
+                        </button>-->
+                        <div *ngIf="dettaglioIspezione.ispezione.modificabile">
+                          <button id="deleteVerbale" type="button" class="btn btn-outline-red"
+                            (click)="eliminaVerbaleBianco(null)">
+                            <i class="fa fa-eraser me-1"></i>
+                            <!--<span *ngIf="!isFaseChiusa">Elimina</span>-->
+                            <span *ngIf="isFaseChiusa">Elimina verbale</span>
+                          </button>
+                        </div>
+                        <!--<div *ngIf="!isFaseChiusa" style="display: flex;">
+                          <input class="form-control" type="file" (change)="allegaVerbaleCompleto($event)">
+
+                          <button (click)="uploadVerbaleCompleto(v)" class="btn btn-outline-blue">
+                            <i class="fa fa-paperclip me-1"></i>
+                            <span>Allega verbale finale</span>
+                          </button>
+                        </div>-->
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-template>
+
+            <h5>Altri Allegati</h5>
+
+            <!-- Allega altro documento -->
+            <div style="margin-bottom: .5rem" class="d-flex input-group"
+              *ngIf="dettaglioIspezione.ispezione.modificabile && isFaseChiusa">
+              <input class="form-control" type="file" (change)="allegaVerbaleCompleto($event)">
+
+              <button (click)="uploadVerbaleBiancoCompleto()" class="btn btn-outline-blue">
+                <i class="fa fa-paperclip me-1"></i>
+                <span *ngIf="isFaseChiusa">Allega Altro Documento</span>
+              </button>
+            </div>
+            <!-- ########################## -->
+
+            <!-- Tabella Altri Allegati -->
+            <table *ngIf="this.altriAllegati.length != 0" class="table-blue no-borders">
+              <thead>
+                <tr>
+                  <th>Nome file</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let allegato of this.altriAllegati">
+                  <!--<td>{{ v.data | italianDate }}</td>-->
+                  <td>{{ allegato.titolo }}</td>
+                  <td>
+                    <div class="verbale-actions-container">
+                      <button *ngIf="faseAttiva.verbaleAllegato" type="button" class="btn btn-outline-blue"
+                        (click)="scaricaVerbaleBiancoCompilato(allegato.id)">
+                        <i class="fa fa-download me-1"></i>
+                        <span>Scarica Allegato</span>
+                      </button>
+                      <!--<button *ngIf="!isFaseChiusa" type="button" class="btn btn-outline-blue"
+                        (click)="modificaVerbale(v)">
+                        <i class="fa fa-pencil me-1"></i>
+                        <span>Modifica</span>
+                      </button>-->
+                      <div *ngIf="dettaglioIspezione.ispezione.modificabile">
+                        <button id="deleteAllegato" type="button" class="btn btn-outline-red"
+                          (click)="eliminaVerbaleBianco(allegato.id, true)">
+                          <i class="fa fa-eraser me-1"></i>
+                          <!--<span *ngIf="!isFaseChiusa">Elimina</span>-->
+                          <span *ngIf="isFaseChiusa">Elimina Allegato</span>
+                        </button>
+                      </div>
+                      <!--<div *ngIf="!isFaseChiusa" style="display: flex;">
+                        <input class="form-control" type="file" (change)="allegaVerbaleCompleto($event)">
+
+                        <button (click)="uploadVerbaleCompleto(v)" class="btn btn-outline-blue">
+                          <i class="fa fa-paperclip me-1"></i>
+                          <span>Allega verbale finale</span>
+                        </button>
+                      </div>-->
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
+  </ng-template>
+  <ng-template aNavigatorView="Nuova Fase">
+    <form-fase-ispezione [data]="dettaglioIspezione" (onSubmit)="insertFase($event)"></form-fase-ispezione>
+  </ng-template>
+  <ng-template aNavigatorView="Nuovo Avviso di Pagamento PagoPA">
+    <form-sanzione [data]="faseAttiva" (onSubmit)="navService.goBack()">
+    </form-sanzione>
+  </ng-template>
+  <ng-template aNavigatorView="Avvisi di Pagamento da Associare">
+    <lista-sanzioni-da-allegare mode="linking" [fase]="faseAttiva?.fase"></lista-sanzioni-da-allegare>
+  </ng-template>
+  <ng-template aNavigatorView="Fase">
+    <app-verbali [idModulo]="navService.storage.verbale.id_modulo" [idVerbale]="navService.storage.verbale.id_verbale"
+      [idIspezioneFase]="faseAttiva?.fase.id_ispezione_fase" (onSubmit)="navService.goBack()"></app-verbali>
+  </ng-template>
+</a-navigator>

@@ -1,0 +1,50 @@
+@use "../../scss/utils";
+
+.a-data-deck {
+  max-width: 512px;
+
+  .control-button {
+    background-color: white;
+    border: 1px solid var(--black);
+    color: var(--black);
+    width: 100%;
+    max-width: 136px;
+    min-height: 38px;
+    line-height: 1;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  #filter-control-col .control-button {
+    margin-right: auto;
+  }
+
+  #sorter-control-col .control-button {
+    margin-left: auto;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: auto;
+
+  &.sorter-icon {
+    width: 14px;
+  }
+}
+
+.active-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.25rem 0;
+}
+
+.confirm-button-wrapper {
+  margin: 1rem 0;
+}
+
+.field-select-wrapper {
+  margin-bottom: .5rem;
+}

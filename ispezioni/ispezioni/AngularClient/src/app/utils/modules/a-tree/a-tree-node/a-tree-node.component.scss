@@ -1,0 +1,90 @@
+.a-tree-node {
+
+  &:not(.expanded) {
+
+    .children {
+      height: 0;
+      overflow: hidden;
+    }
+  }
+
+  &.expanded {
+
+    &>.node-info>.expand-button>.icon {
+      transform: rotate(90deg);
+    }
+
+  }
+
+  .node-name {
+    position: relative;
+  }
+
+  .node-name .tooltiptext {
+    visibility: hidden;
+    width: 256px;
+    background-color: #1e2427;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    left: 100px;
+    top: 40px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+
+  .node-name:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .expand-button {
+    display: inline-block;
+    border: none;
+    background: transparent;
+    width: 32px;
+    height: 32px;
+    padding: 0px;
+    text-align: center;
+    position: relative;
+
+    .arrow-icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .node-name {
+    padding: 10px 8px;
+    line-height: 1;
+    border-radius: var(--border-radius, 0);
+  }
+
+  .node-selector {
+    flex: 1 0 16px;
+    min-width: 16px;
+    min-height: 16px;
+    margin: 8px;
+  }
+
+  .pulse {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    transform: scale(0);
+    transform-origin: center;
+  }
+}

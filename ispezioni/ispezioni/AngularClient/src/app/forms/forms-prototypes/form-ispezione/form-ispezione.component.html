@@ -1,0 +1,137 @@
+<div class="form-ispezione" [formGroup]="form">
+    <div *ngIf="form.get('ispezione')" formGroupName="ispezione">
+        <div class="form-field">
+            <div class="form-field">
+                <label for="per_conto_di" class="form-label">ASL Competente * </label>
+                <select #perconodi class="form-select" id="per_conto_di" formControlName="per_conto_di">
+                    <!--<optgroup *ngFor="let e of asl" [label]="e.descr">
+                        <option *ngFor="let c of e.children" [value]="c.id_ente_uo">{{c.descr_ente_uo}}</option>
+                    </optgroup>-->
+                    <option *ngFor="let a of asl" [value]="a.code" [selected]="true" disabled>{{a.description}}</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="servizio" class="form-label">Servizio * </label>
+                <select [attr.disabled]="this.pageName != 'Nuova Ispezione' ? 'disabled' : null" #servizio
+                    class="form-select" id="servizio" formControlName="id_servizio"
+                    (change)="aggiornaIspettori(servizio.value)">
+                    <option *ngFor="let s of servizi; let i = index" [value]="s.id">{{s.descr}}</option>
+                </select>
+            </div>
+
+            <!-- [selected]="i.user_id == this.ngSelected" -->
+            <div *ngIf="this.pageName == 'Nuova Ispezione'" class="form-field">
+                <label for="congiunto" class="form-label">Altro ispettore* </label>
+                <select #congiunto class="form-select" id="congiunto" formControlName="id_utente_access_congiunto"
+                    (change)="aggiornaAmbiti(congiunto.value)">
+                    <option *ngFor="let i of altriIspettori" [value]="i.user_id"> {{i.descr}} </option>
+                </select>
+            </div>
+
+            <!--<div *ngIf="this.pageName == 'Nuova Ispezione' && ambitiIspettori.length == 0" class="form-field">
+                <label for="ambito" class="form-label">Ambito* </label>
+                <br>
+                <label formControlName="id_ambito" value="null"> Tutti </label>
+            </div>-->
+
+            <div *ngIf="this.pageName == 'Nuova Ispezione'" class="form-field">
+                <label for="ambito" class="form-label">Ambito* </label>
+                <select #ambito class="form-select" id="ambito" formControlName="id_ambito">
+                    <option value="null"> Tutti </option>
+                    <option *ngFor="let a of ambitiIspettori" [value]="a.id_ambito"> {{a.ambito}} </option>
+                </select>
+            </div>
+
+            <!--(change)="patchValue('ispezione.descr_ente_uo', findEnteById(ente.value).descr_ente_uo)"-->
+            <div class="form-field">
+                <label for="ente_isp" class="form-label">Ente Congiunto</label>
+                <button (click)="addEnteCongiunto($event)" style="float: right;"  class="btn btn-outline-blue action">        
+                    <i class="icon fas fa-plus"></i>
+                </button>
+            </div>
+            
+            <div *ngFor="let uo of this.data.ispezione.id_ente_uo_multiple; index as i" style="display: flex;">
+                <select #ente class="form-select" id="id_ente_uo" (change)="patchEnteCongiuntoMultiple(ente.value, i)">
+                    <option value="null">Seleziona..</option>
+                    <optgroup *ngFor="let e of entiUopTree" [label]="e.descr">
+                        <option *ngFor="let c of e.children" [value]="c.id_ente_uo" [selected]="uo.id_ente_uo == c.id_ente_uo">{{c.descr_ente_uo}}</option>
+                    </optgroup>
+                </select>
+                <button (click)="removeEnteCongiunto($event, i)"  class="btn btn-outline-red action">
+                    <i class="icon fas fa-minus"></i>
+                </button>
+            </div>
+
+            <div class="form-field" *ngIf="checkEnteValueMultiple()">
+                <label class="form-label">Specificare altro ente *</label>
+                <input class="form-control" id="altro_ente" formControlName="altro_ente">
+            </div>
+
+            <div class="form-field">
+                <label for="id_motivo_isp" class="form-label">Motivo *</label>
+                <select #motivo class="form-select" id="id_motivo_isp" formControlName="id_motivo_isp"
+                    (change)="patchValue('ispezione.desc_motivo_isp', findMotivoById(motivo.value).desc_motivo_isp)">
+                    <option *ngFor="let m of motivi" [value]="m.id_motivo_isp">{{m.descr}}</option>
+                </select>
+            </div>
+
+            <!-- Ente Richiedente -->
+            <div class="form-field" *ngIf="checkEnteRichiedente(motivo.value)">
+                <label #ente_richiedente for="ente_richiedente" class="form-label"> Ente Richiedente </label>
+                <input class="form-control" id="ente_richiedente" formControlName="ente_richiedente">
+            </div>
+
+        </div>
+
+        <div class="form-field">
+            <fieldset id="cantiere_o_impresa">
+                <label class="form-label d-block">Tipo</label>
+                <div class="form-check form-check-inline"
+                    *ngIf="this.data?.ispezione.descr_stato_ispezione == 'INIZIALE' || (this.data?.ispezione.descr_stato_ispezione != 'INIZIALE' && this.data?.ispezione.cantiere_o_impresa == 'Cantiere')">
+                    <input class="form-check-input" type="radio" name="cantiere_o_impresa" id="cantiere"
+                        formControlName="cantiere_o_impresa" value="Cantiere">
+                    <label class="form-check-label" for="cantiere">Cantiere</label>
+                </div>
+                <div class="form-check form-check-inline"
+                    *ngIf="this.data?.ispezione.descr_stato_ispezione == 'INIZIALE' || (this.data?.ispezione.descr_stato_ispezione != 'INIZIALE' && this.data?.ispezione.cantiere_o_impresa == 'Impresa')">
+                    <input class="form-check-input" type="radio" name="cantiere_o_impresa" id="impresa"
+                        formControlName="cantiere_o_impresa" value="Impresa">
+                    <label class="form-check-label" for="impresa">Impresa</label>
+                </div>
+            </fieldset>
+        </div>
+        <div class="form-field">
+            <label for="data_ispezione" class="form-label">Data Ispezione *</label>
+            <input (change)="changeStatoIspezione()" type="date" class="form-control" id="data_ispezione"
+                formControlName="data_ispezione">
+            <!-- <ng-template #dataINCORSO><input type="date" class="form-control" id="data_ispezione" formControlName="data_ispezione"></ng-template> -->
+        </div>
+        <div class="form-field">
+            <label for="id_stato_ispezione">Stato *</label>
+            <p *ngIf="this.data?.ispezione.descr_stato_ispezione == 'INIZIALE' || this.data?.ispezione.descr_stato_ispezione == 'PROGRAMMATA' || isFutureDate; else selectINCORSO"
+                class="form-label"> {{this.form.value.ispezione.descr_stato_ispezione}} </p>
+            <ng-template #selectINCORSO>
+                <select #stato class="form-select" id="id_stato_ispezione" formControlName="id_stato_ispezione"
+                    (change)="patchValue('ispezione.descr_stato_ispezione', findStatoById(stato.value).descr_stato_ispezione_prossimo)">
+                    <option *ngFor="let s of data.stati_ispezione_successivi" [value]="s.id_stato_ispezione_prossimo">
+                        {{s.descr_stato_ispezione_prossimo}}
+                    </option>
+                </select>
+            </ng-template>
+        </div>
+        <div class="form-field">
+            <label for="descr_isp" class="form-label">Descrizione *</label>
+            <input class="form-control" id="descr_isp" formControlName="descr_isp">
+        </div>
+        <div class="form-field">
+            <label for="luogo" class="form-label">Luogo Ispezione</label>
+            <textarea class="form-control no-resize" id="luogo" formControlName="luogo" rows="3"></textarea>
+        </div>
+        <div class="form-field">
+            <label for="note" class="form-label">Note</label>
+            <textarea class="form-control no-resize" id="note" formControlName="note" rows="8"></textarea>
+        </div>
+    </div>
+    <strong>* campi obbligatori</strong>
+</div>

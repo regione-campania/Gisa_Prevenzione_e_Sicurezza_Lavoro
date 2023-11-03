@@ -1,0 +1,191 @@
+@use "../../table-controls.scss";
+
+.a-table-filter {
+  --searchbox-icon-bg: var(--blue, blue);
+  --apply-btn-bg: var(--blue, blue);
+  --reset-btn-bg: var(--orange, orange);
+  --reset-all-btn-bg: var(--red, red);
+  position: relative;
+  text-transform: none;
+}
+
+.filter-template {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  min-width: max-content;
+  padding: .5rem .55rem;
+  margin: 0;
+  opacity: 0;
+  background-color: white;
+  color: black;
+  animation: none;
+
+  &.visible {
+    display: block;
+    animation: fade-in .4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+
+.icon {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+}
+
+select,
+option {
+  text-transform: capitalize;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+
+  &.buttons-wrapper {
+    justify-content: flex-end;
+
+    .button {
+      min-width: 32px;
+      min-height: 32px;
+
+      &:not(:last-child) {
+        margin: 0 8px;
+      }
+
+      &.apply-button {
+        border: 1px solid var(--apply-btn-bg);
+        background-color: white;
+        color: var(--apply-btn-bg);
+        text-align: center;
+
+        .icon {
+          width: 100%;
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: var(--apply-btn-bg);
+          color: white;
+        }
+
+        &:hover {
+          .icon {
+            animation: flip .5s;
+          }
+        }
+
+        &:active,
+        &:focus {
+          box-shadow: var(--blue-outline);
+        }
+      }
+
+      &.reset-button {
+        border: 1px solid var(--reset-btn-bg);
+        background-color: white;
+        color: var(--reset-btn-bg);
+
+        .icon {
+          fill: var(--reset-btn-bg);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: var(--reset-btn-bg);
+          color: white;
+        }
+
+        &:hover {
+          .icon {
+            animation: rotate360 .5s;
+            fill: white;
+          }
+        }
+
+        &:active,
+        &:focus {
+          box-shadow: var(--orange-outline);
+        }
+      }
+
+      &.reset-all-button {
+        width: 100%;
+        margin: 0;
+        text-transform: capitalize;
+        border: 1px solid var(--reset-all-btn-bg);
+        background-color: white;
+        color: var(--reset-all-btn-bg);
+
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: var(--reset-all-btn-bg);
+          color: white;
+        }
+
+        &:hover {
+          span {
+            animation: shake .5s;
+          }
+        }
+
+        &:active,
+        &:focus {
+          box-shadow: var(--red-outline);
+        }
+      }
+    }
+  }
+}
+
+.a-table-text-filter {
+  .search-group {
+    .input-group-text {
+      background-color: var(--searchbox-icon-bg);
+      fill: white;
+      border-color: var(--searchbox-icon-bg);
+    }
+
+    .form-control {
+      max-width: 180px;
+    }
+  }
+}
+
+.a-table-selection-filter {
+  label {
+    font-weight: normal;
+  }
+}
+
+.a-table-date-filter {
+
+  .form-control,
+  .form-select,
+  #range-wrapper {
+    display: block;
+  }
+
+  .form-label {
+    font-weight: normal;
+    margin-bottom: 0.25rem;
+    font-size: .9rem;
+  }
+}
+
+.a-table-number-filter {
+
+  .filter-body {
+    width: 240px;
+    justify-content: space-evenly;
+
+    .form-control,
+    .form-select {
+      width: 80px;
+    }
+  }
+}

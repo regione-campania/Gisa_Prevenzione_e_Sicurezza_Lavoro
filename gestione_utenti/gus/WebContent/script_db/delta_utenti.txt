@@ -1,0 +1,416 @@
+-- get_delta_ruoli_allineabili()
+
+create table delta_ruoli_allineabili(
+	ruolo_integer integer,
+	endpoint text,
+	enabled boolean
+);
+
+insert into delta_ruoli_allineabili( ruolo_integer, endpoint, enabled)
+values
+(96,'Gisa','true'),
+(44,'Gisa','true'),
+(16,'Gisa','true'),
+(221,'Gisa','true'),
+(42,'Gisa','true'),
+(21,'Gisa','true'),
+(45,'Gisa','true'),
+(97,'Gisa','true'),
+(43,'Gisa','true'),
+(19,'Gisa','true'),
+(46,'Gisa','true'),
+(98,'Gisa','true'),
+(33,'Gisa','true'),
+(56,'Gisa','true'),
+(41,'Gisa','true'),
+(59,'Gisa','true'),
+(222,'Gisa','true');
+
+insert into delta_ruoli_allineabili( ruolo_integer, endpoint, enabled)
+values
+(3,'Vam','true'),
+(5,'Vam','true'),
+(2,'Vam','true'),
+(14,'Vam','true');
+
+insert into delta_ruoli_allineabili( ruolo_integer, endpoint, enabled)
+values
+(18,'bdu','true'),
+(29,'bdu','true'),
+(34,'bdu','true'),
+(20,'bdu','true'),
+(36,'bdu','true');
+
+insert into delta_ruoli_allineabili( ruolo_integer, endpoint, enabled)
+values
+(99,'Digemon','true');
+
+
+CREATE OR REPLACE FUNCTION public.get_delta_ruoli_allineabili(
+	endpoint_ text)
+    RETURNS table (id integer)
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+BEGIN
+
+    return query 
+	select ra.ruolo_integer from delta_ruoli_allineabili ra
+	where ra.endpoint = endpoint_
+	and ra.enabled = 'true';
+	
+END;
+$BODY$;
+
+
+-- prepare delta x endpoint
+CREATE OR REPLACE FUNCTION public.prepare_delta_utenti_bdu(
+	)
+    RETURNS TABLE(codice_fiscale character varying, ruolo_integer integer, asl_id integer, endpoint character varying, nome character varying, cognome character varying) 
+    LANGUAGE 'sql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+select codice_fiscale, ruolo_integer, asl_id, endpoint, nome, cognome from guc_utenti gu
+join guc_ruoli gr
+on gr.id_utente = gu.id
+where endpoint = 'bdu'
+and gu.asl_id > 0 and gr.ruolo_integer in (select * from get_delta_ruoli_allineabili('bdu'))
+and gr.trashed is null and gu.enabled = 'true' and length(codice_fiscale) = 16
+	
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.prepare_delta_utenti_digemon(
+	)
+    RETURNS TABLE(codice_fiscale character varying, ruolo_integer integer, asl_id integer, endpoint character varying, nome character varying, cognome character varying) 
+    LANGUAGE 'sql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+select codice_fiscale, ruolo_integer, asl_id, endpoint, nome, cognome from guc_utenti gu
+join guc_ruoli gr
+on gr.id_utente = gu.id
+where endpoint = 'Digemon'
+and gu.asl_id > 0 and gr.ruolo_integer in (select * from get_delta_ruoli_allineabili('Digemon'))
+and gr.trashed is null and gu.enabled = 'true' and length(codice_fiscale) = 16
+	
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.prepare_delta_utenti_gisa(
+	)
+    RETURNS TABLE(codice_fiscale character varying, ruolo_integer integer, asl_id integer, endpoint character varying, nome character varying, cognome character varying) 
+    LANGUAGE 'sql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+select codice_fiscale, ruolo_integer, asl_id, endpoint, nome, cognome from guc_utenti gu
+join guc_ruoli gr
+on gr.id_utente = gu.id
+where endpoint = 'Gisa'
+and gu.asl_id > 0 and gr.ruolo_integer in (select * from get_delta_ruoli_allineabili('Gisa'))
+and gr.trashed is null and gu.enabled = 'true' and length(codice_fiscale) = 16
+	
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.prepare_delta_utenti_vam(
+	)
+    RETURNS TABLE(codice_fiscale character varying, ruolo_integer integer, asl_id integer, endpoint character varying, nome character varying, cognome character varying) 
+    LANGUAGE 'sql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+select codice_fiscale, ruolo_integer, asl_id, endpoint, nome, cognome from guc_utenti gu
+join guc_ruoli gr
+on gr.id_utente = gu.id
+where endpoint = 'Vam'
+and gu.asl_id > 0 and gr.ruolo_integer in (select * from get_delta_ruoli_allineabili('Vam'))
+and gr.trashed is null and gu.enabled = 'true' and length(codice_fiscale) = 16
+	
+$BODY$;
+
+-- funzione interna, ritorna il delta utenti
+CREATE OR REPLACE FUNCTION public.prepare_delta_utenti(
+	endpoints text)
+    RETURNS TABLE(codice_fiscale character varying, ruolo_integer integer, asl_id integer, endpoint character varying, nome character varying, cognome character varying) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+DECLARE
+	query_ text;
+BEGIN
+	query_ := '';
+	IF(endpoints ilike '%gisa%') THEN
+		query_ := query_ || 'select g.codice_fiscale, g.ruolo_integer, g.asl_id, g.endpoint, g.nome, g.cognome from prepare_delta_utenti_gisa() as g union ';
+	END IF;
+	
+	IF(endpoints ilike '%vam%') THEN
+		query_ := query_ || 'select v.codice_fiscale, v.ruolo_integer, v.asl_id, v.endpoint, v.nome, v.cognome from prepare_delta_utenti_vam() as v union ';
+	END IF;
+	
+	IF(endpoints ilike '%bdu%') THEN
+		query_ := query_ || 'select b.codice_fiscale, b.ruolo_integer, b.asl_id, b.endpoint, b.nome, b.cognome from prepare_delta_utenti_bdu() as b union ';
+	END IF;
+	
+	IF(endpoints ilike '%digemon%') THEN
+		query_ := query_ || 'select d.codice_fiscale, d.ruolo_integer, d.asl_id, d.endpoint, d.nome, d.cognome from prepare_delta_utenti_digemon() as d union ';
+	END IF;
+	
+	--rimuovere l'ultimo 'union '
+	query_ := substring(query_,0,length(query_)-6);
+	
+return query execute query_;
+END;
+$BODY$;
+
+-- host_config
+create table host_config(
+	name text,
+	host text,
+	dbname text
+);
+
+insert into host_config (name, host, dbname)
+values ('demo','37.97.141.132', 'guc');
+
+insert into host_config (name, host, dbname)
+values ('ufficiale','131.1.255.93', 'guc');
+
+-- delta_endpoint
+create table delta_endpoint(
+	name text,
+	enabled boolean
+);
+
+insert into delta_endpoint (name, enabled)
+values ('Gisa','true');
+
+insert into delta_endpoint (name, enabled)
+values ('Vam','true');
+
+insert into delta_endpoint (name, enabled)
+values ('bdu','true');
+
+insert into delta_endpoint (name, enabled)
+values ('Digemon','true');
+
+
+-- get_host_config() ritorna l'url per l'utilizzo di dblink
+
+create or replace function get_host_config(ambiente text, nome_db text)
+returns text
+LANGUAGE 'plpgsql'
+COST 100
+VOLATILE PARALLEL UNSAFE
+as $BODY$
+DECLARE
+host_ text;
+dbname_ text;
+BEGIN
+	IF (ambiente is null or ambiente = '') THEN
+		RAISE EXCEPTION 'Indicare un ambiente';
+	END IF;
+	
+	select host from host_config
+	into host_
+	where name ilike ambiente;
+	
+	IF (host_ is not null OR host_ != '') THEN
+		select dbname from host_config
+		into dbname_
+		where dbname ilike nome_db;
+		IF (dbname_ is null OR dbname_ = '') THEN
+			RAISE EXCEPTION 'DB: ''%'' non trovato per l''ambiente: ''%''', nome_db,ambiente;
+		END IF;
+	ELSE
+		RAISE EXCEPTION 'Ambiente: ''%'' non trovato', ambiente;
+	END IF;
+	
+RETURN 'host='|| host_ ||' dbname='|| dbname_;
+END;
+$BODY$;
+
+-- delta_utenti
+
+CREATE OR REPLACE FUNCTION public.delta_utenti(
+	ambiente_esterno text,
+	endpoints text)
+    RETURNS TABLE(codice_fiscale character varying, ruolo_integer integer, asl_id integer, endpoint character varying, nome character varying, cognome character varying) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+DECLARE
+	dblink_config text;
+	query_ text = 'select * from prepare_delta_utenti('''||endpoints::text||''')';
+BEGIN
+	select * from get_host_config(ambiente_esterno,'guc') into dblink_config;
+	
+	return query 
+	select * from dblink(dblink_config::text,query_)
+	as r(codice_fiscale character varying, ruolo_integer integer, asl_id integer, endpoint character varying, nome character varying, cognome character varying)
+	except
+	select * from prepare_delta_utenti(endpoints)
+	order by codice_fiscale, endpoint, ruolo_integer;
+END;
+$BODY$;
+
+-- get cliniche vam per le richieste
+
+CREATE OR REPLACE FUNCTION public.get_cliniche_vam(
+	codice_fiscale_ text)
+    RETURNS integer[]
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+	lista_cliniche integer[];
+BEGIN
+	select array(select gcv.id_clinica from guc_cliniche_vam gcv
+	where id_utente in (select id from guc_utenti where codice_fiscale = codice_fiscale_))
+				 into lista_cliniche;
+	
+	return lista_cliniche;
+END;
+$BODY$;
+
+-- insert richieste spid
+
+CREATE OR REPLACE FUNCTION spid.dbi_insert_spid_registrazioni(
+	id_tipologia_utente integer,
+	id_tipo_richiesta integer,
+	cognome character varying,
+	nome character varying,
+	codice_fiscale character varying,
+	numero_richiesta character varying,
+	email character varying,
+	telefono character varying,
+	id_ruolo_gisa integer,
+	id_ruolo_bdu integer,
+	id_ruolo_vam bigint,
+	id_clinica_vam integer[],
+	id_ruolo_gisa_ext bigint,
+	identificativo_ente character varying,
+	piva_numregistrazione character varying,
+	comune character varying,
+	nominativo_referente character varying,
+	ruolo_referente character varying,
+	email_referente character varying,
+	telefono_referente character varying,
+	data_richiesta timestamp without time zone,
+	codice_gisa character varying,
+	indirizzo character varying,
+	cap character varying,
+	id_gestore_acque bigint,
+	pec character varying,
+	id_ruolo_digemon bigint,
+	numero_ordine_vet character varying,
+	provincia_ordine_vet character varying,
+	numero_autorizzazione_regionale_vet character varying,
+	id_asl integer,
+	id_tipologia_trasp_dist integer,
+	numero_decreto_prefettizio character varying,
+	scadenza_decreto_prefettizio character varying,
+	id_guc_ruoli integer,
+	ip character varying,
+	user_agent character varying)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+	id_ integer;
+BEGIN
+
+	INSERT INTO spid.spid_registrazioni
+	(id_tipologia_utente, id_tipo_richiesta, cognome, nome,codice_fiscale, numero_richiesta,email, telefono,id_ruolo_gisa, id_ruolo_bdu, id_ruolo_vam, id_clinica_vam,id_ruolo_gisa_ext, identificativo_ente, piva_numregistrazione,comune, nominativo_referente, ruolo_referente, email_referente,telefono_referente, data_richiesta, codice_gisa, indirizzo, cap,id_gestore_acque, pec, id_ruolo_digemon,numero_ordine_vet, provincia_ordine_vet,numero_autorizzazione_regionale_vet,id_asl, id_tipologia_trasp_dist,numero_decreto_prefettizio, scadenza_decreto_prefettizio, id_guc_ruoli,ip, user_agent)
+	VALUES
+	(id_tipologia_utente, id_tipo_richiesta, cognome, nome,codice_fiscale, numero_richiesta,email, telefono,id_ruolo_gisa, id_ruolo_bdu, id_ruolo_vam, id_clinica_vam,id_ruolo_gisa_ext, identificativo_ente, piva_numregistrazione,comune, nominativo_referente, ruolo_referente, email_referente,telefono_referente, data_richiesta, codice_gisa, indirizzo, cap,id_gestore_acque, pec, id_ruolo_digemon,numero_ordine_vet, provincia_ordine_vet,numero_autorizzazione_regionale_vet,id_asl, id_tipologia_trasp_dist,numero_decreto_prefettizio, scadenza_decreto_prefettizio, id_guc_ruoli,ip, user_agent)
+	RETURNING id into id_;
+	
+	return id_;
+
+END;
+$BODY$;
+
+-- execute_delta_utenti()
+
+CREATE OR REPLACE FUNCTION public.execute_delta_utenti(
+	ambiente_esterno text,
+	cf_utente text,
+	endpoints text)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+	count_utenti integer;
+	query_ text := 'select * from delta_utenti('''||ambiente_esterno||''','''||endpoints||''') ';
+	dblink_config text;
+	r record;
+	id_richiesta integer;
+	res text;
+	lista_cliniche integer[];
+BEGIN
+	select * from get_host_config(ambiente_esterno,'guc') into dblink_config;
+	
+	IF(cf_utente is not null and cf_utente != '') THEN
+		query_ := query_ || 'where codice_fiscale = '''|| cf_utente||'''';
+	END IF;
+	
+	--EXECUTE query_ into count_utenti;
+	count_utenti := 0;
+	res := '{';
+	
+	for r in EXECUTE query_
+	loop 
+		raise notice '% - % %', r.codice_fiscale, r.ruolo_integer, r.endpoint;
+		lista_cliniche := (select * from dblink(dblink_config::text,'select * from get_cliniche_vam('''||r.codice_fiscale||''')') as r (lista_cliniche integer[]));
+		-- inserimento richiesta
+		CASE
+			WHEN r.endpoint = 'Vam' THEN
+				IF lista_cliniche is not null THEN
+					id_richiesta := spid.dbi_insert_spid_registrazioni(1,1,r.cognome,r.nome,r.codice_fiscale,(select date_part('year',current_date) ||'-RIC-'|| (select to_char((select max(id)+1 from spid.spid_registrazioni),'fm00000000'))),'','',-1,-1,r.ruolo_integer,lista_cliniche,-1,'', '','','', '','','', CURRENT_DATE,'', '','',-1,'',-1,'', '', '',r.asl_id, -1,'', '', -1,'','');
+				END IF;
+				raise notice 'Vam';
+			WHEN r.endpoint = 'Gisa' THEN
+				id_richiesta := spid.dbi_insert_spid_registrazioni(1,1,r.cognome,r.nome,r.codice_fiscale,(select date_part('year',current_date) ||'-RIC-'|| (select to_char((select max(id)+1 from spid.spid_registrazioni),'fm00000000'))),'','',r.ruolo_integer,-1,-1,lista_cliniche,-1,'', '','','', '','','', CURRENT_DATE,'', '','',-1,'',-1,'', '', '',r.asl_id, -1,'', '', -1,'','');
+				raise notice 'Gisa';
+			WHEN r.endpoint = 'bdu' THEN
+				id_richiesta := spid.dbi_insert_spid_registrazioni(1,1,r.cognome,r.nome,r.codice_fiscale,(select date_part('year',current_date) ||'-RIC-'|| (select to_char((select max(id)+1 from spid.spid_registrazioni),'fm00000000'))),'','',-1,r.ruolo_integer,-1,lista_cliniche,-1,'', '','','', '','','', CURRENT_DATE,'', '','',-1,'',-1,'', '', '',r.asl_id, -1,'', '', -1,'','');
+				raise notice 'bdu';
+			WHEN r.endpoint = 'Digemon' THEN
+				id_richiesta := spid.dbi_insert_spid_registrazioni(1,1,r.cognome,r.nome,r.codice_fiscale,(select date_part('year',current_date) ||'-RIC-'|| (select to_char((select max(id)+1 from spid.spid_registrazioni),'fm00000000'))),'','',-1,-1,-1,lista_cliniche,-1,'', '','','', '','','', CURRENT_DATE,'', '','',-1,'',r.ruolo_integer,'', '', '',r.asl_id, -1,'', '', -1,'','');
+				raise notice 'Digemon';
+		END CASE;
+		
+		-- elabora richiesta
+		IF id_richiesta is not null THEN
+		res := res || '"' ||count_utenti || '":' || (select spid.processa_richiesta((select numero_richiesta from spid.spid_registrazioni where id = id_richiesta),6567));
+		count_utenti = count_utenti + 1;
+		id_richiesta := null;
+		END IF;
+	end loop;
+	--return count_utenti::text||' richieste elaborate; <br>RIEPILOGO<br><br>'||res;
+	res := res || '}';
+	return replace(res,'}"','},"');
+	
+END;
+$BODY$;

@@ -1,0 +1,26 @@
+<li class="a-tree-node clickable" [attr.id]="id" [hidden]="hidden"
+  [ngClass]="{'expanded': expanded, 'selected': selected, 'leaf-node': !hasChildren(), 'disabled': disabled}"
+  [ngStyle]="{'padding-left': level === 0 ? '0' : '32px'}" (click)="$event.stopPropagation(); clickEvent.emit(this)">
+  <div class="node-info wrapper">
+    <button type="button" class="expand-button" *ngIf="hasChildren()" (click)="toggle(); playAnimation()">
+      <svg class="icon arrow-icon mb-1 me-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+        <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+        <path
+          d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+      </svg>
+      <div class="pulse"></div>
+    </button>
+    <div class="wrapper node-name-wrapper" [ngStyle]="{'padding-left': hasChildren() ? '0' : '32px'}">
+      <input type="checkbox" class="node-selector form-check-input" *ngIf="selectable" [ngModel]="selected"
+        (ngModelChange)="changeStatus($event)" [indeterminate]="indeterminate" [disabled]="disabled">
+      <div class="node-name" [ngbTooltip]="data?.descrizione" container="body">{{name}}</div>
+    </div>
+  </div>
+  <ul class="children" *ngIf="hasChildren()">
+    <a-tree-node *ngFor="let child of children" [id]=" child.id" [name]="child.name" [level]="level!+1"
+      [data]="child.data" [selectable]="child.selectable" [selected]="child.selectable && child.selected"
+      [expanded]="child.expanded || false" [parentComponent]="this" [children]="child.children" [disabled]="child.disabled || false"
+      (onClick)="clickEvent.emit($event)" (onChange)="checkStatus(); changeEvent.emit()">
+    </a-tree-node>
+  </ul>
+</li>

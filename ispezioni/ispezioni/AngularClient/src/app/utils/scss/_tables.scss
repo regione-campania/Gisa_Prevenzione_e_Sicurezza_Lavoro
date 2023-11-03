@@ -1,0 +1,111 @@
+.table-container,
+.table-wrapper {
+  padding: 0;
+  overflow-x: auto;
+
+  table {
+    border: none;
+  }
+
+  &.rounded {
+
+    table {
+      border-collapse: separate;
+      border-spacing: 0px;
+      border-radius: var(--border-radius);
+
+      &>.paginator-wrapper:first-child {
+        border-radius: var(--border-radius) var(--border-radius) 0px 0px;
+      }
+
+      &>thead,
+      &>tbody,
+      &>tfoot {
+        &:first-child {
+          &>tr:first-child {
+
+            &>td,
+            &>th {
+              &:first-child {
+                border-radius: var(--border-radius) 0px 0px 0px;
+              }
+
+              &:last-child {
+                border-radius: 0px var(--border-radius) 0px 0px;
+              }
+            }
+          }
+        }
+
+        &:last-child {
+          &>tr:last-child {
+
+            &>td,
+            &>th {
+              &:first-child {
+                border-radius: 0px 0px 0px var(--border-radius);
+              }
+
+              &:last-child {
+                border-radius: 0px 0px var(--border-radius) 0px;
+              }
+            }
+          }
+        }
+      }
+
+
+      &>*:last-child {
+        border-radius: 0px 0px var(--border-radius) var(--border-radius);
+      }
+    }
+  }
+
+  &.table-striped {
+    --stripe-color: var(--bs-gray-400, lightgrey);
+    tbody {
+      tr:nth-of-type(even) {
+        background-color: var(--stripe-color);
+      }
+    }
+  }
+
+}
+
+table.table-striped {
+  --stripe-color: var(--bs-gray-400, lightgrey);
+  tbody {
+    tr:nth-of-type(even) {
+      background-color: var(--stripe-color);
+    }
+  }
+}
+
+table {
+
+  th,
+  td,
+  .a-table-paginator {
+    padding: 6px 8px;
+  }
+
+  thead {
+    th {
+      font-weight: 600;
+      text-transform: capitalize;
+      background: var(--table-primary-color);
+    }
+  }
+
+  tr {
+    border-radius: inherit;
+
+    &.clickable{
+      &:hover {
+        transition: 10ms cubic-bezier(0.22, 0.61, 0.36, 1);
+        box-shadow: var(--box-shadow-3d);
+        background: var(--table-primary-color);
+      }
+    }
+  }
+}

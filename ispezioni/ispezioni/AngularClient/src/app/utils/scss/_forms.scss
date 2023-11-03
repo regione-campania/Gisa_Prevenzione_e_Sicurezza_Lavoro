@@ -1,0 +1,45 @@
+.form-control[readonly] {
+  border-color: var(--light-grey);
+  background-color: #e9ecef;
+
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
+.form-check {
+
+  .form-check-input {
+    margin-top: .3rem;
+  }
+}
+
+input,
+select,
+textarea {
+
+  &.ng-dirty,
+  &.ng-touched {
+
+    &.ng-invalid {
+      --red-outline: 0 0 0 0.25rem rgba(222, 35, 41, 0.3);
+      border: 1px solid var(--red);
+      outline: 1px solid var(--red);
+
+      &:focus {
+        box-shadow: var(--red-outline);
+      }
+    }
+  }
+}
+
+.form-group.required label,
+label.required {
+  &:not(.form-check-label)::after {
+    content: "*";
+  }
+}
+
+input[type=checkbox] {
+  cursor: pointer;
+}
