@@ -7,6 +7,7 @@ const fs = require('fs');
 const conf = require('../config/config');
 const path = require('path');
 var httpProxy = require('http-proxy');
+const compression = require('compression');
 
 if(process.env.NODE_APP_INSTANCE == 0 || process.env.NODE_APP_INSTANCE == undefined && conf.ispezioniEnabled){ //se viene lanciato su pm2 solo il primo processo deve lanciare i cron
     const cron = require('../utils/cron');
@@ -32,6 +33,7 @@ const corsOptionsDelegate = (req, callback) => {
     callback(null, {origin: true, credentials: true})
 }
 
+app.use(compression());
 app.use(cors(corsOptionsDelegate)); //per permettere connessioni da angular e passaggio cookie
 app.use(cookieSession({
     secret: "mykey",

@@ -52,9 +52,9 @@ export class LoginComponent implements OnInit {
         Continuando a navigare sul sito accetterai automaticamente i cookie necessari e l'informativa alla privacy.
         </div>
         `,
-        footer: `<a style="margin: 10px" href="informativa">Link all'informativa sui cookie</a>
+        footer: `<a style="margin: 10px" href="/#/informativa">Link all'informativa sui cookie</a>
                 <br>
-                <a style="margin: 10px" href="https://sca.gisacampania.it/informativaPrivacy/">Link all'informativa alla privacy</a>`,
+                <a style="margin: 10px" href="./assets/informativaPrivacy.html">Link all'informativa alla privacy</a>`,
         showConfirmButton: true,
         confirmButtonText: 'Ok, accetto',
         backdrop: true,
