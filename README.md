@@ -2,7 +2,7 @@
 <img src="docs/logo-regione-campania.png">
 </p>
 
-# G.I.S.A. Sicurezza e Prevenzione sui luoghi di lavoro
+# GISA Campania - Prevenzione e Sicurezza Lavoro
 - [1. Descrizione e finalità del software](#1-descrizione-e-finalità-del-software)
   - [1.1 Descrizione della struttura repository](#11-descrizione-della-struttura-repository)
   - [1.2 Contesto di utilizzo e casi d'uso](#12-contesto-di-utilizzo-e-casi-duso)
@@ -126,7 +126,7 @@ Ogni cartella del repository ha questa struttura:
 
 ## **1.2 Contesto di utilizzo e casi d'uso**
 
- Il contesto di utilizzo e casi d'uso del Software sono descritti dettagliatamente nella [guida utente ispezione](https://gisasicurezzalavoro-coll.regione.campania.it/assets/Manuale_GISA_Sicurezza_Lavoro_Ispezioni.pdf) e [guida utente notifiche](https://gisasicurezzalavoro-coll.regione.campania.it/assets/Manuale_GISA_Sicurezza_Lavoro.pdf)
+ Il contesto di utilizzo e casi d'uso del Software sono descritti dettagliatamente nella [guida utente ispezione](https://gisasicurezzalavoro.regione.campania.it/assets/Manuale_GISA_Sicurezza_Lavoro_Ispezioni.pdf), in [guida utente notifiche](https://gisasicurezzalavoro.regione.campania.it/assets/Manuale_GISA_Notifiche_Preliminari.pdf) e [guida utente registrazione/profilazione](https://gisasicurezzalavoro.regione.campania.it/registrazione/ManualeModuloPre-SICUREZZA.pdf?v193181733)
  
 ## **1.3 Piattaforme abilitanti**
 
@@ -172,9 +172,11 @@ Stato Software : Stabile
 
 **Soggetti incaricati del mantenimento del progetto open source**
 
-U.S. s.r.l. 
+DXC Technology 
 ## **2.2 Indirizzo e-mail segnalazioni di sicurezza**
-Ogni segnalazione di eventuali problemi di sicurezza o bug relativo al software presente in questo repository, va segnalato unicamente tramite e-mail agli indirizzi presente nel file security.txt disponibile a questo [link](http://www.gisacampania.it/.well-known/security.txt)
+Ogni segnalazione relativa al software presente in questo repository, deve essere inoltrata rispettivamente a:
+- per problemi di sicurezza informatica a sicurezza.informatica@regione.campania.it
+- per bug applicativi a gisa.sicurezzalavoro@regione.campania.it
 
 NOTA: Le segnalazioni non vanno inviate attraverso l'issue tracker pubblico ma devono essere inviate confidenzialmente agli indirizzi e-mail presenti nel security.txt.
 
@@ -189,10 +191,8 @@ Una copia della Licenza è disponibile al seguente indirizzo: <https://www.gnu.o
 
 **NOTE:**
 
-In caso di riuso, in toto o in parte di GISA Prevenzione e Sicurezza sui luoghi di lavoro, è necessario notificare l'adozione in riuso tramite l'apertura di un ticket (o analogo meccanismo quale una pull request) in questo repository. Inoltre, al contempo per gli aspetti organizzativi utili a potenziare i benefici derivanti dalla pratica del riuso tra PP.AA., come la partecipazione alla **Cabina di regia** per la condivisione di eventuali modifiche/integrazioni o innovazioni, è necessario darne tempestiva comunicazione alle seguenti e-mail:
-
-[paolo.sarnelli@regione.campania.it]() 
+In caso di riuso, in toto o in parte di GISA Prevenzione e Sicurezza sui luoghi di lavoro, è necessario notificare l'adozione in riuso tramite l'apertura di un ticket (o analogo meccanismo quale una pull request) in questo repository. Inoltre, al contempo per gli aspetti organizzativi utili a potenziare i benefici derivanti dalla pratica del riuso tra PP.AA., come la partecipazione al **Centro di competenza e di supporto al riuso e al ciclo di vita del software GISA Campania** per la condivisione di eventuali modifiche/integrazioni o innovazioni, è necessario darne tempestiva comunicazione alle seguenti e-mail:
 
 [cinzia.matonti@regione.campania.it]()	
 
-Gli enti che aderiscono al riuso di GISA entreranno a far parte della Cabina di Regia per condividere e partecipare all'evoluzione di GISA insieme alle altre PP.AA.
+Gli enti che aderiscono al riuso di GISA entreranno a far parte del "Centro di competenza e di supporto al riuso e al ciclo di vita del software GISA Campania" per condividere e partecipare all'evoluzione di GISA insieme alle altre PP.AA.

@@ -6,7 +6,7 @@ publiccodeYmlVersion: '0.2'
 
 name: GISA Campania - Prevenzione e Sicurezza Lavoro
 url: 'https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro'
-releaseDate: '2024-01-16'
+releaseDate: '2024-02-05'
 platforms:
   - web
 
@@ -62,7 +62,3 @@ it:
   piattaforme:
     pagopa: true
 logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
-    
-
-
-

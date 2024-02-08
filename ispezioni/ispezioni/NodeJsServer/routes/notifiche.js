@@ -4,6 +4,9 @@ var router = express.Router();
 var conn = require('../db/connection');
 const mapUtilts = require("../utils/mapUtils");
 var auth = require('../utils/auth');
+var utils = require('../utils/utils');
+var config = require('../config/config');
+
 
 router.get("/getNotifiche", auth.authenticateToken, function (req, res) {
     console.log(req.authData);
@@ -112,7 +115,7 @@ router.post("/updateNotificaInfo", auth.authenticateToken, async function (req, 
 
         //geocode
         try {
-
+            if(config.hereMapsApiKey){
            // if (req.body.notifica.cantiere.lat == null && req.body.notifica.cantiere.lng == null) { //se lat e lng sono già valorizzati significa che è stata usata la localizzazione o il geocode già effettuato
 
                 var indirizzo = (req.body.notifica.cantiere.via == null ? '' : req.body.notifica.cantiere.via) + " " +
@@ -132,13 +135,13 @@ router.post("/updateNotificaInfo", auth.authenticateToken, async function (req, 
                         }
                     })
                 }
-            //}
+            }
 
         } catch (e) {
             console.log(e.stack);
         }
 
-        var url = `call gds.upd_dati('upd_notifica','${JSON.stringify(req.body.notifica).replace(/'/g, "''")}', ${idNotificante}, null)`;
+        var url = `call gds.upd_dati('upd_notifica','${JSON.stringify((req.body.notifica)).replace(/'/g, "''")}', ${idNotificante}, null)`;
         console.log(url);
         result = await conn.client.safequery(url);
         console.log(result.rows[0].joutput);
@@ -164,7 +167,7 @@ router.post("/checkNotifica", auth.authenticateToken, async function (req, res) 
 
     try {
 
-        var url = `call gds_srv.check_dati('check_notifica','${JSON.stringify(req.body.notifica).replace(/'/g, "''")}', ${idNotificante}, null)`;
+        var url = `call gds_srv.check_dati('check_notifica','${JSON.stringify((req.body.notifica)).replace(/'/g, "''")}', ${idNotificante}, null)`;
         console.log(url);
         result = await conn.client.safequery(url);
         console.log(result.rows[0].joutput);

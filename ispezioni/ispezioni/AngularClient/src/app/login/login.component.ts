@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
         `,
         footer: `<a style="margin: 10px" href="/#/informativa">Link all'informativa sui cookie</a>
                 <br>
-                <a style="margin: 10px" href="./assets/informativaPrivacy.html">Link all'informativa alla privacy</a>`,
+                <a style="margin: 10px" href="./assets/informativaPrivacy.pdf">Link all'informativa alla privacy</a>`,
         showConfirmButton: true,
         confirmButtonText: 'Ok, accetto',
         backdrop: true,
