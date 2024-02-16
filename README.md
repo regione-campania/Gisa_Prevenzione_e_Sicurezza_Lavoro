@@ -195,4 +195,6 @@ In caso di riuso, in toto o in parte di GISA Prevenzione e Sicurezza sui luoghi 
 
 [cinzia.matonti@regione.campania.it]()	
 
+[vincenzo.giordano@regione.campania.it]()	
+
 Gli enti che aderiscono al riuso di GISA entreranno a far parte del "Centro di competenza e di supporto al riuso e al ciclo di vita del software GISA Campania" per condividere e partecipare all'evoluzione di GISA insieme alle altre PP.AA.

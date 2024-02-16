@@ -9,6 +9,8 @@ url: 'https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro'
 releaseDate: '2024-02-05'
 platforms:
   - web
+  - iOS
+  - Android
 
 categories:
   - document-management
@@ -18,6 +20,18 @@ categories:
 developmentStatus: stable 
   
 softwareType: standalone/web
+
+dependsOn:
+  open:
+    - name: Apache Tomcat
+      optional: false
+      version: '9.0.73'
+    - name: PostgreSQL
+      optional: false
+      version: '15.x'
+    - name: OpenJDK
+      optional: false
+      version: 1.8.0_372
   
 description:
   it:
@@ -60,5 +74,27 @@ it:
   riuso:
     codiceIPA: r_campan
   piattaforme:
-    pagopa: true
+    cie: true
+    pagopa: false
+    spid: true
 logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
+it:
+    conforme:
+        misureMinimeSicurezza: true
+usedBy:
+  - Regione Campania
+  - ASL NA1 Centro
+  - ASL NA2 Nord
+  - ASL NA3 Sud
+  - ASL AV
+  - ASL BN
+  - ASL CE
+  - ASL SA
+  
+landingURL: 'https://gisasicurezzalavoro.regione.campania.it'
+legal:
+  authorsFile: |-
+    https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
+  license: AGPL-3.0-only
+  mainCopyrightOwner: Regione Campania
+  repoOwner: Regione Campania
