@@ -36,8 +36,10 @@ dependsOn:
 description:
   it:
     genericName: Gestionale
-    shortDescription: Piattaforma software open source per la gestione unificata su territorio regionale della Sicurezza sui luoghi di lavoro
-    longDescription: |
+    shortDescription: |-
+      Piattaforma software open source per la gestione unificata su territorio regionale della Sicurezza sui luoghi di lavoro
+    longDescription: |2+
+    
       GISA Sicurezza Lavoro è composto dai seguenti tre  moduli funzionali:
 
 
@@ -57,8 +59,6 @@ description:
       - Gestione unificata ruoli e utenti
       - Ricerca cantiere
       
-legal:
-  license: AGPL-3.0-only
       
 maintenance:
   type: internal
