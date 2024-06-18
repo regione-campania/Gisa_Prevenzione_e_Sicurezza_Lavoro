@@ -3,9 +3,9 @@
 # More info at https://github.com/italia/publiccode.yml
 
 publiccodeYmlVersion: '0.2'
-
 name: GISA Campania - Prevenzione e Sicurezza Lavoro
 url: 'https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro'
+landingURL: 'https://gisasicurezzalavoro.regione.campania.it'
 releaseDate: '2024-02-05'
 platforms:
   - web
@@ -104,7 +104,7 @@ usedBy:
   - ASL CE
   - ASL SA
   
-landingURL: 'https://gisasicurezzalavoro.regione.campania.it'
+
 legal:
   authorsFile: |-
     https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
