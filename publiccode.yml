@@ -9,8 +9,8 @@ url: 'https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro'
 releaseDate: '2024-02-05'
 platforms:
   - web
-  - iOS
-  - Android
+  - ios
+  - android
 
 categories:
   - document-management
@@ -36,29 +36,39 @@ dependsOn:
 description:
   it:
     genericName: Gestionale
-    shortDescription: |-
-      Piattaforma software open source per la gestione unificata su territorio regionale della Sicurezza sui luoghi di lavoro
+
     longDescription: |2+
-    
-      GISA Sicurezza Lavoro è composto dai seguenti tre  moduli funzionali:
+           
 
-
-      1. Gestione Notifiche Preliminari ai sensi dell’Art. 99 Capo I del D. Lgs. 81/08 da parte di:
+      GISA Campania - Prevenzione e Sicurezza Lavoro è composto dai seguenti moduli funzionali
+      
+      - Autenticazione tramite SPID/CIE/CNS
+      - Gestione Notifiche Preliminari ai sensi dell’Art. 99 Capo I del D. Lgs. 81/08 da parte di:
           - Committente o dal Responsabile dei lavori del   Cantiere che può compilare on line la notifica preliminare dell’apertura del Cantiere;
           - ASL, Ispettorato del Lavoro e Enti Bilaterali (Comitati Paritetici e Casse Edili) per ricevere le Notifiche Preliminari di apertura dei Cantieri;
           - dalla Regione per reportistica.
-      2. Gestione del Ciclo Ispettivo relativo alla sicurezza sui luoghi di
-      lavoro in accordo alla normativa vigente e con integrazione con PagoPA. 
+          
+      - Gestione del Ciclo Ispettivo relativo alla sicurezza sui luoghi di lavoro in accordo alla normativa vigente e con integrazione con PagoPA. 
 
-      3. Registro delle Macchine difformi.
+      - Registro delle Macchine difformi.
+      
+      Le tipologie di utenti che possono accedere al sistema sono:
+        - utenti regionali;
+        - utenti ASL;
+        - utenti delle casse edili (previa configurazione);
+        - utenti dell'ispettorato del lavoro (previa configurazione);
+        - cittadini che sono committenti di cantieri/imprese;
+        - professionisti responsabili dei lavori sul cantiere/impresa.
+      
+    shortDescription: |-
+      Piattaforma software open source per la gestione unificata su territorio regionale della Sicurezza sui luoghi di lavoro
 
     features:
       - Gestione Notifiche Preliminari
-      - Gestione Ciclo Ispettivo Sicurezza luoghi di lavoro
       - Registro Macchine difformi
       - Gestione unificata ruoli e utenti
       - Ricerca cantiere
-      
+      - Gestione Ciclo Ispettivo Sicurezza luoghi di lavoro (in sperimentazione)
       
 maintenance:
   type: internal
@@ -74,15 +84,16 @@ localisation:
 
 it:
   riuso:
-    codiceIPA: r_campan
+    codiceIPA: 'r_campan'
   piattaforme:
     cie: true
-    pagopa: false
+    pagopa: true
     spid: true
+  conforme:
+    misureMinimeSicurezza: true
+  countryExtensionVersion: '0.2'
 logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
-it:
-    conforme:
-        misureMinimeSicurezza: true
+    
 usedBy:
   - Regione Campania
   - ASL NA1 Centro
