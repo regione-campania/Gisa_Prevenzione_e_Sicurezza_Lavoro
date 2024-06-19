@@ -11,14 +11,13 @@ platforms:
   - web
   - ios
   - android
-
 categories:
   - document-management
   - data-collection
   - data-visualization
-  
+
 developmentStatus: stable 
-  
+
 softwareType: standalone/web
 
 dependsOn:
@@ -32,7 +31,7 @@ dependsOn:
     - name: OpenJDK
       optional: false
       version: 1.8.0_372
-  
+
 description:
   it:
     genericName: Gestionale
@@ -70,13 +69,19 @@ description:
       - Ricerca cantiere
       - Gestione Ciclo Ispettivo Sicurezza luoghi di lavoro (in sperimentazione)
       
+legal:
+  authorsFile: |-
+    https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
+  license: AGPL-3.0-only
+  mainCopyrightOwner: Regione Campania
+  repoOwner: Regione Campania
+
 maintenance:
   type: internal
   contacts:
     - affiliation: Regione Campania
       email: cinzia.matonti@regione.campania.it
       name: Cinzia Matonti
-      
 localisation:
   localisationReady: false
   availableLanguages:
@@ -92,8 +97,7 @@ it:
   conforme:
     misureMinimeSicurezza: true
   countryExtensionVersion: '0.2'
-logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
-    
+
 usedBy:
   - Regione Campania
   - ASL NA1 Centro
@@ -103,11 +107,4 @@ usedBy:
   - ASL BN
   - ASL CE
   - ASL SA
-  
-
-legal:
-  authorsFile: |-
-    https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
-  license: AGPL-3.0-only
-  mainCopyrightOwner: Regione Campania
-  repoOwner: Regione Campania
+logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
