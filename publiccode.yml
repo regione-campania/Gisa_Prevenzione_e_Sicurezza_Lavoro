@@ -41,7 +41,7 @@ description:
     longDescription: |2+
 
            
-      GISA Campania - Prevenzione e Sicurezza Lavoro è composto dai seguenti moduli funzionali
+      GISA Campania - Prevenzione e Sicurezza Lavoro è un sistema di gestione controlli ufficiali e notifiche preliminari composto dai seguenti moduli funzionali
       
       - Autenticazione tramite SPID/CIE/CNS
       - Gestione Notifiche Preliminari ai sensi dell’Art. 99 Capo I del D. Lgs. 81/08 da parte di:
@@ -54,37 +54,28 @@ description:
       Le tipologie di utenti che possono accedere al sistema sono:
         - utenti regionali;
         - utenti ASL;
-        - utenti delle casse edili (previa configurazione);
-        - utenti dell'ispettorato del lavoro (previa configurazione);
-        - cittadini che sono committenti di cantieri/imprese;
-        - professionisti responsabili dei lavori sul cantiere/impresa.
+        - utenti delle casse edili, previa configurazione e personalizzazione;
+        - utenti dell'ispettorato del lavoro, previa configurazione e personalizzazione;
+        - cittadini che sono committenti di cantieri e imprese;
+        - professionisti responsabili dei lavori sul cantiere e impresa.
       
     shortDescription: |-
-      Piattaforma software open source per la gestione unificata su territorio regionale della Sicurezza sui luoghi di lavoro
+      Piattaforma software open source per la gestione unificata su territorio regionale delle notifiche e controlli in materia di Sicurezza sui luoghi di lavoro
 
     features:
       - Gestione Notifiche Preliminari
       - Registro Macchine difformi
       - Gestione unificata ruoli e utenti
       - Ricerca cantiere
-      - Gestione Ciclo Ispettivo Sicurezza luoghi di lavoro (in sperimentazione)
- 
-legal:
-  authorsFile: |-
-    https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
-  license: AGPL-3.0-only
-  mainCopyrightOwner: Regione Campania
-  repoOwner: Regione Campania
-     
+      - Gestione Ciclo Ispettivo Sicurezza luoghi di lavoro
 maintenance:
-  type: contract
-  contractors:
-    - name: ' DXC '
-      until: '2025-12-31'
   contacts:
-    - affiliation: Regione Campania
-      email: cinzia.matonti@regione.campania.it
+    - email: cinzia.matonti@regione.campania.it
       name: Cinzia Matonti
+  contractors:
+    - name: DXC Technology
+      until: '2025-06-30'
+  type: contract 
 localisation:
   availableLanguages:
     - it
@@ -94,22 +85,27 @@ it:
   conforme:
     misureMinimeSicurezza: true
   countryExtensionVersion: '0.2'
+  riuso:
+    codiceIPA: r_campan
   piattaforme:
     anpr: false
     cie: true
     pagopa: true
     spid: true
-  riuso:
-    codiceIPA: r_campan
-    
-usedBy:
-  - Regione Campania
-  - ASL NA1 Centro
-  - ASL NA2 Nord
-  - ASL NA3 Sud
-  - ASL AV
-  - ASL BN
-  - ASL CE
-  - ASL SA
-  
+  usedBy:
+    - Regione Campania
+    - ASL NA1 Centro
+    - ASL NA2 Nord
+    - ASL NA3 Sud
+    - ASL AV
+    - ASL BN
+    - ASL CE
+    - ASL SA
+    - Regione Basilicata
 logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
+legal:
+  authorsFile: |-
+    https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
+  license: AGPL-3.0-only
+  mainCopyrightOwner: Regione Campania
+  repoOwner: Regione Campania
