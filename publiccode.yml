@@ -52,11 +52,11 @@ description:
       - Ricerca cantiere
       - Gestione Ciclo Ispettivo Sicurezza luoghi di lavoro
 legal:
+  authorsFile: |-
+     https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
   license: AGPL-3.0-only
   mainCopyrightOwner: Regione Campania
   repoOwner: Regione Campania
-  authorsFile: |-
-    https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
 maintenance:
   type: contract
   contractors:
