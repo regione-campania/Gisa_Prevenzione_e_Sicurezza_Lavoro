@@ -1,85 +1,31 @@
-# This repository adheres to the publiccode.yml standard by including this 
+# This repository adheres to the publiccode.yml standard by including this
 # metadata file that makes public software easily discoverable.
 # More info at https://github.com/italia/publiccode.yml
 
 publiccodeYmlVersion: '0.2'
+
 name: GISA Campania - Prevenzione e Sicurezza sui luoghi di lavoro
 url: 'https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro'
-softwareVersion: '1.1'
+landingURL: 'https://gisasicurezzalavoro.regione.campania.it'
 releaseDate: '2022-06-01'
-logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
+softwareVersion: '1.1'
+
 platforms:
   - web
   - ios
   - android
+
 categories:
-  - customer-service-and-support
+  - document-management
   - data-collection
   - data-visualization
-  - document-management
-  - mobile-payment
+  - data-analytics
+  - customer-service-and-support
+
 developmentStatus: stable
+
 softwareType: standalone/web
-description:
-  it:
-    genericName: Cinzia Matonti
-    localisedName: Cinzia Matonti
-    shortDescription: Piattaforma software open source per la gestione unificata su
-      territorio regionale delle notifiche/controlli in materia di Sicurezza
-      luoghi di lavoro
-    longDescription: >-
-      GISA Campania - Prevenzione e Sicurezza Lavoro è un sistema di gestione
-      controlli ufficiali e notifiche preliminari composto dai seguenti moduli
-      funzionali         
-            - Autenticazione tramite SPID/CIE/CNS
-            - Gestione Notifiche Preliminari ai sensi dell’Art. 99 Capo I del D. Lgs. 81/08 da parte di:
-                Committente o dal Responsabile dei lavori del   Cantiere che può compilare on line la notifica preliminare dell’apertura del Cantiere;
-                ASL, Ispettorato del Lavoro e Enti Bilaterali (Comitati Paritetici e Casse Edili) per ricevere le Notifiche Preliminari di apertura dei Cantieri;
-                dalla Regione per reportistica.
-            - Gestione del Ciclo Ispettivo relativo alla sicurezza sui luoghi di lavoro in accordo alla normativa vigente e con integrazione con PagoPA. 
-            - Registro delle Macchine difformi.
-            Le tipologie di utenti che possono accedere al sistema sono:
-              - utenti regionali;
-              - utenti ASL;
-              - utenti delle casse edili, previa configurazione e personalizzazione;
-              - utenti dell'ispettorato del lavoro, previa configurazione e personalizzazione;
-              - cittadini che sono committenti di cantieri e imprese;
-              - professionisti responsabili dei lavori sul cantiere e impresa.
-    features:
-      - Gestione Notifiche Preliminari
-      - Registro Macchine difformi
-      - Gestione unificata ruoli e utenti
-      - Ricerca cantiere
-      - Gestione Ciclo Ispettivo Sicurezza luoghi di lavoro
-legal:
-  authorsFile: |-
-     https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
-  license: AGPL-3.0-only
-  mainCopyrightOwner: Regione Campania
-  repoOwner: Regione Campania
-maintenance:
-  type: contract
-  contractors:
-    - name: DXC Technology
-      until: 2026-08-03
-      email: michele.milone@dxc.com
-      website: https://dxc.com/it/it
-  contacts:
-    - name: Cinzia Matonti
-      email: cinzia.matonti@regione.campania.it
-      affiliation: Regione Campania
-localisation:
-  localisationReady: false
-  availableLanguages:
-    - it
-it:
-  countryExtensionVersion: '0.2'
-  piattaforme:
-    spid: true
-    cie: true
-    pagopa: true
-  riuso:
-    codiceIPA: r_campan
+
 dependsOn:
   open:
     - name: Apache Tomcat
@@ -88,16 +34,84 @@ dependsOn:
     - name: PostgreSQL
       optional: false
       version: '15.x'
-    - name: OpenJDK
-      optional: false
-      version: '1.8.0_372'
+
+description:
+  it:
+    genericName: Gestionale
+
+    longDescription: |2+
+
+
+      GISA Campania - Prevenzione e Sicurezza Lavoro è un sistema di gestione controlli ufficiali e notifiche preliminari composto dai seguenti moduli funzionali
+
+
+        - Autenticazione tramite SPID/CIE/CNS
+        - Gestione Notifiche Preliminari ai sensi dell’Art. 99 Capo I del D. Lgs. 81/08 da parte di:
+                Committente o dal Responsabile dei lavori del   Cantiere che può compilare on line la notifica preliminare dell’apertura del Cantiere
+                ASL, Ispettorato del Lavoro e Enti Bilaterali (Comitati Paritetici e Casse Edili) per ricevere le Notifiche Preliminari di apertura dei Cantieri
+                dalla Regione per reportistica.
+        - Gestione del Ciclo Ispettivo relativo alla sicurezza sui luoghi di lavoro in accordo alla normativa vigente e con integrazione con PagoPA 
+        - Registro delle Macchine difformi
+      Le tipologie di utenti che possono accedere al sistema sono:
+         - utenti regionali
+         - utenti ASL
+         - utenti delle casse edili, previa configurazione e personalizzazione
+         - utenti dell'ispettorato del lavoro, previa configurazione e personalizzazione
+         - cittadini che sono committenti di cantieri e imprese
+         - professionisti responsabili dei lavori sul cantiere e impresa
+
+    shortDescription: |-
+      Sistema software regionale per notifiche/controlli in materia di Sicurezza lavoro
+
+    features:
+      - Gestione Notifiche Preliminari
+      - Registro Macchine difformi
+      - Gestione unificata ruoli e utenti
+      - Ricerca cantiere
+      - Gestione Ciclo Ispettivo Sicurezza luoghi di lavoro
+
+legal:
+  authorsFile: |-
+     https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
+  license: AGPL-3.0-only
+  mainCopyrightOwner: Regione Campania
+  repoOwner: Regione Campania
+
+maintenance:
+  type: contract
+  contractors:
+    - name: 'DXC Technology'
+      until: '2026-08-03'
+  contacts:
+    - affiliation: Regione Campania
+      email: cinzia.matonti@regione.campania.it
+      name: Cinzia Matonti
+
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: false
+
+it:
+  conforme:
+    misureMinimeSicurezza: true
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    spid: true
+    cie: true
+    pagopa: true
+  riuso:
+    codiceIPA: r_campan
+
 usedBy:
-    - Regione Campania
-    - ASL NA1 Centro
-    - ASL NA2 Nord
-    - ASL NA3 Sud
-    - ASL AV
-    - ASL BN
-    - ASL CE
-    - ASL SA
-    - Regione Basilicata
+  - Regione Campania
+  - ASL NA1 Centro
+  - ASL NA2 Nord
+  - ASL NA3 Sud
+  - ASL AV
+  - ASL BN
+  - ASL CE
+  - ASL SA
+  - Regione Basilicata
+
+logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
