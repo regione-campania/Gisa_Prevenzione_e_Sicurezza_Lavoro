@@ -4,10 +4,10 @@
 
 publiccodeYmlVersion: '0.2'
 name: GISA Campania - Prevenzione e Sicurezza sui luoghi di lavoro
-url: https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro
+url: 'https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro'
 softwareVersion: '1.1'
-releaseDate: 2022-06-01
-logo: https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png
+releaseDate: '2022-06-01'
+logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
 platforms:
   - web
   - ios
@@ -67,14 +67,13 @@ maintenance:
   contacts:
     - name: Cinzia Matonti
       email: cinzia.matonti@regione.campania.it
-      phone: ''
       affiliation: Regione Campania
 localisation:
   localisationReady: false
   availableLanguages:
     - it
 it:
-  countryExtensionVersion: "0.2"
+  countryExtensionVersion: '0.2'
   piattaforme:
     spid: true
     cie: true
@@ -92,7 +91,7 @@ dependsOn:
     - name: OpenJDK
       optional: false
       version: '1.8.0_372'
-  usedBy:
+usedBy:
     - Regione Campania
     - ASL NA1 Centro
     - ASL NA2 Nord
