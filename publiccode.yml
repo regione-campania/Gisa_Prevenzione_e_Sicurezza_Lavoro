@@ -1,15 +1,13 @@
-# This repository adheres to the publiccode.yml standard by including this
+# This repository adheres to the publiccode.yml standard by including this 
 # metadata file that makes public software easily discoverable.
 # More info at https://github.com/italia/publiccode.yml
 
 publiccodeYmlVersion: '0.2'
 
-name: GISA Campania - Prevenzione e Sicurezza sui luoghi di lavoro
+name: GISA Campania - Prevenzione e Sicurezza Lavoro
+applicationSuite: GISA Campania
 url: 'https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro'
-landingURL: 'https://gisasicurezzalavoro.regione.campania.it'
 releaseDate: '2022-06-01'
-softwareVersion: '1.1'
-
 platforms:
   - web
   - ios
@@ -19,64 +17,36 @@ categories:
   - document-management
   - data-collection
   - data-visualization
-  - data-analytics
-  - customer-service-and-support
-
-developmentStatus: stable
-
+  
+developmentStatus: stable 
+  
 softwareType: standalone/web
-
-dependsOn:
-  open:
-    - name: Apache Tomcat
-      optional: false
-      version: '9.0.73'
-    - name: PostgreSQL
-      optional: false
-      version: '15.x'
-
+  
 description:
   it:
     genericName: Gestionale
-
-    longDescription: |2+
-
-
-      GISA Campania - Prevenzione e Sicurezza Lavoro è un sistema di gestione controlli ufficiali e notifiche preliminari composto dai seguenti moduli funzionali
+    shortDescription: Ecosistema Software regionale per la Sicurezza sui luoghi di lavoro
+    longDescription: |
+      GISA Sicurezza Lavoro è composto dai seguenti tre  moduli funzionali:
 
 
-        - Autenticazione tramite SPID/CIE/CNS
-        - Gestione Notifiche Preliminari ai sensi dell’Art. 99 Capo I del D. Lgs. 81/08 da parte di:
-                Committente o dal Responsabile dei lavori del   Cantiere che può compilare on line la notifica preliminare dell’apertura del Cantiere
-                ASL, Ispettorato del Lavoro e Enti Bilaterali (Comitati Paritetici e Casse Edili) per ricevere le Notifiche Preliminari di apertura dei Cantieri
-                dalla Regione per reportistica.
-        - Gestione del Ciclo Ispettivo relativo alla sicurezza sui luoghi di lavoro in accordo alla normativa vigente e con integrazione con PagoPA 
-        - Registro delle Macchine difformi
-      Le tipologie di utenti che possono accedere al sistema sono:
-         - utenti regionali
-         - utenti ASL
-         - utenti delle casse edili, previa configurazione e personalizzazione
-         - utenti dell'ispettorato del lavoro, previa configurazione e personalizzazione
-         - cittadini che sono committenti di cantieri e imprese
-         - professionisti responsabili dei lavori sul cantiere e impresa
+      1. Gestione Notifiche Preliminari ai sensi dell’Art. 99 Capo I del D. Lgs. 81/08 utilizzabile da parte di:
+          - Committente o dal Responsabile dei lavori del   Cantiere che può compilare on line la notifica preliminare dell’apertura del Cantiere;
+          - ASL, Ispettorato del Lavoro e Enti Bilaterali (Comitati Paritetici e Casse Edili) per ricevere le Notifiche Preliminari di apertura dei Cantieri;
+          - dalla Regione per reportistica.
+      2. Gestione del Ciclo Ispettivo relativo alla sicurezza sui luoghi di
+      lavoro in accordo alla normativa vigente e con integrazione con PagoPA. 
 
-    shortDescription: |-
-      Sistema software regionale per notifiche/controlli in materia di Sicurezza lavoro
+      3. Registro delle Macchine difformi.
 
     features:
       - Gestione Notifiche Preliminari
-      - Registro Macchine difformi
-      - Gestione unificata ruoli e utenti
-      - Ricerca cantiere
       - Gestione Ciclo Ispettivo Sicurezza luoghi di lavoro
-
+      - Registro Macchine difformi
+      
 legal:
-  authorsFile: |-
-     https://github.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/blob/main/Copyrights.txt
   license: AGPL-3.0-only
-  mainCopyrightOwner: Regione Campania
-  repoOwner: Regione Campania
-
+      
 maintenance:
   type: contract
   contractors:
@@ -86,22 +56,19 @@ maintenance:
     - affiliation: Regione Campania
       email: cinzia.matonti@regione.campania.it
       name: Cinzia Matonti
-
+      
 localisation:
+  localisationReady: false
   availableLanguages:
     - it
-  localisationReady: false
 
 it:
-  conforme:
-    misureMinimeSicurezza: true
-  countryExtensionVersion: '0.2'
-  piattaforme:
-    spid: true
-    cie: true
-    pagopa: true
   riuso:
     codiceIPA: r_campan
+  piattaforme:
+    pagopa: true
+    cie: true
+    spid: true
 
 usedBy:
   - Regione Campania
@@ -112,6 +79,4 @@ usedBy:
   - ASL BN
   - ASL CE
   - ASL SA
-  - Regione Basilicata
-
-logo: 'https://raw.githubusercontent.com/regione-campania/Gisa_Prevenzione_e_Sicurezza_Lavoro/master/logo.png'
+  - Regione Basilicata 
